@@ -1,0 +1,34 @@
+{
+  "name": "cortexjs",
+  "main": "build/cortex.js",
+  "homepage": "https://github.com/mquan/cortex",
+  "authors": [
+    "Quan Nguyen"
+  ],
+  "description": "A data management solution for React",
+  "keywords": [
+    "React",
+    "nested",
+    "data"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "package.json",
+    "gulpfile.js",
+    "node_modules",
+    "bower_components",
+    "examples",
+    "test",
+    "tests"
+  ],
+  "_release": "99b8dc4027",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "99b8dc4027356b9fb3b9d1849c4675eb06515fdb"
+  },
+  "_source": "git://github.com/mquan/cortex.git",
+  "_target": "*",
+  "_originalSource": "cortexjs",
+  "_direct": true
+}
