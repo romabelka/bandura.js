@@ -5,7 +5,7 @@ var stylus  = require('gulp-stylus'),
     gulp    = require('gulp');
 
 gulp.task('coffee', function() {
-    gulp.src('./app/logic/*.coffee')
+    gulp.src('./app/logic/**/*.coffee')
         .pipe(plumber())
         .pipe(coffee())
         .pipe(gulp.dest('./dist/logic'));
@@ -19,7 +19,8 @@ gulp.task('stylus', function () {
 });
 
 gulp.task('watch', function() {
-   gulp.watch('./app/**/*.coffee', ['coffee', 'stylus']);
+   gulp.watch('./app/logic/**/*.coffee', ['coffee']);
+   gulp.watch('./app/styles/**/*.stylus', ['stylus']);
 });
 
 gulp.task('default', ['coffee', 'stylus','watch']);

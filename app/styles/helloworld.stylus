@@ -1,2 +1,10 @@
-div
+.Play_btn
+  background-color green
+  width 300px
+  height 100px
+  font-size 2em
+.Pause_btn
   background-color red
+  width 300px
+  height 100px
+  font-size 2em
