@@ -17,6 +17,7 @@
     "react": "~0.12.0",
     "bacon": "~0.7.30",
     "cortexjs": "*",
-    "underscore": "~1.7.0"
+    "underscore": "~1.7.0",
+    "SoundManager2": "git@github.com:scottschiller/SoundManager2.git"
   }
 }
