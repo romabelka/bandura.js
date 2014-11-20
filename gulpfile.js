@@ -5,10 +5,10 @@ var stylus  = require('gulp-stylus'),
     gulp    = require('gulp');
 
 gulp.task('coffee', function() {
-    gulp.src('./app/logic/**/*.coffee')
+    gulp.src('./app/**/*.coffee')
         .pipe(plumber())
         .pipe(coffee())
-        .pipe(gulp.dest('./dist/logic'));
+        .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('stylus', function () {
@@ -19,7 +19,7 @@ gulp.task('stylus', function () {
 });
 
 gulp.task('watch', function() {
-   gulp.watch('./app/logic/**/*.coffee', ['coffee']);
+   gulp.watch('./app/**/*.coffee', ['coffee']);
    gulp.watch('./app/styles/**/*.stylus', ['stylus']);
 });
 
