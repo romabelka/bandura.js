@@ -1,9 +1,11 @@
-#=========================DISPETCHER=============
+#==============Public API=====================
 @controls = new Bacon.Bus()
 @progress = new Bacon.Bus()
 @activePlaylist = new Bacon.Bus()
-@playerSettings = new Bacon.Bus()
+@settingsChanges = new Bacon.Bus()
+#=============================================
 
+#========frequently changed values============
 progress.map((smTrack) ->
   {
   progress: smTrack.position / smTrack.duration
@@ -11,7 +13,26 @@ progress.map((smTrack) ->
   }
 ).onValue((data) -> sendToStore(data))
 
-#todo setVolume and mute
+playerSettings = settingsChanges.scan({},(settings, changes) ->
+  if changes.mute? and changes.mute then soundManager.mute() else soundManager.unmute()
+  if changes.volume?
+    soundManager.setup({defaultOptions: {volume: changes.volume}})
+
+  return Utils.extendImmutable(settings, changes)
+).log('playerSettings')
+
+
+#Changes volume of current track(SM can't change volume on all tracks)
+playerSettings.changes().combine(activePlaylist, (a,b) ->
+  {
+    settings: a
+    playlist: b
+  }
+).onValue((obj) ->
+  {settings, playlist} = obj
+  soundManager.setVolume(playlist.getActiveTrack().id, settings.volume)
+)
+#=============================================
 
 
 activePlaylist.combine(controls, (a,b) ->
@@ -23,6 +44,7 @@ activePlaylist.combine(controls, (a,b) ->
   switch obj.action
     when 'stop'
       soundManager.stopAll()
+      Utils.extendImmutable obj.playlist, {status: 'Stoped'}
     when 'play'
       soundManager.pauseAll()
       soundManager.createSound(obj.playlist.getActiveTrack())
@@ -34,17 +56,19 @@ activePlaylist.combine(controls, (a,b) ->
       Utils.extendImmutable obj.playlist, {status: 'Paused'}
 
     when 'nextTrack'
+      nextTrack = obj.playlist.nextTrack()
       controls.push('stop')
-      activePlaylist.push(obj.playlist.nextTrack())
+      activePlaylist.push(nextTrack)
       controls.push('play')
-      Utils.extendImmutable obj.playlist, {status: 'isPlaying'}
+      Utils.extendImmutable nextTrack, {status: 'switched to next track'}
 
 
     when 'previousTrack'
+      previousTrack = obj.playlist.previousTrack()
       controls.push('stop')
-      activePlaylist.push(obj.playlist.previousTrack())
+      activePlaylist.push(previousTrack)
       controls.push('play')
-      Utils.extendImmutable obj.playlist, {status: 'isPlaying'}
+      Utils.extendImmutable previousTrack, {status: 'switched to previous track'}
 
-).log('control').onValue((data) -> sendToStore(data))
+).log('control')
 
