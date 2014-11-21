@@ -11,7 +11,7 @@ class @Player
 
   constructor: (options) ->
     _.extend(@, {
-      volume: 20
+      volume: 0
     },options)
 
     settingsChanges.push(new PlayerSettings @volume, false)
@@ -67,12 +67,7 @@ class @Player
     controls.push('stop')
     return @
 
-  #------------Playlists----------
-  setActivePlaylist: (pl) ->
-    controls.push('stop')
-    activePlaylist.push(pl)
-    return @
-
+  #------------Playlist----------
   destroyActivePlaylist: () ->
     controls.push('stop')
     activePlaylist.push(new Playlist())
@@ -91,6 +86,25 @@ class @Player
     controls.push('previousTrack')
     return @
 
+  #-----------PlaylistCollections---------
+  setActivePlaylist: (pl) ->
+    controls.push('stop')
+    activePlaylist.push(pl)
+    return @
 
+  #[Array[Playlist]] or [PLCollection] => [Player]
+  setPlaylistsCollection: (collection) ->
+    collection = new PLCollection(collection) unless collection instanceof PLCollection
+    collections.push({action: 'setNewCollection', collection: collection})
 
+    return @
 
+  removePlaylist: (pl) ->
+    collections.push({action: 'removePlaylist', playlist: pl})
+
+    return @
+
+  addPlaylist: (pl) ->
+    collections.push({action: 'addPlaylist', playlist: pl})
+
+    return @

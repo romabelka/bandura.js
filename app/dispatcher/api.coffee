@@ -1,0 +1,5 @@
+@controls = new Bacon.Bus()
+@progress = new Bacon.Bus()
+@activePlaylist = new Bacon.Bus()
+@collections = new Bacon.Bus()
+@settingsChanges = new Bacon.Bus()

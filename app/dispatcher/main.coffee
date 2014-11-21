@@ -1,10 +1,3 @@
-#==============Public API=====================
-@controls = new Bacon.Bus()
-@progress = new Bacon.Bus()
-@activePlaylist = new Bacon.Bus()
-@settingsChanges = new Bacon.Bus()
-#=============================================
-
 #========frequently changed values============
 progress.map((smTrack) ->
   {
@@ -72,3 +65,9 @@ activePlaylist.combine(controls, (a,b) ->
 
 ).log('control')
 
+activePlaylist.onValue((pl) -> collections.push({action: 'update', playlist: pl}))
+
+playlistsCollection = collections.scan(new PLCollection(), (collection, ev) ->
+  return ev.collection if ev.action is 'setNewCollection'
+  return collection[ev.action](ev.playlist)
+).log('current playlists collection')
