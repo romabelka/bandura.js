@@ -68,30 +68,36 @@ class @Playlist
 #================================================================================
 
 class @PLCollection
-  constructor: (playlists, sorted = false, ids = null) ->
-    #sorting and inds just to make it faster
-    @_playlists = if sorted then playlists else _.sortBy playlists, (pl) -> pl.getId()
-    #its important to have ids in the same order that playlists
-    @_plIds = ids or _.map @_playlists, (pl) -> pl.getId()
+  constructor: (playlists, grouped = false) ->
+    @_playlists = if grouped
+      playlists
+    else
+      _.reduce(playlists, (acc,pl) ->
+        acc[pl.getId()] = pl
+        acc
+      ,{})
 
   #able to use it as update to
   addPlaylist: (playlist) ->
     id = playlist.getId()
-    throw new Error 'Collection allready contains this playlist' if _.contains(@_plIds, id)
+    throw new Error 'Collection allready contains this playlist' if @_playlists[id]?
+    playlists = @_playlists
+    playlists[id] = playlist
 
-    position = _.sortedIndex(@_plIds, id)
-    return new PLCollection Utils.insertOn(@_playlists, playlist, position), true, Utils.insertOn(@_plIds, id, position)
+    return new PLCollection playlists, true
 
   removePlaylist: (playlist) ->
-    position = _.sortedIndex(@_plIds, playlist.getId())
+    id = playlist.getId()
+    list = @_playlists
+    list[id] = null
 
-    return new PLCollection Utils.removeFrom(@_playlists, position), true, Utils.removeFrom(@_plIds, position)
+    return new PLCollection list, true
 
   #updates a single playlist in collection(not removes or create it => no ids changed)
   update: (playlist) ->
-    index = _.indexOf @_plIds, playlist.getId(),true
-    return @addPlaylist(playlist) if index < 0
+    id = playlist.getId()
+    return @addPlaylist(playlist) unless @_playlists[id]?
     list = @_playlists
-    list[index] = playlist
+    list[id] = playlist
 
-    return new PLCollection list, true, @_plIds
+    return new PLCollection list, true
