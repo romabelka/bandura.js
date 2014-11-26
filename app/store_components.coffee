@@ -131,18 +131,8 @@ Controls = createClass
 TrackInfo = createClass
   displayName: 'TrackInfo'
 
-  mixins: [store.subscribe()]
-
   propTypes:
     store: PropTypes.store
-
-  filterDataFromStore: (store) ->
-    console.log "#{@constructor.displayName}::filterDataFromStore", store
-    return {
-      track: _(store.tracks).findWhere({
-        id: store.playing.track_id
-      })
-    }
 
   classSet: ->
     {} = @props
@@ -152,14 +142,22 @@ TrackInfo = createClass
 
     })
 
+
+
+
+  mixins: [store.subscribe()]
+
+  filterDataFromStore: (store) ->
+    console.log "#{@constructor.displayName}::filterDataFromStore", store
+    return {
+      track: _(store.tracks).findWhere({
+        id: store.playing.track_id
+      })
+    }
+
   render: ->
     console.log("#{@constructor.displayName}::RENDER")
-    {track} = @getDataFromStore()
-    {} = @props
-    {} = @state
-
-
-    {id, name, genre, artist, album} = track
+    {id, name, genre, artist, album} = @getDataFromStore().track
 
     return `<div className={this.classSet()}>
       <h6>current track: {id} - {name}</h6>
@@ -184,7 +182,7 @@ TrackInfo = createClass
 window.Bandura = createClass
   displayName: 'Bandura'
 
-  mixins: [store.subscribe()]
+  mixins: [store.subscribe(), controlActions.mixin()]
 
   propTypes:
     store: PropTypes.store
@@ -206,6 +204,8 @@ window.Bandura = createClass
 
   render: ->
     console.log("#{@constructor.displayName}::RENDER")
+    @sendAction('playlist.play', {fuck: 'suck'})
+
     {status} = @getDataFromStore()
     {} = @props
     {} = @state
