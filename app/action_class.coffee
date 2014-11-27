@@ -1,4 +1,8 @@
-prepareStr = (str) -> return _(str).chain().clean().trim().slugify()
+# Mix in non-conflict functions to Underscore namespace if you want
+_.mixin(_.str.exports());
+
+prepareStr = (str) ->
+  return _(str).chain().clean().trim().slugify().value()
 
 isStringAndNonEmpty = (str) -> return typeof str is 'string' and str.length > 0
 
@@ -17,24 +21,31 @@ class @Actions
 
   instances = []
 
-  constructor: (namespace, actions) ->
-    if not isStringAndNonEmpty(namespace)
+  constructor: (rawNamespace, actions) ->
+    if not isStringAndNonEmpty(rawNamespace)
       throw  Error 'Namespace must be non-empty string'
 
-    name = prepareStr(namespace)
+    namespace = prepareStr(rawNamespace)
 
-    if _(instances).find name: name
-      throw  Error "You already have namespace by this name '#{namespace}'"
+    if _(instances).find({namespace: namespace})
+      throw Error "You already have namespace by this name '#{namespace}'"
 
     else if (not _(actions).isObject()) or _(actions).isEmpty()
       throw  Error "Actions-hash must be non-empty"
 
-    @namespace = name
+    @namespace = namespace
     @actions = actions
 
-  getAction: (eventName) ->
-    throw  Error 'eventName must be string and non-empty' if isStringAndNonEmpty(eventName)
+    instances.push(@)
+
+
+  getActionByName: (eventName) ->
+    throw  Error 'eventName must be string and non-empty' unless isStringAndNonEmpty(eventName)
     return @actions[eventName]
+
+  ### STATIC ###
+  @getByNamespace: (namespace) ->
+    return _(instances).find(namespace: namespace)
 
   # Actions.mixin()
   @mixin: ->
@@ -42,24 +53,24 @@ class @Actions
       senderAction: (->
         return -> @sendAction.apply(@, arguments)
       )
-      sendAction: ((name, extra) ->
-        name = name.split('.')
+      sendAction: ((eventStr, extra) ->
+        eventArr = eventStr.split('.')
 
-        if name.length < 2
+        if eventArr.length < 2
           throw  Error "Actions must have action-namespace and action-name"
 
-        [namespace, eventName] = name
+        [namespace, eventName] = eventArr
 
-        instance = _(instances).find(name: namespace)
+        actionInstance = Actions.getByNamespace(namespace)
 
-        unless instance?
+        unless actionInstance?
           throw  Error "You dont have action-namespace with name '#{namespace}'"
 
-        eventHandle = instance.getAction(eventName)
+        eventHandle = actionInstance.getActionByName(eventName)
 
         unless eventHandle?
           throw  Error "eventHandle '#{eventName}' is not found in namespace '#{namespace}'"
 
-        return eventHandle(name, extra)
+        return eventHandle(eventArr, extra)
       )
     }

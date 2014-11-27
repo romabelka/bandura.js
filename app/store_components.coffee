@@ -143,8 +143,6 @@ TrackInfo = createClass
     })
 
 
-
-
   mixins: [store.subscribe()]
 
   filterDataFromStore: (store) ->
@@ -182,7 +180,7 @@ TrackInfo = createClass
 window.Bandura = createClass
   displayName: 'Bandura'
 
-  mixins: [store.subscribe(), controlActions.mixin()]
+  mixins: [store.subscribe(), Actions.mixin()]
 
   propTypes:
     store: PropTypes.store
@@ -204,7 +202,7 @@ window.Bandura = createClass
 
   render: ->
     console.log("#{@constructor.displayName}::RENDER")
-    @sendAction('playlist.play', {fuck: 'suck'})
+    @sendAction('controls.play', {fuck: 'suck'})
 
     {status} = @getDataFromStore()
     {} = @props
