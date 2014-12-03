@@ -74,3 +74,6 @@ class @Actions
         return eventHandle(eventArr, extra)
       )
     }
+
+
+module.exports = Actions

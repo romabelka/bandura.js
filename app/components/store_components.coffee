@@ -4,9 +4,6 @@
 
 PropTypes.store = PropTypes.object
 
-
-
-
 trackPropTypes =
   id: PropTypes.string
   name: PropTypes.string
@@ -21,7 +18,6 @@ trackPropTypes =
   artist: PropTypes.string
   album: PropTypes.string
   isPlaying: PropTypes.bool
-
 
 #'col-md': PropTypes.number
 

@@ -15,7 +15,3 @@
     _.reduce(array, (acc, el, index) ->
       if el is element then acc.concat(index) else acc
     , [])
-
-
-
-@sendToStore = (data) ->

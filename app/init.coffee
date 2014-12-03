@@ -1,3 +1,5 @@
+Actions = require('./core/actions')
+
 try
   window.controlActions = new Actions 'Controls ',
     play: ->

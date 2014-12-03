@@ -1,3 +1,14 @@
+/**
+ * Go and look to buildfile.coffee
+ * */
+
+require('coffee-script/register');
+require('./buildfile.coffee');
+
+
+
+return
+// something old
 var stylus = require('gulp-stylus'),
     coffee = require('gulp-coffee'),
     jsx = require('gulp-jsx'),
