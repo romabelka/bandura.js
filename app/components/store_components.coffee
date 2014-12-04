@@ -2,8 +2,6 @@
 
 {PropTypes, createClass, PropTypes, addons} = React
 
-PropTypes.store = PropTypes.object
-
 trackPropTypes =
   id: PropTypes.string
   name: PropTypes.string
@@ -172,40 +170,3 @@ TrackInfo = createClass
     </div>`
 
 # -------------------------------------------------- Bandura
-
-window.Bandura = createClass
-  displayName: 'Bandura'
-
-  mixins: [store.subscribe(), Actions.mixin()]
-
-  propTypes:
-    store: PropTypes.store
-
-  filterDataFromStore: (store) ->
-    console.log "#{@constructor.displayName}::filterDataFromStore", store
-
-    return {
-      status: store.status
-    }
-
-  classSet: ->
-    {} = @props
-    {} = @state
-
-    return addons.classSet({
-
-    })
-
-  render: ->
-    console.log("#{@constructor.displayName}::RENDER")
-    @sendAction('controls.play', {fuck: 'suck'})
-
-    {status} = @getDataFromStore()
-    {} = @props
-    {} = @state
-
-    return `<div className={this.classSet()}>
-      <h4>Status: {status}</h4>
-      <hr />
-      <TrackInfo store={store}/>
-    </div>`

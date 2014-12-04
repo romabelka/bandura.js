@@ -3,25 +3,24 @@
  * */
 
 require('coffee-script/register');
-require('./buildfile.coffee');
+//require('./buildfile.coffee');
 
 
-
-return
 // something old
 var stylus = require('gulp-stylus'),
     coffee = require('gulp-coffee'),
     jsx = require('gulp-jsx'),
     react = require('gulp-react'),
     plumber = require('gulp-plumber'),
-    gulp = require('gulp');
+    gulp = require('gulp'),
+    browserify = require('gulp-browserify');
 
 gulp.task('coffee', function () {
     gulp.src('./app/**/*.coffee')
         .pipe(plumber())
         .pipe(coffee({bare: true}))
         .pipe(react())
-        .pipe(gulp.dest('./dist'));
+        .pipe(gulp.dest('./tmp'));
 });
 
 gulp.task('stylus', function () {
@@ -36,4 +35,28 @@ gulp.task('watch', function() {
    gulp.watch('./app/styles/**/*.stylus', ['stylus']);
 });
 
-gulp.task('default', ['coffee', 'stylus', 'watch']);
+gulp.task('browserify_react', function() {
+    gulp.src('./tmp/init.js')
+        .pipe(browserify({
+                extensions: ['.js'],
+                insertGlobals: true,
+                debug: true
+            }
+    ))
+    .pipe(gulp.dest('./build'))
+});
+
+gulp.task('browserify_bandura', function() {
+    gulp.src('./tmp/api/initBandura.js')
+        .pipe(browserify({
+                extensions: ['.js'],
+                insertGlobals: true,
+                debug: true
+            }
+    ))
+    .pipe(gulp.dest('./build'))
+});
+
+gulp.task('build', ['coffee', 'browserify_react', 'browserify_bandura']);
+
+gulp.task('default', ['coffee', 'browserify','watch']);

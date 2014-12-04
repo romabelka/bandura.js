@@ -1,4 +1,4 @@
-@Utils =
+Utils =
   extendImmutable: (arg...) ->
     _.extend.apply @, [{}].concat(arg)
 
@@ -15,3 +15,5 @@
     _.reduce(array, (acc, el, index) ->
       if el is element then acc.concat(index) else acc
     , [])
+
+module.exports = Utils

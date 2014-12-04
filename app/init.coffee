@@ -1,4 +1,8 @@
 Actions = require('./core/actions')
+Bandura = require('./components/bandura_component')
+React = require('../bower_components/react/react-with-addons')
+
+PropTypes.store = PropTypes.object
 
 try
   window.controlActions = new Actions 'Controls ',

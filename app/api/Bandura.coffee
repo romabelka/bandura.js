@@ -1,4 +1,11 @@
-class @Player
+{controls,progress, activePlaylist, collections, settingsChanges} = require('../dispatcher/api')
+#require('../dispatcher/api')
+PlayerSettings = require('./PlayerSettings')
+Track = require('./Track')
+Playlist = require('./Playlist')
+PLCollection = require('./PLCollection')
+
+class Bandura
   #private
   valideVolume = (vol) ->
     throw new Error 'must be a number' unless _.isNumber vol
@@ -108,3 +115,5 @@ class @Player
     collections.push({action: 'addPlaylist', playlist: pl})
 
     return @
+
+module.exports = Bandura
