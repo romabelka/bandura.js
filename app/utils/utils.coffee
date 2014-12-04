@@ -1,4 +1,4 @@
-@Utils =
+Utils =
   extendImmutable: (arg...) ->
     _.extend.apply @, [{}].concat(arg)
 
@@ -16,6 +16,4 @@
       if el is element then acc.concat(index) else acc
     , [])
 
-
-
-@sendToStore = (data) ->
+module.exports = Utils

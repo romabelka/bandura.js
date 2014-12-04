@@ -18,6 +18,8 @@
     "bacon": "~0.7.30",
     "cortexjs": "*",
     "underscore": "~1.7.0",
-    "SoundManager2": "git@github.com:scottschiller/SoundManager2.git"
+    "SoundManager2": "git@github.com:scottschiller/SoundManager2.git",
+    "underscore.string": "~2.4.0",
+    "underscore-contrib": "~0.3.0"
   }
 }

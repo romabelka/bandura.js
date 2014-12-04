@@ -1,28 +1,40 @@
+// something old
 var stylus = require('gulp-stylus'),
     coffee = require('gulp-coffee'),
-    jsx = require('gulp-jsx'),
     react = require('gulp-react'),
     plumber = require('gulp-plumber'),
-    gulp = require('gulp');
+    gulp = require('gulp'),
+    browserify = require('gulp-browserify');
+
+gulp.task('stylus', function () {
+    return gulp.src('./app/styles/bandura.stylus')
+        .pipe(plumber())
+        .pipe(stylus())
+        .pipe(gulp.dest('./build'))
+});
 
 gulp.task('coffee', function () {
-    gulp.src('./app/**/*.coffee')
+    return gulp.src('./app/**/*.coffee')
         .pipe(plumber())
         .pipe(coffee({bare: true}))
         .pipe(react())
-        .pipe(gulp.dest('./dist'));
+        .pipe(gulp.dest('./tmp'));
 });
 
-gulp.task('stylus', function () {
-    gulp.src('./app/styles/**/*.stylus')
-        .pipe(plumber())
-        .pipe(stylus())
-        .pipe(gulp.dest('./dist/styles'))
+gulp.task('browserify', ['coffee'], function() {
+    return gulp.src(['./tmp/roma.js', './tmp/murad.js'])
+        .pipe(browserify({
+                extensions: ['.js'],
+                insertGlobals: true,
+                debug: true
+            }))
+    .pipe(gulp.dest('./build'))
 });
 
 gulp.task('watch', function() {
-   gulp.watch('./app/**/*.coffee', ['coffee']);
-   gulp.watch('./app/styles/**/*.stylus', ['stylus']);
+    gulp.watch('./app/**/*.coffee', ['browserify']);
+    gulp.watch('./app/styles/**/*.stylus', ['stylus']);
 });
 
-gulp.task('default', ['coffee', 'stylus', 'watch']);
+gulp.task('build', ['browserify', 'stylus']);
+gulp.task('default', ['build', 'watch']);

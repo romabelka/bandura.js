@@ -1,23 +1,6 @@
-class @PlayerSettings
-  constructor: (@volume, @mute) ->
+Utils = require('../utils/utils')
 
-  setVolume: (vol) -> return new PlayerSettings(vol, @mute)
-  setMute: (mute) -> return new PlayerSettings(@volume, mute)
-
-
-class @Track
-  defaults: {
-    artist: 'unknown artist'
-    name: 'unknown track'
-  }
-
-  constructor: (data) ->
-    _.extend(@, @defaults, data)
-
-
-#================================================================================
-
-class @Playlist
+class Playlist
   #Public
   constructor: (@_tracks = [], @_name = 'Custom playlist', @_activeTrackIndex = 0, @_id = Utils.randomId()) ->
 
@@ -65,39 +48,6 @@ class @Playlist
 
     return new Playlist(tracks, @_name, activeTrack, @_id)
 
-#================================================================================
 
-class @PLCollection
-  constructor: (playlists, grouped = false) ->
-    @_playlists = if grouped
-      playlists
-    else
-      _.reduce(playlists, (acc,pl) ->
-        acc[pl.getId()] = pl
-        acc
-      ,{})
 
-  #able to use it as update to
-  addPlaylist: (playlist) ->
-    id = playlist.getId()
-    throw new Error 'Collection allready contains this playlist' if @_playlists[id]?
-    playlists = @_playlists
-    playlists[id] = playlist
-
-    return new PLCollection playlists, true
-
-  removePlaylist: (playlist) ->
-    id = playlist.getId()
-    list = @_playlists
-    list[id] = null
-
-    return new PLCollection list, true
-
-  #updates a single playlist in collection(not removes or create it => no ids changed)
-  update: (playlist) ->
-    id = playlist.getId()
-    return @addPlaylist(playlist) unless @_playlists[id]?
-    list = @_playlists
-    list[id] = playlist
-
-    return new PLCollection list, true
+module.exports = Playlist
