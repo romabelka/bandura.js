@@ -1,7 +1,7 @@
-Bandura = require('./Bandura')
-Track = require('./Track')
-Playlist = require('./Playlist')
-require('./../dispatcher/main')
+Bandura = require('./api/Bandura')
+Track = require('./api/Track')
+Playlist = require('./api/Playlist')
+require('./dispatcher/main')
 
 window.bandura = new Bandura()
 window.track1 = new Track
