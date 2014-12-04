@@ -1,4 +1,4 @@
-class @Storik
+class Storik
   _currentState: {}
 
   getCurrentState: ->
@@ -73,3 +73,6 @@ class @Storik
     которая возникает если дочерний элемент пошел на проверку,
     а потом родительский обновился и соответственно вызвал ререндер
 ###
+
+
+module.exports = Storik

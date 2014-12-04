@@ -1,25 +1,17 @@
-Actions = require('./core/actions')
-Bandura = require('./components/bandura_component')
 React = require('../bower_components/react/react-with-addons')
+{renderComponent, PropTypes} = React
+Bandura = require('./components/bandura_component')
+{isDevEnv} = require('./config')
 
-PropTypes.store = PropTypes.object
+do ->
+  PropTypes.store = PropTypes.object
+  window.React = React if isDevEnv
 
 try
-  window.controlActions = new Actions 'Controls ',
-    play: ->
-      console.log('ACTION::PLAY', arguments)
-    pause: ->
-      console.log('ACTION::PAUSE', arguments)
-    mute: ->
-      console.log('ACTION::MUTE', arguments)
-    setVolume: ->
-      console.log('ACTION::SETVOLUME', arguments)
-
-
   document.addEventListener "DOMContentLoaded", (event) ->
     console.log 'DOMContentLoaded'
 
-    React.renderComponent(`<Bandura store={store} />`,
+    renderComponent(`<Bandura store={store} />`,
       document.getElementById('bandura-container')
     )
 
@@ -30,4 +22,5 @@ try
       }})
     , 1500)
 catch e
+  # todo: глобальный перехватчик и регистратор ошибок
   console.error('ERROR: ', e)

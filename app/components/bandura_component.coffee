@@ -1,5 +1,5 @@
 Actions = require('../core/actions')
-Actions = require('../core/store')
+Store = require('../core/store')
 {PropTypes, createClass, PropTypes, addons} = require('../../bower_components/react/react-with-addons.js')
 
 

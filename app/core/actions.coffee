@@ -17,7 +17,7 @@ isStringAndNonEmpty = (str) -> return typeof str is 'string' and str.length > 0
 
 ###
 
-class @Actions
+class Actions
 
   instances = []
 

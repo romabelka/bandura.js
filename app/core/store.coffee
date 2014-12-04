@@ -1,3 +1,5 @@
+Storik = require('./storik')
+
 class Store
   constructor: (initialData) ->
     @commits = []
@@ -45,3 +47,6 @@ class Store
     @storiks.push(storik)
 
     return storik.getMixin()
+
+
+module.exports = Store
