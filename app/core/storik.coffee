@@ -13,13 +13,14 @@ class Storik
     return
 
   constructor: (@options) ->
-    @_currentState = options.initialSnapshot
+    @_currentState = {}
 
   check: ({snapshot}) ->
     # прерываем если компонент еще не подписался или вызвал ошибку при регистрации ... todo: сделать отложенной подпиской на главный стор
     return unless @component?
 
     newState = @filterMethod(snapshot)
+    console.log 'newState', @filterMethod, snapshot
 
     isEqual = _.isEqual(newState, @getCurrentState())
     console.log "#{@component.constructor.displayName}::check, isEqual: #{isEqual}", newState, @getCurrentState()
@@ -42,12 +43,13 @@ class Storik
 
   getMixin: ->
     storik = @
-    snapshot = @getCurrentState()
     mixin = {}
 
     mixin.componentWillMount = (->
       console.log "#{@constructor.displayName}::componentWillMount", @, arguments
 
+      snapshot = storik.options.getLatestSnapshot()
+      console.log 'componentWillMount:snapshot', snapshot
       storik.register({component: @, snapshot})
     )
 
