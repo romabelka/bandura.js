@@ -4,6 +4,7 @@ PlayerSettings = require('./PlayerSettings')
 Track = require('./Track')
 Playlist = require('./Playlist')
 PLCollection = require('./PLCollection')
+store = require('../dispatcher/store')
 
 class Bandura
   #private
