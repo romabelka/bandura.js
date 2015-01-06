@@ -9,7 +9,7 @@ progress.map((smTrack) ->
   progress: smTrack.position / smTrack.duration
   loaded: smTrack.bytesLoaded / smTrack.bytesTotal
   }
-).onValue((data) -> console.log(data))
+)
 
 playerSettings = settingsChanges.scan({},(settings, changes) ->
   if changes.mute? and changes.mute then soundManager.mute() else soundManager.unmute()
