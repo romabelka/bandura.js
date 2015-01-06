@@ -42,6 +42,7 @@ class Bandura
         whileplaying: -> progress.push(@)
         whileloading: -> progress.push(@)
 
+
   #todo validate
   setVolume: (vol) ->
     @volume = valideVolume(vol)
@@ -124,5 +125,11 @@ class Bandura
     collections.push({action: 'addPlaylist', playlist: pl})
 
     return @
+
+###
+  drawUI: ->
+    store.UIComponents.progressbar = React.render(`<UIprogressbar progress = {store.progress} loaded = {store.loaded}/>`, document.getElementById('progressbar'))
+###
+
 
 module.exports = Bandura
