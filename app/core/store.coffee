@@ -1,10 +1,11 @@
+Storik = require('./storik')
+
 class Store
+  storiks = []
+  commits = []
+
   constructor: (initialData) ->
-    @commits = []
-    @storiks = []
-
-
-    @update(initialData)
+    @update(initialData.initialSnapshot)
 
   validateChanges = (hash) ->
     return _.isObject(hash)
@@ -13,18 +14,19 @@ class Store
     if not validateChanges(changes)
       return console.error('Update data not valid!')
 
-    @commits.push(changes)
+    commits.push(changes)
 
     @notify
-      storiks: @storiks # todo: only active storiks
-      snapshot: @getLatestSnapshot()
+      storiks: storiks # todo: only active storik
+      snapshot: getLatestSnapshot()
 
     return
 
-  getLatestSnapshot: ->
-    return _.extend.apply(_, @commits)
+  getLatestSnapshot = ->
+    return _.extend.apply(_, commits)
 
   notify: ({storiks, snapshot}) ->
+    console.log 'notify', snapshot, storiks
     storik.check({snapshot}) for storik in storiks
 
   defaultOptions =
@@ -32,16 +34,19 @@ class Store
     getter: 'getDataFromStore'
     trigger: 'triggerDataFromStore'
 
-  subscribe: (options = {}) ->
-    storik = new Storik _.extend(
+  @subscribe: (options = {}) ->
+    storik = new Storik(_.extend(
       {},
       defaultOptions,
       _.clone(options),
       {
-        initialSnapshot: @getLatestSnapshot()
+        getLatestSnapshot: getLatestSnapshot
       }
-    )
+    ))
 
-    @storiks.push(storik)
+    storiks.push(storik)
 
     return storik.getMixin()
+
+
+module.exports = Store

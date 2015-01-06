@@ -1,5 +1,6 @@
 Actions = require('../core/actions')
-Actions = require('../core/store')
+Store = require('../core/store')
+TrackInfo = require('./track-info_component')
 {PropTypes, createClass, PropTypes, addons} = require('../../bower_components/react/react-with-addons.js')
 
 
@@ -15,7 +16,7 @@ Bandura = createClass
     console.log "#{@constructor.displayName}::filterDataFromStore", store
 
     return {
-    status: store.status
+      status: store.status
     }
 
   classSet: ->
@@ -28,14 +29,15 @@ Bandura = createClass
 
   render: ->
     console.log("#{@constructor.displayName}::RENDER")
-    @sendAction('controls.play', {fuck: 'suck'})
 
     {status} = @getDataFromStore()
-    {} = @props
+    {store} = @props
     {} = @state
 
+    onClick = this.senderAction('controls.play', {fuck: 'suck'})
+
     return `<div className={this.classSet()}>
-        <h4>Status: {status}</h4>
+        <h4 onClick={onClick}>Status: {status}</h4>
         <hr />
         <TrackInfo store={store}/>
     </div>`

@@ -23,6 +23,7 @@ gulp.task('coffee', function () {
 
 gulp.task('browserify', ['coffee'], function() {
     return gulp.src(['./tmp/roma.js', './tmp/murad.js'])
+        .pipe(plumber())
         .pipe(browserify({
                 extensions: ['.js'],
                 insertGlobals: true,

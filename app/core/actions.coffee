@@ -17,7 +17,7 @@ isStringAndNonEmpty = (str) -> return typeof str is 'string' and str.length > 0
 
 ###
 
-class @Actions
+class Actions
 
   instances = []
 
@@ -50,8 +50,10 @@ class @Actions
   # Actions.mixin()
   @mixin: ->
     return {
-      senderAction: (->
-        return -> @sendAction.apply(@, arguments)
+      senderAction: ((args...)->
+        return =>
+          # todo: original: arguments
+          @sendAction.apply(@, args)
       )
       sendAction: ((eventStr, extra) ->
         eventArr = eventStr.split('.')
