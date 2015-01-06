@@ -1,11 +1,21 @@
 Utils = require('../utils/utils')
+Playlist = require('./Playlist')
 
 class PLCollection
+  @CUSTOM_ID = 0
+  @FAVORITE_ID = 1
+
   constructor: (playlists, sorted = false, ids = null) ->
-    #sorting and inds just to make it faster
-    @_playlists = if sorted then playlists else _.sortBy playlists, (pl) -> pl.getId()
+    if playlists?
+      @_playlists = if sorted then playlists else _.sortBy playlists, (pl) -> pl.getId()
+    else
+      @_playlists = [
+        new Playlist [], 'Custom playlist', 0, PLCollection.CUSTOM_ID
+        new Playlist [], 'Favourite', 0, PLCollection.FAVORITE_ID
+      ]
     #its important to have ids in the same order that playlists
     @_plIds = ids or _.map @_playlists, (pl) -> pl.getId()
+
 
   #able to use it as update to
   addPlaylist: (playlist) ->
@@ -28,6 +38,19 @@ class PLCollection
     list[index] = playlist
 
     return new PLCollection list, true, @_plIds
+
+  #============GETERS===========
+  getPlaylistById: (id) ->
+    index = _.indexOf @_plIds, id, true
+    throw new Error "there are no playlist with id=#{id}" if index < 0
+    return @_playlists[index]
+
+  getCustomPlaylist: () ->
+    return @_playlists[@CUSTOM_ID]
+
+  getFavoritePlaylist: () ->
+    return @_playlists[@FAVORITE_ID]
+
 
 
 module.exports = PLCollection

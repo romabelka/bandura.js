@@ -2,7 +2,7 @@ Utils = require('../utils/utils')
 
 class Playlist
   #Public
-  constructor: (@_tracks = [], @_name = 'Custom playlist', @_activeTrackIndex = 0, @_id = Utils.randomId()) ->
+  constructor: (@_tracks = [], @_name = 'User playlist', @_activeTrackIndex = 0, @_id = Utils.randomId()) ->
 
   getName: -> @_name
   getTracks: -> @_tracks

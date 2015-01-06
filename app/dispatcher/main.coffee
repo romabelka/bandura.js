@@ -68,11 +68,13 @@ activePlaylist.combine(controls, (a,b) ->
       controls.push('play')
       Utils.extendImmutable previousTrack, {status: 'switched to previous track'}
 
+
 ).log('control')
 
 activePlaylist.onValue((pl) -> collections.push({action: 'update', playlist: pl}))
 
 playlistsCollection = collections.scan(new PLCollection(), (collection, ev) ->
+  console.log '----', 'plCol', arguments
   return ev.collection if ev.action is 'setNewCollection'
   return collection[ev.action](ev.playlist)
 ).log('current playlists collection')

@@ -74,6 +74,10 @@ class Bandura
     controls.push('stop')
     return @
 
+  play: () ->
+    controls.push('play')
+    return @
+
   #------------Playlist----------
   destroyActivePlaylist: () ->
     controls.push('stop')
@@ -94,6 +98,10 @@ class Bandura
     return @
 
   #-----------PlaylistCollections---------
+  setCustomPlaylist: (tracks, currentTrack = 0) ->
+    #todo test me
+    activePlaylist.push(new Playlist tracks, 'Custom playlist', currentTrack, PLCollection.CUSTOM_ID)
+
   setActivePlaylist: (pl) ->
     controls.push('stop')
     activePlaylist.push(pl)
