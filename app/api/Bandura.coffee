@@ -42,6 +42,8 @@ class Bandura
         whileplaying: -> progress.push(@)
         whileloading: -> progress.push(@)
 
+    store.bandura = @
+
 
   #todo validate
   setVolume: (vol) ->

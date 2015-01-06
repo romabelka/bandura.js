@@ -41,16 +41,16 @@ playerActions = activePlaylist.combine(controls, (a,b) ->
   switch obj.action
     when 'stop'
       soundManager.stopAll()
-      Utils.extendImmutable obj.playlist, {playing: 'Stoped'}
+      Utils.extendImmutable obj.playlist, {playingStatus: 'Stoped'}
     when 'play'
       soundManager.pauseAll()
       soundManager.createSound(obj.playlist.getActiveTrack())
       soundManager.play(obj.playlist.getActiveTrack().id)
-      Utils.extendImmutable obj.playlist, {playing: 'isPlaying'}
+      Utils.extendImmutable obj.playlist, {playingStatus: 'isPlaying'}
 
     when 'pause'
       soundManager.pauseAll()
-      Utils.extendImmutable obj.playlist, {playing: 'Paused'}
+      Utils.extendImmutable obj.playlist, {playingStatus: 'Paused'}
 
     when 'nextTrack'
       nextTrack = obj.playlist.nextTrack()
@@ -88,4 +88,4 @@ playerSettings.onValue((settings) ->
 
 playlistsCollection.onValue((PLC) -> store.update 'playlists', PLC)
 
-playerActions.onValue((obj) -> store.update 'playing', obj.playing)
+playerActions.onValue((obj) -> store.update('playingStatus', obj.playingStatus) if obj.playingStatus?)
