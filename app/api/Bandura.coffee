@@ -4,7 +4,6 @@ PlayerSettings = require('./PlayerSettings')
 Track = require('./Track')
 Playlist = require('./Playlist')
 PLCollection = require('./PLCollection')
-store = require('../dispatcher/store')
 
 class Bandura
   #private
@@ -42,7 +41,6 @@ class Bandura
         whileplaying: -> progress.push(@)
         whileloading: -> progress.push(@)
 
-    store.bandura = @
 
 
   #todo validate
@@ -127,11 +125,6 @@ class Bandura
     collections.push({action: 'addPlaylist', playlist: pl})
 
     return @
-
-###
-  drawUI: ->
-    store.UIComponents.progressbar = React.render(`<UIprogressbar progress = {store.progress} loaded = {store.loaded}/>`, document.getElementById('progressbar'))
-###
 
 
 module.exports = Bandura

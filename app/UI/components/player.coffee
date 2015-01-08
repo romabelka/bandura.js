@@ -1,17 +1,19 @@
+{controls} = require('../../dispatcher/api')
+
 module.exports = React.createClass
   displayName: 'Player'
   prevTrack: ->
-    this.props.bandura.previousTrack()
+    controls.push('previousTrack')
   nextTrack: ->
-    this.props.bandura.nextTrack()
+    controls.push('nextTrack')
   playAction: ->
     switch this.props.playingStatus
       when 'isPlaying'
-        this.props.bandura.pause()
+        controls.push 'pause'
       when 'Paused'
-        this.props.bandura.play()
+        controls.push 'play'
       when 'Stoped'
-        this.props.bandura.play()
+        controls.push 'play'
 
 
   render: ->
