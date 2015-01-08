@@ -1,9 +1,44 @@
+width=200
+{controls} = require('../../dispatcher/api')
+
 module.exports = React.createClass
   displayName: 'Progressbar'
-  render: ->
+  getInitialState: ->
+    {
+    position:
+      top  : 0
+      left : 0
+    }
+
+  handleDrag: (e, ui) ->
+    controls.push
+      type: 'setPosition'
+      percent: ui.position.left / width
+
+    @setState({
+      position: ui.position
+    });
+
+  setPosition: (ev) ->
+    controls.push
+      type: 'setPosition'
+      percent: (ev.clientX - ev.currentTarget.getBoundingClientRect().left) / width
+
+  render: () ->
     return `(
-    <div>
-    <p>progress: {this.props.progress} %</p>
-    <p>loaded: {this.props.loaded} %</p>
+    <div className="b-progressbar" style={{width:width}}>
+      <div className="b-progressbar__container" onClick = {this.setPosition}>
+      <div className="b-progressbar__loaded" style={{width: this.props.loaded ? this.props.loaded * width : 0}}></div>
+        <ReactDraggable
+        axis="x"
+        bound="all box"
+        onDrag={this.handleDrag}
+        start={{y:0, x:this.props.progress ? this.props.progress * width : 0}}>
+
+          <div className="b-progressbar__drag"></div>
+        </ReactDraggable>
+      </div>
     </div>
     );`
+
+

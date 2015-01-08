@@ -13,3 +13,20 @@
   width 10px
   height 10px
   background-color red
+
+.b-progressbar__container
+  background-color #000000
+  height 10px
+
+.b-progressbar__drag
+  width 10px
+  height 10px
+  background-color green
+
+.b-progressbar
+  position relative
+
+.b-progressbar__loaded
+  background-color #808080
+  height 10px
+  float left

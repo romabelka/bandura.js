@@ -69,10 +69,8 @@ playerActions = activePlaylist.combine(controls, (a,b) ->
         Utils.extendImmutable previousTrack, {result: 'switched to previous track'}
 
   else
-    console.log '----', 123
     switch obj.action.type
       when 'setPosition'
-        console.log '----', 234
         track = soundManager.getSoundById(obj.playlist.getActiveTrack().id)
         position = track.duration * obj.action.percent
         track.setPosition(position)
