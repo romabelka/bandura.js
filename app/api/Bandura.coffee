@@ -6,8 +6,8 @@ Playlist = require('./Playlist')
 PLCollection = require('./PLCollection')
 
 class Bandura
-  #private
-  valideVolume = (vol) ->
+  #static
+  @valideVolume = (vol) ->
     throw new Error 'must be a number' unless _.isNumber vol
 
     if vol < 0 then return 0
@@ -45,7 +45,7 @@ class Bandura
 
   #todo validate
   setVolume: (vol) ->
-    @volume = valideVolume(vol)
+    @volume = Bandura.valideVolume(vol)
     settingsChanges.push({volume: @volume})
     return @
   mute: () ->

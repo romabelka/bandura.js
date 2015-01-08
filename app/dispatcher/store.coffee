@@ -13,14 +13,18 @@ class Store
   update: (field, value) ->
     throw new Error 'invalid field for Store' unless field in validFields
     @[field] = value
-
-    if field is 'progressbar'
-      @UIComponents.progressbar.setProps(
-        progress: value.progress
-        loaded: value.loaded
-      )
-    else
-      @UIComponents.player.setProps(@)
-      console.log '----', @
+    console.log '----', field
+    switch field
+      when 'progressbar'
+        @UIComponents.progressbar.setProps(
+          progress: value.progress
+          loaded: value.loaded
+        )
+      when 'volume'
+        @UIComponents.volume.setProps
+          volume: @volume
+      else
+        @UIComponents.player.setProps(@)
+        console.log '----', @
 
 module.exports = new Store()

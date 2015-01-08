@@ -1,30 +1,36 @@
+Bandura = require('../../api/Bandura')
+{settingsChanges} = require('../../dispatcher/api')
+
 module.exports = React.createClass
-  handleStart: (event, ui) ->
-    console.log('Event: ', event)
-    console.log('Position: ', ui.position)
+  getInitialState: ->
+    {
+      position:
+        top  : 0
+        left : 0
+    }
 
-
-  handleDrag: (event, ui) ->
-    console.log('Event: ', event);
-    console.log('Position: ', ui.position);
-
-  handleStop: (event, ui) ->
-    console.log('Event: ', event)
-    console.log('Position: ', ui.position)
+  handleDrag: (e, ui) ->
+    settingsChanges.push {volume: Bandura.valideVolume(ui.position.left)}
+    @setState({
+      position: ui.position
+    });
 
   render: () ->
-    return `(<ReactDraggable
+    return `(
+    <div className="b-volume">
+    Volume:
+    <div className="b-volume__container">
+    <ReactDraggable
     axis="x"
     handle=".handle"
-    grid={[25, 25]}
-    start={{x: 25, y: 25}}
-    zIndex={100}
-    onStart={this.handleStart}
+    bound="all box"
+    start={{y:0, x:this.props.volume}}
     onDrag={this.handleDrag}
-    onStop={this.handleStop}>
-    <div>
-    <div className="handle">Drag from here</div>
-                        <div>Lorem ipsum...</div>
+    >
+      <div>
+      <div className="b-volume__drag handle"></div>
+      </div>
+    </ReactDraggable>
     </div>
-                </ReactDraggable>
+    </div>
     );`
