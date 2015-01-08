@@ -38,35 +38,44 @@ playerActions = activePlaylist.combine(controls, (a,b) ->
     action: b
   }
 ).map((obj) ->
-  switch obj.action
-    when 'stop'
-      soundManager.stopAll()
-      Utils.extendImmutable obj.playlist, {playingStatus: 'Stoped'}
-    when 'play'
-      soundManager.pauseAll()
-      soundManager.createSound(obj.playlist.getActiveTrack())
-      soundManager.play(obj.playlist.getActiveTrack().id)
-      Utils.extendImmutable obj.playlist, {playingStatus: 'isPlaying'}
+  if typeof obj.action is 'string'
+    switch obj.action
+      when 'stop'
+        soundManager.stopAll()
+        Utils.extendImmutable obj.playlist, {playingStatus: 'Stoped'}
+      when 'play'
+        soundManager.pauseAll()
+        soundManager.createSound(obj.playlist.getActiveTrack())
+        soundManager.play(obj.playlist.getActiveTrack().id)
+        Utils.extendImmutable obj.playlist, {playingStatus: 'isPlaying'}
 
-    when 'pause'
-      soundManager.pauseAll()
-      Utils.extendImmutable obj.playlist, {playingStatus: 'Paused'}
+      when 'pause'
+        soundManager.pauseAll()
+        Utils.extendImmutable obj.playlist, {playingStatus: 'Paused'}
 
-    when 'nextTrack'
-      nextTrack = obj.playlist.nextTrack()
-      controls.push('stop')
-      activePlaylist.push(nextTrack)
-      controls.push('play')
-      Utils.extendImmutable nextTrack, {result: 'switched to next track'}
+      when 'nextTrack'
+        nextTrack = obj.playlist.nextTrack()
+        controls.push('stop')
+        activePlaylist.push(nextTrack)
+        controls.push('play')
+        Utils.extendImmutable nextTrack, {result: 'switched to next track'}
 
 
-    when 'previousTrack'
-      previousTrack = obj.playlist.previousTrack()
-      controls.push('stop')
-      activePlaylist.push(previousTrack)
-      controls.push('play')
-      Utils.extendImmutable previousTrack, {result: 'switched to previous track'}
+      when 'previousTrack'
+        previousTrack = obj.playlist.previousTrack()
+        controls.push('stop')
+        activePlaylist.push(previousTrack)
+        controls.push('play')
+        Utils.extendImmutable previousTrack, {result: 'switched to previous track'}
 
+  else
+    console.log '----', 123
+    switch obj.action.type
+      when 'setPosition'
+        console.log '----', 234
+        track = soundManager.getSoundById(obj.playlist.getActiveTrack().id)
+        position = track.duration * obj.action.percent
+        track.setPosition(position)
 
 )
 

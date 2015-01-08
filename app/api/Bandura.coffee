@@ -80,6 +80,13 @@ class Bandura
     controls.push('play')
     return @
 
+  setPosition: (percent) ->
+    controls.push
+      type: 'setPosition'
+      percent: percent
+
+    return @
+
   #------------Playlist----------
   destroyActivePlaylist: () ->
     controls.push('stop')

@@ -13,7 +13,6 @@ class Store
   update: (field, value) ->
     throw new Error 'invalid field for Store' unless field in validFields
     @[field] = value
-    console.log '----', field
     switch field
       when 'progressbar'
         @UIComponents.progressbar.setProps(
