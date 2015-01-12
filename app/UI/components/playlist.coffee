@@ -1,14 +1,25 @@
+Track = require './track'
+
 module.exports = React.createClass
   displayName: 'Playlist'
 
   render: ->
-    tracks = this.props.playlist.getTracks()
+    unless @props.playlist?
+      return `(<div></div>)`
+
+    tracks = _.map(this.props.playlist.getTracks(), (track) ->
+      return `(
+        <li>
+        <Track track={track}/>
+        </li>
+      )`
+    )
 
     return `(
-      <div>
-      <ul>
-      <li>track1</li>
-      <li>track2</li>
-      </ul>
-      </div>
-    );`
+        <div>
+        {this.props.playlist.getName()}
+        <ul>
+        {tracks}
+        </ul>
+        </div>
+      )`
