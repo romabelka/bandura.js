@@ -1,4 +1,5 @@
 {controls} = require('../../dispatcher/api')
+Playlists = require './playlists'
 
 module.exports = React.createClass
   displayName: 'Player'
@@ -22,5 +23,6 @@ module.exports = React.createClass
       <div onClick={this.prevTrack}>Previous Track</div>
       <div onClick={this.playAction}>{this.props.playingStatus}</div>
       <div onClick={this.nextTrack}>Next Track</div>
+      <Playlists PLCollection={this.props.PLCollection}/>
       </div>
     );`

@@ -103,6 +103,8 @@ playerSettings.onValue((settings) ->
 
 playlistsCollection.onValue((PLC) ->
   console.log '----', 'change in PLC'
+  UIComponents.player.setProps
+    PLCollection: PLC
 )
 
 playerActions.onValue((obj) ->
