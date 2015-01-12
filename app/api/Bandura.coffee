@@ -6,8 +6,8 @@ Playlist = require('./Playlist')
 PLCollection = require('./PLCollection')
 
 class Bandura
-  #private
-  valideVolume = (vol) ->
+  #static
+  @valideVolume = (vol) ->
     throw new Error 'must be a number' unless _.isNumber vol
 
     if vol < 0 then return 0
@@ -41,9 +41,11 @@ class Bandura
         whileplaying: -> progress.push(@)
         whileloading: -> progress.push(@)
 
+
+
   #todo validate
   setVolume: (vol) ->
-    @volume = valideVolume(vol)
+    @volume = Bandura.valideVolume(vol)
     settingsChanges.push({volume: @volume})
     return @
   mute: () ->
@@ -76,6 +78,13 @@ class Bandura
 
   play: () ->
     controls.push('play')
+    return @
+
+  setPosition: (percent) ->
+    controls.push
+      type: 'setPosition'
+      percent: percent
+
     return @
 
   #------------Playlist----------
@@ -123,5 +132,6 @@ class Bandura
     collections.push({action: 'addPlaylist', playlist: pl})
 
     return @
+
 
 module.exports = Bandura

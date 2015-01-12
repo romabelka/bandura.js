@@ -45,6 +45,9 @@ class PLCollection
     throw new Error "there are no playlist with id=#{id}" if index < 0
     return @_playlists[index]
 
+  getAllPlaylists: () ->
+    return @_playlists
+
   getCustomPlaylist: () ->
     return @_playlists[@CUSTOM_ID]
 
