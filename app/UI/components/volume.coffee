@@ -10,16 +10,17 @@ module.exports = React.createClass
     }
 
   handleDrag: (e, ui) ->
-    settingsChanges.push {volume: Bandura.valideVolume(ui.position.left)}
-    @setState({
-      position: ui.position
-    });
+    settingsChanges.push {volume: ui.position.left}
+
+  setVolume: (ev) ->
+    settingsChanges.push
+      volume: (ev.clientX - ev.currentTarget.getBoundingClientRect().left)
 
   render: () ->
     return `(
     <div className="b-volume">
     Volume:
-    <div className="b-volume__container">
+    <div className="b-volume__container" onClick={this.setVolume}>
     <ReactDraggable
     axis="x"
     handle=".handle"

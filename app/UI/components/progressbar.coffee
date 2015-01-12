@@ -15,10 +15,6 @@ module.exports = React.createClass
       type: 'setPosition'
       percent: ui.position.left / width
 
-    @setState({
-      position: ui.position
-    });
-
   setPosition: (ev) ->
     controls.push
       type: 'setPosition'

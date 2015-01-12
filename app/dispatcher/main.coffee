@@ -1,5 +1,6 @@
 {controls,progress, activePlaylist, collections, settingsChanges} = require('./api')
 PLCollection = require('../api/PLCollection')
+Bandura = require('../api/Bandura')
 Utils = require('../utils/utils')
 UIComponents = require('../UI/UIComponents')
 
@@ -13,6 +14,7 @@ progressbar = progress.map((smTrack) ->
 playerSettings = settingsChanges.scan({},(settings, changes) ->
   if changes.mute? and changes.mute then soundManager.mute() else soundManager.unmute()
   if changes.volume?
+    changes.volume = Bandura.valideVolume(changes.volume)
     soundManager.setup({defaultOptions: {volume: changes.volume}})
 
   return Utils.extendImmutable(settings, changes)
@@ -94,6 +96,7 @@ progressbar.onValue((progressbar) ->
 )
 
 playerSettings.onValue((settings) ->
+  console.log '---- vol', settings.volume
   UIComponents.volume.setProps
     volume: settings.volume
 )
