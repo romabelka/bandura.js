@@ -1,7 +1,7 @@
 {controls,progress, activePlaylist, collections, settingsChanges} = require('./api')
 PLCollection = require('../api/PLCollection')
 Utils = require('../utils/utils')
-store = require('./store')
+UIComponents = require('../UI/UIComponents')
 
 #========frequently changed values============
 progressbar = progress.map((smTrack) ->
@@ -86,13 +86,22 @@ playlistsCollection = collections.scan(new PLCollection(), (collection, ev) ->
 
 
 #====================Store Updates==============
-progressbar.onValue((progressbar) -> store.update('progressbar', progressbar))
-
-playerSettings.onValue((settings) ->
-  store.update 'mute', settings.mute
-  store.update 'volume', settings.volume
+progressbar.onValue((progressbar) ->
+  UIComponents.progressbar.setProps(
+    progress: progressbar.progress
+    loaded: progressbar.loaded
+  )
 )
 
-playlistsCollection.onValue((PLC) -> store.update 'playlists', PLC)
+playerSettings.onValue((settings) ->
+  UIComponents.volume.setProps
+    volume: settings.volume
+)
 
-playerActions.onValue((obj) -> store.update('playingStatus', obj.playingStatus) if obj.playingStatus?)
+playlistsCollection.onValue((PLC) ->
+  console.log '----', 'change in PLC'
+)
+
+playerActions.onValue((obj) ->
+  UIComponents.player.setProps({playingStatus: obj.playingStatus}) if obj.playingStatus?
+)
