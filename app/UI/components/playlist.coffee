@@ -6,11 +6,11 @@ module.exports = React.createClass
   render: ->
     unless @props.playlist?
       return `(<div></div>)`
-
-    tracks = _.map(this.props.playlist.getTracks(), (track) ->
+    self = @
+    tracks = _.map(this.props.playlist.getTracks(), (track, index) ->
       return `(
-        <li>
-        <Track track={track}/>
+        <li key={index}>
+        <Track track={track} isPlaying = {self.props.isPlaying && track == self.props.playlist.getActiveTrack()} key={index}/>
         </li>
       )`
     )

@@ -79,7 +79,7 @@ playerActions = activePlaylist.combine(controls, (a,b) ->
 
 )
 
-activePlaylist.onValue((pl) -> collections.push({action: 'update', playlist: pl}))
+activePlaylist.onValue((pl) -> collections.push({action: 'updateActive', playlist: pl}))
 
 playlistsCollection = collections.scan(new PLCollection(), (collection, ev) ->
   return ev.collection if ev.action is 'setNewCollection'

@@ -8,21 +8,26 @@ module.exports = React.createClass
   showPlaylist: (id) ->
     return =>
       @setState
-        visiblePlaylist: @props.PLCollection.getPlaylistById(id)
+        visiblePlaylistId: id
 
   render: ->
     self = @
-    playlists = _.map(@props.PLCollection?.getAllPlaylists() or [], (pl) ->
+    playlists = _.map(@props.PLCollection?.getAllPlaylists() or [], (pl) =>
+      className = 'b-playlists__active' if @props.PLCollection.getActivePlaylist()?.getId() is pl.getId()
       return `(
-        <li onClick = {self.showPlaylist(pl.getId())} key={pl.getId()}>{pl.getName()}</li>
+        <li onClick = {self.showPlaylist(pl.getId())} className={className} key={pl.getId()}>{pl.getName()}</li>
       )`
     )
+    visiblePlaylist =
+      if this.props.PLCollection? and this.state.visiblePlaylistId?
+        this.props.PLCollection?.getPlaylistById(this.state.visiblePlaylistId)
+      else null
 
     return `(
-      <div>
+      <div className = "b-playlists">
       <ul>
       {playlists}
       </ul>
-      <Playlist playlist={this.state.visiblePlaylist}/>
+      <Playlist playlist={visiblePlaylist} isPlaying={this.props.isPlaying == 'isPlaying'}/>
       </div>
     );`

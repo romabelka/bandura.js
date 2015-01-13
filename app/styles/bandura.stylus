@@ -36,5 +36,11 @@
   width 200px
   height 200px
 
+.b-track__playing
+  background-color red
+
 .b-track__artist
   font-weight bold
+
+.b-playlists__active
+  background-color #008000
