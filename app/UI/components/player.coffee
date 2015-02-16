@@ -18,11 +18,22 @@ module.exports = React.createClass
 
 
   render: ->
+    playClass = if @props.playingStatus is 'isPlaying' then 'b-icon__pause' else 'b-icon__play'
     return `(
-      <div>
-      <div onClick={this.prevTrack}>Previous Track</div>
-      <div onClick={this.playAction}>{this.props.playingStatus}</div>
-      <div onClick={this.nextTrack}>Next Track</div>
-      <Playlists PLCollection={this.props.PLCollection} isPlaying={this.props.playingStatus}/>
+      <div className="b-player--wrapper">
+      <div className="b-player">
+        <div className="b-controls">
+        <div className="b-controls--button" onClick={this.prevTrack}>
+          <i className="b-icon b-icon__fast-backward-1"></i>
+        </div>
+        <div className="b-controls--button" onClick={this.playAction}>
+          <i className={'b-icon ' + playClass}></i>
+        </div>
+        <div className="b-controls--button" onClick={this.nextTrack}>
+                <i className="b-icon b-icon__fast-forward-1"></i>
+        </div>
+        </div>
+        <Playlists PLCollection={this.props.PLCollection} isPlaying={this.props.playingStatus}/>
+      </div>
       </div>
     );`
