@@ -36,7 +36,12 @@ module.exports = React.createClass
         </div>
         </div>
 
+        <div className="b-progressbar--wrapper">
+        <span className="b-progressbar--track-info">asd</span>
+        <span className="b-progressbar--track-time">asd</span>
+
         <Progressbar progress={this.props.progress} loaded = {this.props.loaded} />
+        </div>
         <Volume volume={this.props.volume} />
         <Playlists PLCollection={this.props.PLCollection} isPlaying={this.props.playingStatus}/>
       </div>

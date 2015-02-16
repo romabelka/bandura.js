@@ -1,19 +1,36 @@
-.b-progressbar__container {
-background-color: #000000;
-height: 10px;
-}
-.b-progressbar__drag {
-width: 10px;
-height: 10px;
-background-color: green;
-}
-.b-progressbar {
-  display: inline-block;
-  position: relative;
-}
+@loaderColor: #3b3b3b;
+@progressColor: green;
+@progressbarColor: black;
+@textColor: white;
 
-.b-progressbar__loaded {
-  background-color: #808080;
-  height: 10px;
-  float: left;
+.b-progressbar {
+  position: relative;
+
+  &--container {
+    background-color: @progressbarColor;
+    height: 6px;
+  }
+  &--drag {
+    width: 10px;
+    height: 6px;
+    background-color: green;
+  }
+
+  &--loaded {
+    background-color: @loaderColor;
+    height: 6px;
+    float: left;
+  }
+
+  &--wrapper {
+    display: inline-block;
+    color: @textColor;
+  }
+
+  &--track-info {
+    float: left;
+  }
+  &--track-time {
+    float: right;
+  }
 }

@@ -1,4 +1,4 @@
-width=200
+width=500
 {controls} = require('../../dispatcher/api')
 
 module.exports = React.createClass
@@ -23,15 +23,15 @@ module.exports = React.createClass
   render: () ->
     return `(
     <div className="b-progressbar" style={{width:width}}>
-      <div className="b-progressbar__container" onClick = {this.setPosition}>
-      <div className="b-progressbar__loaded" style={{width: this.props.loaded ? this.props.loaded * width : 0}}></div>
+      <div className="b-progressbar--container" onClick = {this.setPosition}>
+      <div className="b-progressbar--loaded" style={{width: this.props.loaded ? this.props.loaded * width : 0}}></div>
         <ReactDraggable
         axis="x"
         bound="all box"
         onDrag={this.handleDrag}
         start={{y:0, x:this.props.progress ? this.props.progress * width : 0}}>
 
-          <div className="b-progressbar__drag"></div>
+          <div className="b-progressbar--drag"></div>
         </ReactDraggable>
       </div>
     </div>
