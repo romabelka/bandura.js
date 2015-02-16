@@ -21,6 +21,13 @@ module.exports = React.createClass
 
   render: ->
     playClass = if @props.playingStatus is 'isPlaying' then 'b-icon__pause' else 'b-icon__play'
+    if currentTrack = @props.PLCollection?.getActivePlaylist()?.getActiveTrack()
+      trackInfo = "#{currentTrack.name} : #{currentTrack.artist}"
+      trackTime = '00'
+    else
+      trackTime = ''
+      trackInfo = 'Nothing is playing right now'
+
     return `(
       <div className="b-player--wrapper">
       <div className="b-player">
@@ -37,8 +44,8 @@ module.exports = React.createClass
         </div>
 
         <div className="b-progressbar--wrapper">
-        <span className="b-progressbar--track-info">asd</span>
-        <span className="b-progressbar--track-time">asd</span>
+        <span className="b-progressbar--track-info">{trackInfo}</span>
+        <span className="b-progressbar--track-time">{trackTime}</span>
 
         <Progressbar progress={this.props.progress} loaded = {this.props.loaded} />
         </div>

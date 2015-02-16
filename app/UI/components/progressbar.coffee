@@ -29,7 +29,7 @@ module.exports = React.createClass
         axis="x"
         bound="all box"
         onDrag={this.handleDrag}
-        start={{y:0, x:this.props.progress ? this.props.progress * width : 0}}>
+        start={{y:-6, x:this.props.progress ? this.props.progress * width : 0}}>
 
           <div className="b-progressbar--drag"></div>
         </ReactDraggable>
