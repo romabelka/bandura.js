@@ -35,6 +35,9 @@ module.exports = React.createClass
                 <i className="b-icon b-icon__fast-forward-1"></i>
         </div>
         </div>
+
+        <Progressbar progress={this.props.progress} loaded = {this.props.loaded} />
+        <Volume volume={this.props.volume} />
         <Playlists PLCollection={this.props.PLCollection} isPlaying={this.props.playingStatus}/>
       </div>
       </div>

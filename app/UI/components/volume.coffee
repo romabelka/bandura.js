@@ -19,7 +19,6 @@ module.exports = React.createClass
   render: () ->
     return `(
     <div className="b-volume">
-    Volume:
     <div className="b-volume--container" onClick={this.setVolume}>
     <ReactDraggable
     axis="x"

@@ -2,7 +2,7 @@
 PLCollection = require('../api/PLCollection')
 Bandura = require('../api/Bandura')
 Utils = require('../utils/utils')
-UIComponents = require('../UI/UIComponents')
+UI = require('../UI/UI')
 
 #========frequently changed values============
 progressbar = progress.map((smTrack) ->
@@ -89,24 +89,23 @@ playlistsCollection = collections.scan(new PLCollection(), (collection, ev) ->
 
 #====================Store Updates==============
 progressbar.onValue((progressbar) ->
-  UIComponents.progressbar.setProps(
+  UI.setProps
     progress: progressbar.progress
     loaded: progressbar.loaded
-  )
 )
 
 playerSettings.onValue((settings) ->
   console.log '---- vol', settings.volume
-  UIComponents.volume.setProps
+  UI.setProps
     volume: settings.volume
 )
 
 playlistsCollection.onValue((PLC) ->
   console.log '----', 'change in PLC'
-  UIComponents.player.setProps
+  UI.setProps
     PLCollection: PLC
 )
 
 playerActions.onValue((obj) ->
-  UIComponents.player.setProps({playingStatus: obj.playingStatus}) if obj.playingStatus?
+  UI.setProps({playingStatus: obj.playingStatus}) if obj.playingStatus?
 )
