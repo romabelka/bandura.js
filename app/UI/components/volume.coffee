@@ -10,11 +10,11 @@ module.exports = React.createClass
     }
 
   handleDrag: (e, ui) ->
-    settingsChanges.push {volume: ui.position.left}
+    settingsChanges.push {volume: ui.position.left * 2}
 
   setVolume: (ev) ->
     settingsChanges.push
-      volume: (ev.clientX - ev.currentTarget.getBoundingClientRect().left)
+      volume: (ev.clientX - ev.currentTarget.getBoundingClientRect().left) * 2
 
   render: () ->
     return `(
@@ -24,7 +24,7 @@ module.exports = React.createClass
     axis="x"
     handle=".handle"
     bound="all box"
-    start={{y:-26, x:this.props.volume}}
+    start={{y:-26, x:this.props.volume / 2}}
     onDrag={this.handleDrag}
     >
       <div className="b-volume--draggable">
