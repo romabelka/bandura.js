@@ -1,5 +1,7 @@
 {controls} = require('../../dispatcher/api')
 Playlists = require './playlists'
+Volume = require './volume'
+Progressbar = require './progressbar'
 
 module.exports = React.createClass
   displayName: 'Player'

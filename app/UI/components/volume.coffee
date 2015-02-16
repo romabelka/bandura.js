@@ -5,7 +5,7 @@ module.exports = React.createClass
   getInitialState: ->
     {
       position:
-        top  : 0
+        top  : -26
         left : 0
     }
 
@@ -20,16 +20,16 @@ module.exports = React.createClass
     return `(
     <div className="b-volume">
     Volume:
-    <div className="b-volume__container" onClick={this.setVolume}>
+    <div className="b-volume--container" onClick={this.setVolume}>
     <ReactDraggable
     axis="x"
     handle=".handle"
     bound="all box"
-    start={{y:0, x:this.props.volume}}
+    start={{y:-26, x:this.props.volume}}
     onDrag={this.handleDrag}
     >
-      <div>
-      <div className="b-volume__drag handle"></div>
+      <div className="b-volume--draggable">
+      <i className="b-icon b-icon__record handle"></i>
       </div>
     </ReactDraggable>
     </div>
