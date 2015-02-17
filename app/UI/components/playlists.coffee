@@ -25,7 +25,7 @@ module.exports = React.createClass
     return `<div style={{display:'none'}}></div>` unless @props.visible
     return `(
       <div className = "b-playlists">
-      <ul>
+      <ul className="b-playlists--plank">
       {playlists}
       </ul>
       <Playlist playlist={visiblePlaylist} isPlaying={this.props.isPlaying == 'isPlaying'}/>

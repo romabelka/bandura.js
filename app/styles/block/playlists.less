@@ -1,14 +1,32 @@
 @playlistColor: black;
 @plankColor: #171717;
+@plankTextColor: white;
+@plankLiColor: grey;
+
 .b-playlists {
   height: 200px;
   position: relative;
-  bottom: 275px;
+  bottom: 250px;
   width: 100%;
   background: @playlistColor;
   &--plank {
+    margin: 0;
+    position: absolute;
+    bottom: 0;
     height: 25px;
     width: 100%;
     background-color: @plankColor;
+    color: @plankTextColor;
+
+    & li {
+      background-color: @plankLiColor;
+      width: 150px;
+      height: 25px;
+      line-height: 25px;
+      margin: 0 5px;
+      text-align: center;
+      display: inline-block;
+      cursor: pointer;
+    }
   }
 }
