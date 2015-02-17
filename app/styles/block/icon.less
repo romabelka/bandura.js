@@ -1,3 +1,6 @@
+@muteColor: #c8c8c8;
+@muteColorHover: white;
+
 @charset "UTF-8";
 
 @font-face {
@@ -117,5 +120,15 @@
   &__volume-off:before { content: '\e801'; } /* '' */
   &__volume-up:before { content: '\e81a'; } /* '' */
   &__clock:before { content: '\e818'; } /* '' */
+
+  &__mute {
+    margin-right: 10px;
+    color: @muteColor;
+    font-size: 10px;
+    cursor: pointer;
+    &:hover {
+      color: @muteColorHover
+    }
+  }
 
 }

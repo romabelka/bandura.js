@@ -7,7 +7,8 @@ UI = require('../UI/UI')
 #========frequently changed values============
 progressbar = progress.map((smTrack) ->
   {
-  progress: smTrack.position / smTrack.duration
+  position: smTrack.position
+  duration: smTrack.duration
   loaded: smTrack.bytesLoaded / smTrack.bytesTotal
   }
 )
@@ -90,14 +91,13 @@ playlistsCollection = collections.scan(new PLCollection(), (collection, ev) ->
 #====================Store Updates==============
 progressbar.onValue((progressbar) ->
   UI.setProps
-    progress: progressbar.progress
+    position: progressbar.position
+    duration: progressbar.duration
     loaded: progressbar.loaded
 )
 
 playerSettings.onValue((settings) ->
-  console.log '---- vol', settings.volume
-  UI.setProps
-    volume: settings.volume
+  UI.setProps settings
 )
 
 playlistsCollection.onValue((PLC) ->

@@ -16,9 +16,14 @@ module.exports = React.createClass
     settingsChanges.push
       volume: (ev.clientX - ev.currentTarget.getBoundingClientRect().left) * 2
 
+  mute: ->
+    settingsChanges.push {mute: not @props.mute}
+
   render: () ->
+    muteIcon = if @props.mute then 'b-icon__volume-off-1' else 'b-icon__volume'
     return `(
     <div className="b-volume">
+    <i className= {'b-icon b-icon__mute ' + muteIcon} onClick={this.mute}></i>
     <div className="b-volume--container" onClick={this.setVolume}>
     <ReactDraggable
     axis="x"

@@ -21,11 +21,17 @@ module.exports = React.createClass
 
   render: ->
     playClass = if @props.playingStatus is 'isPlaying' then 'b-icon__pause' else 'b-icon__play'
-    if currentTrack = @props.PLCollection?.getActivePlaylist()?.getActiveTrack()
+    currentTrack = @props.PLCollection?.getActivePlaylist()?.getActiveTrack()
+    if @props.position?
       trackInfo = "#{currentTrack.name} : #{currentTrack.artist}"
-      trackTime = '00'
+      trackTime =
+        min : Math.floor(@props.duration/60000)
+        sec : Math.floor((@props.duration - Math.floor(@props.duration/60000)*60000)/1000)
+        posMin : Math.floor(@props.position/60000)
+        posSec : Math.floor((@props.position - Math.floor(@props.position/60000)*60000)/1000)
+      showTime = "#{trackTime.posMin}:#{trackTime.posSec} / #{trackTime.min}:#{trackTime.sec}"
     else
-      trackTime = ''
+      showTime = ''
       trackInfo = 'Nothing is playing right now'
 
     return `(
@@ -45,11 +51,11 @@ module.exports = React.createClass
 
         <div className="b-progressbar--wrapper">
         <span className="b-progressbar--track-info">{trackInfo}</span>
-        <span className="b-progressbar--track-time">{trackTime}</span>
+        <span className="b-progressbar--track-time">{showTime}</span>
 
-        <Progressbar progress={this.props.progress} loaded = {this.props.loaded} />
+        <Progressbar progress={this.props.position / this.props.duration} loaded = {this.props.loaded} />
         </div>
-        <Volume volume={this.props.volume} />
+        <Volume volume={this.props.volume} mute={this.props.mute}/>
         <Playlists PLCollection={this.props.PLCollection} isPlaying={this.props.playingStatus}/>
       </div>
       </div>
