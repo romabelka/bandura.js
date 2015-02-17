@@ -28,7 +28,7 @@ module.exports = React.createClass
   render: ->
     enabledButtons = [
       className: 'b-player--show-pl'
-      callback: @showPlaylists.bind(@)
+      callback: @showPlaylists
     ]
 
     playClass = if @props.playingStatus is 'isPlaying' then 'b-icon__pause' else 'b-icon__play'

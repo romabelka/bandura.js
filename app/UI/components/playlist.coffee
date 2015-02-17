@@ -9,14 +9,14 @@ module.exports = React.createClass
     self = @
     tracks = _.map(this.props.playlist.getTracks(), (track, index) ->
       return `(
-        <li key={index}>
+        <li key={index} className="b-playlist--li">
         <Track track={track} isPlaying = {self.props.isPlaying && track == self.props.playlist.getActiveTrack()} key={index}/>
         </li>
       )`
     )
 
     return `(
-        <div>
+        <div className="b-playlist">
         {this.props.playlist.getName()}
         <ul>
         {tracks}
