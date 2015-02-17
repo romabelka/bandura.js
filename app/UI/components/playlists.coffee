@@ -22,7 +22,7 @@ module.exports = React.createClass
       if this.props.PLCollection? and this.state.visiblePlaylistId?
         this.props.PLCollection?.getPlaylistById(this.state.visiblePlaylistId)
       else null
-
+    return `<div style={{display:'none'}}></div>` unless @props.visible
     return `(
       <div className = "b-playlists">
       <ul>

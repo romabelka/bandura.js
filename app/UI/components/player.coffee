@@ -2,9 +2,12 @@
 Playlists = require './playlists'
 Volume = require './volume'
 Progressbar = require './progressbar'
+Buttons = require './buttons'
 
 module.exports = React.createClass
   displayName: 'Player'
+  getInitialState: -> return {showPlaylists: true}
+
   prevTrack: ->
     controls.push('previousTrack')
   nextTrack: ->
@@ -18,8 +21,16 @@ module.exports = React.createClass
       when 'Stoped'
         controls.push 'play'
 
+  showPlaylists: ->
+    @setState
+      showPlaylists: not @state.showPlaylists
 
   render: ->
+    enabledButtons = [
+      className: 'b-player--show-pl'
+      callback: @showPlaylists.bind(@)
+    ]
+
     playClass = if @props.playingStatus is 'isPlaying' then 'b-icon__pause' else 'b-icon__play'
     currentTrack = @props.PLCollection?.getActivePlaylist()?.getActiveTrack()
     if @props.position?
@@ -56,7 +67,8 @@ module.exports = React.createClass
         <Progressbar progress={this.props.position / this.props.duration} loaded = {this.props.loaded} />
         </div>
         <Volume volume={this.props.volume} mute={this.props.mute}/>
-        <Playlists PLCollection={this.props.PLCollection} isPlaying={this.props.playingStatus}/>
+        <Buttons enabledButtons={enabledButtons} />
       </div>
+        <Playlists PLCollection={this.props.PLCollection} isPlaying={this.props.playingStatus} visible={this.state.showPlaylists}/>
       </div>
     );`
