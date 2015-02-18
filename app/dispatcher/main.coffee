@@ -44,7 +44,7 @@ playerActions = activePlaylist.combine(controls, (a,b) ->
   if typeof obj.action is 'string'
     switch obj.action
       when 'stop'
-        soundManager.stopAll()
+        soundManager.destroySound(obj.playlist.getActiveTrack().id)
         Utils.extendImmutable obj.playlist, {playingStatus: 'Stoped'}
       when 'play'
         soundManager.pauseAll()

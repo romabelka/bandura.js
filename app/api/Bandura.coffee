@@ -62,6 +62,7 @@ class Bandura
       else if _.isEmpty obj then currentTrack
       else new Track obj
 
+    controls.push('stop')
     activePlaylist.push(new Playlist([track])) if track
     controls.push('play')
 
@@ -94,6 +95,7 @@ class Bandura
     return @
 
   playPlaylist: (pl) ->
+    controls.push('stop')
     activePlaylist.push(pl)
     controls.push('play')
     return @
