@@ -1,9 +1,7 @@
 // something old
 var gulp = require('gulp'),
   plugins = require('gulp-load-plugins')({lazy: false}),
-  del = require('del'),
-  browserify = require('gulp-browserify');
-
+  del = require('del');
 // Configuration
 var dist = './build';
 var tmp = './tmp';
@@ -26,8 +24,10 @@ gulp.task('css', function () {
 gulp.task('coffee', function () {
   return gulp.src(coffeeFiles)
     .pipe(plugins.plumber())
+    .pipe(plugins.sourcemaps.init())
     .pipe(plugins.coffee({bare: true}))
     .pipe(plugins.react())
+    .pipe(plugins.sourcemaps.write())
     .pipe(gulp.dest(tmp));
 });
 
@@ -42,7 +42,7 @@ gulp.task('lint', function () {
 gulp.task('js', ['lint', 'coffee'], function () {
   return gulp.src('./tmp/roma.js')
     .pipe(plugins.plumber())
-    .pipe(browserify({
+    .pipe(plugins.browserify({
       extensions: ['.js'],
       insertGlobals: true,
       debug: true
