@@ -1,4 +1,4 @@
-{controls,progress, activePlaylist, collections, settingsChanges} = require('../dispatcher/api')
+{controls,progress, activePlaylist, collections, settingsChanges, videos} = require('../dispatcher/api')
 #require('../dispatcher/api')
 PlayerSettings = require('./PlayerSettings')
 Track = require('./Track')
@@ -145,6 +145,16 @@ class Bandura
     ws = new WebSocket(settings.host);
     remoteActions = Bacon.fromEventTarget ws , 'message', (ev) -> settings.actions?[ev.data] or ev.data
     controls.plug(remoteActions)
+
+  #--------Youtube----------------
+  findYouTubeVideos: ->
+    protocol = window.location.protocol or 'http:'
+    url = protocol + "//gdata.youtube.com/feeds/api/videos/-/Music?q=" + 'Scorpions' + "&hd=true&v=2&alt=jsonc&safeSearch=strict"
+    videos.plug Bacon.fromPromise($.ajax
+      url: url
+      dataType: "jsonp"
+    ).map((response) -> response.data.items)
+
 
 
 module.exports = Bandura

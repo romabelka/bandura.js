@@ -1,4 +1,4 @@
-{controls,progress, activePlaylist, collections, settingsChanges} = require('./api')
+{controls,progress, activePlaylist, collections, settingsChanges, videos} = require('./api')
 PLCollection = require('../api/PLCollection')
 Bandura = require('../api/Bandura')
 Utils = require('../utils/utils')
@@ -87,4 +87,4 @@ playlistsCollection = collections.scan(new PLCollection(), (collection, ev) ->
   return collection[ev.action](ev.playlist)
 )
 
-module.exports = {progressbar, playerSettings, playlistsCollection, playerActions}
+module.exports = {progressbar, playerSettings, playlistsCollection, playerActions, videos}

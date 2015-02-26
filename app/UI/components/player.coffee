@@ -3,6 +3,7 @@ Playlists = require './playlists'
 Volume = require './volume'
 Progressbar = require './progressbar'
 Buttons = require './buttons'
+VidoScreen = require './videoScreen'
 
 module.exports = React.createClass
   displayName: 'Player'
