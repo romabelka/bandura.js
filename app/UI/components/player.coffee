@@ -71,5 +71,6 @@ module.exports = React.createClass
         <Buttons enabledButtons={enabledButtons} />
       </div>
         <Playlists PLCollection={this.props.PLCollection} isPlaying={this.props.playingStatus} visible={this.state.showPlaylists}/>
+        <VidoScreen videos = {this.props.videos} />
       </div>
     );`

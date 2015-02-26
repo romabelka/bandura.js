@@ -21,9 +21,6 @@ module.exports = ->
   playerActions.onValue (obj) ->
     UI.setProps({playingStatus: obj.playingStatus}) if obj.playingStatus?
 
-  videos.log()
-###
   videos.onValue (videos) ->
     console.log '----', videos
     UI.setProps videos: videos
-###
