@@ -2,7 +2,6 @@
 PLCollection = require('../api/PLCollection')
 Bandura = require('../api/Bandura')
 Utils = require('../utils/utils')
-console.log '----', 123, Bandura
 
 #========frequently changed values============
 progressbar = progress.map((smTrack) ->
@@ -16,6 +15,7 @@ playerSettings = settingsChanges.scan({},(settings, changes) ->
   if changes.mute? and changes.mute then soundManager.mute() else soundManager.unmute()
   if changes.volume?
     changes.volume = Bandura.valideVolume(changes.volume)
+    changes.mute = false
     soundManager.setup({defaultOptions: {volume: changes.volume}})
 
   return Utils.extendImmutable(settings, changes)
