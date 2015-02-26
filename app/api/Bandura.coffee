@@ -41,6 +41,8 @@ class Bandura
         whileplaying: -> progress.push(@)
         whileloading: -> progress.push(@)
 
+    do render
+
 
 
   #todo validate
@@ -137,3 +139,5 @@ class Bandura
 
 
 module.exports = Bandura
+render = require '../dispatcher/render'
+
