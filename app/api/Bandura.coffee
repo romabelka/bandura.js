@@ -142,7 +142,7 @@ class Bandura
   #optional: actions; to map your actions to Bandura's format, example 'next track': 'nextTrack';
   startRemote: (settings) ->
     settings or= @_remoteSettings
-    ws = new WebSocket(settings.host);
+    ws = new WebSocket(settings.host)
     remoteActions = Bacon.fromEventTarget ws , 'message', (ev) -> settings.actions?[ev.data] or ev.data
     controls.plug(remoteActions)
 

@@ -7,7 +7,7 @@ var coffee = require('gulp-coffee'),
     browserify = require('gulp-browserify');
 
 gulp.task('less', function () {
-    return gulp.src('./app/styles/**/*.less')
+    return gulp.src('./app/styles/bandura.less')
         .pipe(plumber())
         .pipe(less())
         .pipe(gulp.dest('./build'))
