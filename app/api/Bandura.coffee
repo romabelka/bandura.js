@@ -137,6 +137,12 @@ class Bandura
 
     return @
 
+  #--------Remote------------------
+  startRemote: (settings) ->
+    ws = new WebSocket(settings.host);
+    remoteActions = Bacon.fromEventTarget ws , 'message', (ev) -> ev.data
+    controls.plug(remoteActions)
+
 
 module.exports = Bandura
 render = require '../dispatcher/render'
