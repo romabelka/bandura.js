@@ -17,9 +17,8 @@ class Bandura
   # Public
 
   constructor: (options) ->
-    _.extend(@, {
-      volume: 0
-    },options)
+    @volume = options.volume or 40
+    @_remoteSettings = options.remote
 
     settingsChanges.push(new PlayerSettings @volume, false)
 
@@ -138,9 +137,13 @@ class Bandura
     return @
 
   #--------Remote------------------
+  #settings can be set here or when Bandura is created('remote' field).
+  #required: host; example host: 'ws://localhost:3000'
+  #optional: actions; to map your actions to Bandura's format, example 'next track': 'nextTrack';
   startRemote: (settings) ->
+    settings or= @_remoteSettings
     ws = new WebSocket(settings.host);
-    remoteActions = Bacon.fromEventTarget ws , 'message', (ev) -> ev.data
+    remoteActions = Bacon.fromEventTarget ws , 'message', (ev) -> settings.actions?[ev.data] or ev.data
     controls.plug(remoteActions)
 
 

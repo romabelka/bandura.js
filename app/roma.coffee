@@ -2,7 +2,16 @@ Bandura = require('./api/Bandura')
 Track = require('./api/Track')
 Playlist = require('./api/Playlist')
 
-window.bandura = new Bandura()
+window.bandura = new Bandura
+  remote:
+    host: 'ws://localhost:3000'
+    actions:
+      Previous: 'previousTrack'
+      Next: 'nextTrack'
+      Play: 'play'
+      Pause: 'pause'
+
+
 window.track1 = new Track
   id: '1204'
   name: 'These Days'
