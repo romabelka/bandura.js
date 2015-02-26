@@ -1,41 +1,70 @@
 // something old
-var coffee = require('gulp-coffee'),
-    less = require('gulp-less'),
-    react = require('gulp-react'),
-    plumber = require('gulp-plumber'),
-    gulp = require('gulp'),
-    browserify = require('gulp-browserify');
+var gulp = require('gulp'),
+  plugins = require('gulp-load-plugins')({lazy: false}),
+  del = require('del'),
+  browserify = require('gulp-browserify');
 
-gulp.task('less', function () {
-    return gulp.src('./app/styles/bandura.less')
-        .pipe(plumber())
-        .pipe(less())
-        .pipe(gulp.dest('./build'))
+// Configuration
+var dist = './build';
+var tmp = './tmp';
+var coffeeFiles = './app/**/*.coffee';
+
+// CSS
+gulp.task('css', function () {
+  return gulp.src('./app/styles/bandura.less')
+    .pipe(plugins.plumber())
+    .pipe(plugins.sourcemaps.init())
+    .pipe(plugins.less({
+      paths: ['./app/styles']
+    }))
+    .pipe(plugins.autoprefixer('last 2 version'))
+    .pipe(plugins.sourcemaps.write())
+    .pipe(gulp.dest(dist))
 });
 
+// Coffee
 gulp.task('coffee', function () {
-    return gulp.src('./app/**/*.coffee')
-        .pipe(plumber())
-        .pipe(coffee({bare: true}))
-        .pipe(react())
-        .pipe(gulp.dest('./tmp'));
+  return gulp.src(coffeeFiles)
+    .pipe(plugins.plumber())
+    .pipe(plugins.coffee({bare: true}))
+    .pipe(plugins.react())
+    .pipe(gulp.dest(tmp));
 });
 
-gulp.task('browserify', ['coffee'], function() {
-    return gulp.src('./tmp/roma.js')
-        .pipe(plumber())
-        .pipe(browserify({
-                extensions: ['.js'],
-                insertGlobals: true,
-                debug: true
-            }))
-    .pipe(gulp.dest('./build'))
+// Coffee Lint
+gulp.task('lint', function () {
+  gulp.src(coffeeFiles)
+    .pipe(plugins.coffeelint())
+    .pipe(plugins.coffeelint.reporter())
 });
 
-gulp.task('watch', function() {
-    gulp.watch('./app/**/*.coffee', ['browserify']);
-    gulp.watch('./app/styles/**/*.less', ['less']);
+// JS
+gulp.task('js', ['lint', 'coffee'], function () {
+  return gulp.src('./tmp/roma.js')
+    .pipe(plugins.plumber())
+    .pipe(browserify({
+      extensions: ['.js'],
+      insertGlobals: true,
+      debug: true
+    }))
+    .pipe(plugins.sourcemaps.init({loadMaps: true}))
+    .pipe(plugins.sourcemaps.write())
+    .pipe(gulp.dest(dist))
 });
 
-gulp.task('build', ['browserify', 'less']);
-gulp.task('default', ['build', 'watch']);
+gulp.task('clean', function (cb) {
+  del([dist, tmp], cb);
+});
+
+gulp.task('watch', function () {
+  gulp.watch('./app/**/*.coffee', ['js']);
+  gulp.watch('./app/styles/**/*.less', ['css']);
+});
+
+// Build
+gulp.task('build', ['js', 'css']);
+
+// Default task
+gulp.task('default', ['clean'], function () {
+  gulp.start(['build', 'watch'])
+});
