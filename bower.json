@@ -20,7 +20,7 @@
     "underscore": "~1.8.0",
     "underscore.string": "~3.0.0",
     "underscore-contrib": "~0.3.0",
-    "SoundManager2": "git@github.com:scottschiller/SoundManager2.git",
+    "SoundManager2": "git@github.com:scottschiller/SoundManager2.git#master",
     "react-draggable": "~0.4.0"
   }
 }

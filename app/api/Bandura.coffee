@@ -173,13 +173,13 @@ class Bandura
   defaultButtons =
     remote:
       action: @startRemote
-      liClass: 'b-player--show-pl'
-      iconClass: 'b-icon__th-list'
+      liClass: 'b-player--network'
+      iconClass: 'b-icon__network'
       tooltip: 'Start remote control'
     youtube:
       action: @findYouTubeVideos
-      liClass: 'b-player--show-pl'
-      iconClass: 'b-icon__th-list'
+      liClass: 'b-player--youtube'
+      iconClass: 'b-icon__youtube'
       tooltip: 'Search video on youtube'
 
 
