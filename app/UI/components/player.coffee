@@ -27,13 +27,6 @@ module.exports = React.createClass
       showPlaylists: not @state.showPlaylists
 
   render: ->
-    ###
-        enabledButtons = [
-          liClass: 'b-player--show-pl'
-          iconClass: 'b-icon__th-list'
-          callback: @showPlaylists
-        ]
-    ###
 
     playClass = if @props.playingStatus is 'isPlaying' then 'b-icon__pause' else 'b-icon__play'
     currentTrack = @props.PLCollection?.getActivePlaylist()?.getActiveTrack()
