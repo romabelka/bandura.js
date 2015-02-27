@@ -7,5 +7,6 @@ module.exports = React.createClass
     return `(
     <div className='b-video--item'>
         <img className='b-video--img' src={this.props.video.thumbnail.hqDefault}/>
+
     </div>
     )`
