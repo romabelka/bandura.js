@@ -4,22 +4,25 @@ module.exports = React.createClass
   displayName: 'Playlist'
 
   render: ->
-    unless @props.playlist?
-      return `(<div></div>)`
+    return false unless @props.playlist?
+
     self = @
+
     tracks = _.map(this.props.playlist.getTracks(), (track, index) ->
       return `(
-        <li key={index} className="b-playlist--li">
-        <Track track={track} isPlaying = {self.props.isPlaying && track == self.props.playlist.getActiveTrack()} key={index}/>
+        <li key={index} className="b-playlist--tracks-item">
+          <Track track={track} isPlaying = {self.props.isPlaying && track == self.props.playlist.getActiveTrack()} key={index}/>
         </li>
       )`
     )
 
     return `(
         <div className="b-playlist">
-        {this.props.playlist.getName()}
-        <ul>
-        {tracks}
-        </ul>
+          <div className="b-playlist--title">
+            {this.props.playlist.getName()}
+          </div>
+          <ul className="b-playlist--tracks">
+            {tracks}
+          </ul>
         </div>
       )`
