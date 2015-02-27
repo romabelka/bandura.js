@@ -10,11 +10,13 @@ class Bandura
   defaultButtons =
     remote:
       action: @startRemote
-      className: 'b-player--show-pl'
+      liClass: 'b-player--show-pl'
+      iconClass: 'b-icon__th-list'
       tooltip: 'Start remote control'
     youtube:
       action: @startRemote
-      className: 'b-player--show-pl'
+      liClass: 'b-player--show-pl'
+      iconClass: 'b-icon__th-list'
       tooltip: 'Search video on youtube'
 
   # Public
@@ -48,7 +50,7 @@ class Bandura
     buttons.push
       togglePlaylists:
         action: (-> @UI.setState showPlaylists: not @UI.state.showPlaylists).bind(@)
-        liName: 'b-player--show-pl'
+        liClass: 'b-player--show-pl'
         iconClass: 'b-icon__th-list'
         tooltip: 'open/close playlists'
 
