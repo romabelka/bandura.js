@@ -181,10 +181,6 @@ class Bandura
       dataType: "jsonp"
     ).map((response) -> response.data.items)
 
-  # Private
-  # actions take arguments (activeTrack, activePlaylist)
-
-
 
 module.exports = Bandura
 render = require '../dispatcher/render'

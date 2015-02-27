@@ -24,10 +24,6 @@ module.exports = React.createClass
       when 'Stoped'
         controls.push 'play'
 
-  showPlaylists: ->
-    @setState
-      showPlaylists: not @state.showPlaylists
-
   closeVideoScreen: ->
     @setState videoScreen: no
 
