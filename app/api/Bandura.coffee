@@ -13,7 +13,6 @@ class Bandura
     @_remoteSettings = options.remote
 
     settingsChanges.push(new PlayerSettings @volume, false)
-    buttons.push defaultButtons
 
     soundManager.setup
       url: "http://localhost/required/swf/"
@@ -34,6 +33,7 @@ class Bandura
         whileloading: -> progress.push(@)
 
     @UI = do render
+    buttons.push defaultButtons
     buttons.push
       togglePlaylists:
         action: (-> @UI.setState showPlaylists: not @UI.state.showPlaylists).bind(@)
@@ -169,6 +169,7 @@ class Bandura
     ).map((response) -> response.data.items)
 
   # Private
+  # actions take arguments (activeTrack, activePlaylist)
   defaultButtons =
     remote:
       action: @startRemote
