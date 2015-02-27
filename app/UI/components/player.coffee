@@ -7,7 +7,9 @@ VidoScreen = require './videoScreen'
 
 module.exports = React.createClass
   displayName: 'Player'
-  getInitialState: -> return {showPlaylists: true}
+  getInitialState: ->
+    showPlaylists: no
+    videoScreen: no
 
   prevTrack: ->
     controls.push('previousTrack')
@@ -25,6 +27,9 @@ module.exports = React.createClass
   showPlaylists: ->
     @setState
       showPlaylists: not @state.showPlaylists
+
+  closeVideoScreen: ->
+    @setState videoScreen: no
 
   render: ->
 
@@ -69,6 +74,6 @@ module.exports = React.createClass
         <Buttons enabledButtons={this.props.buttons} />
       </div>
         <Playlists PLCollection={this.props.PLCollection} isPlaying={this.props.playingStatus} visible={this.state.showPlaylists}/>
-        <VidoScreen videos = {this.props.videos} />
+        <VidoScreen videos = {this.props.videos} visible={this.state.videoScreen} closeScreen={this.closeVideoScreen} />
       </div>
     );`

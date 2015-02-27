@@ -33,13 +33,24 @@ class Bandura
         whileloading: -> progress.push(@)
 
     @UI = do render
-    buttons.push defaultButtons
-    buttons.push
+    defaultButtons =
+      remote:
+        action: (->@startRemote()).bind @
+        liClass: 'b-player--network'
+        iconClass: 'b-icon__network'
+        tooltip: 'Start remote control'
+      youtube:
+        action: @findYouTubeVideos.bind @
+        liClass: 'b-player--youtube'
+        iconClass: 'b-icon__youtube'
+        tooltip: 'Search video on youtube'
       togglePlaylists:
-        action: (-> @UI.setState showPlaylists: not @UI.state.showPlaylists).bind(@)
+        action: (-> @UI.setState showPlaylists: not @UI.state.showPlaylists).bind @
         liClass: 'b-player--show-pl'
         iconClass: 'b-icon__th-list'
         tooltip: 'open/close playlists'
+
+    buttons.push defaultButtons
 
 
 
@@ -152,14 +163,16 @@ class Bandura
   #optional: actions; to map your actions to Bandura's format, example 'next track': 'nextTrack';
 
 
-  @startRemote = (settings) ->
+  startRemote: (settings) ->
     settings or= @_remoteSettings
     ws = new WebSocket(settings.host)
     remoteActions = Bacon.fromEventTarget ws , 'message', (ev) -> settings.actions?[ev.data] or ev.data
     controls.plug(remoteActions)
 
   #--------Youtube----------------
-  @findYouTubeVideos = (track) ->
+  findYouTubeVideos: (track) ->
+    @UI.setState videoScreen: true
+    throw new Error('Noting is playing right now') unless track
     query = track.artist or '' + ' ' + track.name or ''
     protocol = window.location.protocol or 'http:'
     url = protocol + "//gdata.youtube.com/feeds/api/videos/-/Music?q=#{query}&hd=true&v=2&alt=jsonc&safeSearch=strict"
@@ -170,17 +183,6 @@ class Bandura
 
   # Private
   # actions take arguments (activeTrack, activePlaylist)
-  defaultButtons =
-    remote:
-      action: @startRemote
-      liClass: 'b-player--network'
-      iconClass: 'b-icon__network'
-      tooltip: 'Start remote control'
-    youtube:
-      action: @findYouTubeVideos
-      liClass: 'b-player--youtube'
-      iconClass: 'b-icon__youtube'
-      tooltip: 'Search video on youtube'
 
 
 
