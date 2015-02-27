@@ -6,19 +6,6 @@ Playlist = require('./Playlist')
 PLCollection = require('./PLCollection')
 
 class Bandura
-  # Private
-  defaultButtons =
-    remote:
-      action: @startRemote
-      liClass: 'b-player--show-pl'
-      iconClass: 'b-icon__th-list'
-      tooltip: 'Start remote control'
-    youtube:
-      action: @startRemote
-      liClass: 'b-player--show-pl'
-      iconClass: 'b-icon__th-list'
-      tooltip: 'Search video on youtube'
-
   # Public
 
   constructor: (options) ->
@@ -172,14 +159,27 @@ class Bandura
     controls.plug(remoteActions)
 
   #--------Youtube----------------
-  @findYouTubeVideos = (args...) ->
-    query = args.join ' '
+  @findYouTubeVideos = (track) ->
+    query = track.artist or '' + ' ' + track.name or ''
     protocol = window.location.protocol or 'http:'
     url = protocol + "//gdata.youtube.com/feeds/api/videos/-/Music?q=#{query}&hd=true&v=2&alt=jsonc&safeSearch=strict"
     videos.plug Bacon.fromPromise($.ajax
       url: url
       dataType: "jsonp"
     ).map((response) -> response.data.items)
+
+  # Private
+  defaultButtons =
+    remote:
+      action: @startRemote
+      liClass: 'b-player--show-pl'
+      iconClass: 'b-icon__th-list'
+      tooltip: 'Start remote control'
+    youtube:
+      action: @findYouTubeVideos
+      liClass: 'b-player--show-pl'
+      iconClass: 'b-icon__th-list'
+      tooltip: 'Search video on youtube'
 
 
 
