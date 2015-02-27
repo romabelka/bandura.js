@@ -1,7 +1,7 @@
 {
   "name": "bandura.js",
   "version": "0.0.0",
-  "homepage": "https://github.com/wetunein/bandura.js",
+  "homepage": "https://github.com/romabelka/bandura.js",
   "authors": [
     "Roman Iakobhuk <kaboom.ua@gmail.com>"
   ],
@@ -15,12 +15,12 @@
   ],
   "devDependencies": {
     "react": "~0.12.0",
-    "bacon": "~0.7.30",
-    "cortexjs": "*",
-    "underscore": "~1.7.0",
-    "SoundManager2": "git@github.com:scottschiller/SoundManager2.git",
-    "underscore.string": "~2.4.0",
+    "bacon": "~0.7.0",
+    "cortexjs": "~0.7.0",
+    "underscore": "~1.8.0",
+    "underscore.string": "~3.0.0",
     "underscore-contrib": "~0.3.0",
+    "SoundManager2": "git@github.com:scottschiller/SoundManager2.git",
     "react-draggable": "~0.4.0"
   }
 }
