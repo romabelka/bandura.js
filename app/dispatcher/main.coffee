@@ -90,5 +90,6 @@ playlistsCollection = collections.scan(new PLCollection(), (collection, ev) ->
 callbacks = buttons.scan {}, (buttons, ev) ->
   #todo check _.extendImmutable
   return Utils.extendImmutable buttons, ev
+callbacks.log('callbacks ')
 
 module.exports = {progressbar, playerSettings, playlistsCollection, playerActions, videos, callbacks}

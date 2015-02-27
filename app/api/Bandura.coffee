@@ -10,11 +10,11 @@ class Bandura
   defaultButtons =
     remote:
       action: @startRemote
-      className: 'someClass'
+      className: 'b-player--show-pl'
       tooltip: 'Start remote control'
     youtube:
       action: @startRemote
-      className: 'someClass'
+      className: 'b-player--show-pl'
       tooltip: 'Search video on youtube'
 
   # Public
