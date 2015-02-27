@@ -1,4 +1,4 @@
-{controls,progress, activePlaylist, collections, settingsChanges} = require('../dispatcher/api')
+{controls,progress, activePlaylist, collections, settingsChanges, videos, buttons} = require('../dispatcher/api')
 #require('../dispatcher/api')
 PlayerSettings = require('./PlayerSettings')
 Track = require('./Track')
@@ -6,13 +6,16 @@ Playlist = require('./Playlist')
 PLCollection = require('./PLCollection')
 
 class Bandura
-  #static
-  @valideVolume = (vol) ->
-    throw new Error 'must be a number' unless _.isNumber vol
-
-    if vol < 0 then return 0
-    else if vol > 100 then return 100
-    else return vol
+  # Private
+  defaultButtons =
+    remote:
+      action: @startRemote
+      className: 'b-player--show-pl'
+      tooltip: 'Start remote control'
+    youtube:
+      action: @startRemote
+      className: 'b-player--show-pl'
+      tooltip: 'Search video on youtube'
 
   # Public
 
@@ -21,6 +24,7 @@ class Bandura
     @_remoteSettings = options.remote
 
     settingsChanges.push(new PlayerSettings @volume, false)
+    buttons.push defaultButtons
 
     soundManager.setup
       url: "http://localhost/required/swf/"
@@ -40,7 +44,14 @@ class Bandura
         whileplaying: -> progress.push(@)
         whileloading: -> progress.push(@)
 
-    do render
+    @UI = do render
+    buttons.push
+      togglePlaylists:
+        action: (-> @UI.setState showPlaylists: not @UI.state.showPlaylists).bind(@)
+        className: 'b-player--show-pl'
+        tooltip: 'open/close playlists'
+
+
 
 
 
@@ -136,15 +147,37 @@ class Bandura
 
     return @
 
+
+  #=======================static======================
+  @valideVolume = (vol) ->
+    throw new Error 'must be a number' unless _.isNumber vol
+
+    if vol < 0 then return 0
+    else if vol > 100 then return 100
+    else return vol
+
   #--------Remote------------------
   #settings can be set here or when Bandura is created('remote' field).
   #required: host; example host: 'ws://localhost:3000'
   #optional: actions; to map your actions to Bandura's format, example 'next track': 'nextTrack';
-  startRemote: (settings) ->
+
+
+  @startRemote = (settings) ->
     settings or= @_remoteSettings
-    ws = new WebSocket(settings.host);
+    ws = new WebSocket(settings.host)
     remoteActions = Bacon.fromEventTarget ws , 'message', (ev) -> settings.actions?[ev.data] or ev.data
     controls.plug(remoteActions)
+
+  #--------Youtube----------------
+  @findYouTubeVideos = (args...) ->
+    query = args.join ' '
+    protocol = window.location.protocol or 'http:'
+    url = protocol + "//gdata.youtube.com/feeds/api/videos/-/Music?q=#{query}&hd=true&v=2&alt=jsonc&safeSearch=strict"
+    videos.plug Bacon.fromPromise($.ajax
+      url: url
+      dataType: "jsonp"
+    ).map((response) -> response.data.items)
+
 
 
 module.exports = Bandura

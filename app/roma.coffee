@@ -1,4 +1,4 @@
-Bandura = require('./api/Bandura')
+window.Bandura = require('./api/Bandura')
 Track = require('./api/Track')
 Playlist = require('./api/Playlist')
 
