@@ -1,4 +1,4 @@
-{controls,progress, activePlaylist, collections, settingsChanges, videos} = require('./api')
+{controls,progress, activePlaylist, collections, settingsChanges, videos, buttons} = require('./api')
 PLCollection = require('../api/PLCollection')
 Bandura = require('../api/Bandura')
 Utils = require('../utils/utils')
@@ -87,4 +87,8 @@ playlistsCollection = collections.scan(new PLCollection(), (collection, ev) ->
   return collection[ev.action](ev.playlist)
 )
 
-module.exports = {progressbar, playerSettings, playlistsCollection, playerActions, videos}
+callbacks = buttons.scan {}, (buttons, ev) ->
+  #todo check _.extendImmutable
+  return Utils.extendImmutable buttons, ev
+
+module.exports = {progressbar, playerSettings, playlistsCollection, playerActions, videos, callbacks}

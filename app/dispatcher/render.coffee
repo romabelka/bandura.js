@@ -1,5 +1,5 @@
 renderUI = require '../UI/UI'
-{progressbar, playerSettings, playlistsCollection, playerActions, videos} = require './main'
+{progressbar, playerSettings, playlistsCollection, playerActions, videos, callbacks} = require './main'
 
 module.exports = ->
   UI = do renderUI
@@ -24,3 +24,7 @@ module.exports = ->
   videos.onValue (videos) ->
     console.log '----', videos
     UI.setProps videos: videos
+
+  callbacks.onValue (buttons) -> UI.setProps buttons: buttons
+  
+  return UI
