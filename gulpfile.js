@@ -16,7 +16,7 @@ gulp.task('css', function () {
       paths: ['./app/styles']
     }))
     .pipe(plugins.autoprefixer('last 2 version'))
-    .pipe(plugins.sourcemaps.write())
+    .pipe(plugins.sourcemaps.write('./'))
     .pipe(gulp.dest(dist))
 });
 
@@ -48,7 +48,7 @@ gulp.task('js', ['lint', 'coffee'], function () {
       debug: true
     }))
     .pipe(plugins.sourcemaps.init({loadMaps: true}))
-    .pipe(plugins.sourcemaps.write())
+    .pipe(plugins.sourcemaps.write('./'))
     .pipe(gulp.dest(dist))
 });
 
