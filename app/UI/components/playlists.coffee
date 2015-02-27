@@ -13,7 +13,8 @@ module.exports = React.createClass
   render: ->
     self = @
     playlists = _.map(@props.PLCollection?.getAllPlaylists() or [], (pl) =>
-      className = 'b-playlists__active' if @props.PLCollection.getActivePlaylist()?.getId() is pl.getId()
+      className = 'b-playlists--menu--item '
+      className += 'b-playlists--menu--item__active' if @props.PLCollection.getActivePlaylist()?.getId() is pl.getId()
       return `(
         <li onClick = {self.showPlaylist(pl.getId())} className={className} key={pl.getId()}>{pl.getName()}</li>
       )`
@@ -24,12 +25,12 @@ module.exports = React.createClass
       else null
 
     isPlaying = @props.isPlaying is 'isPlaying' and @props.PLCollection.getActivePlaylist().getId() is visiblePlaylist?.getId()
-    return `<div style={{display:'none'}}></div>` unless @props.visible
+    return `<div style={{display:'none'}} className="b-playlist--title"></div>` unless @props.visible
     return `(
-      <div className = "b-playlists">
-      <ul className="b-playlists--plank">
-      {playlists}
-      </ul>
-      <Playlist playlist={visiblePlaylist} isPlaying={isPlaying}/>
+      <div className="b-playlists">
+        <ul className="b-playlists--menu">
+          {playlists}
+        </ul>
+        <Playlist playlist={visiblePlaylist} isPlaying={isPlaying}/>
       </div>
     );`

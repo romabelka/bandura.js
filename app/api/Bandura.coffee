@@ -48,7 +48,8 @@ class Bandura
     buttons.push
       togglePlaylists:
         action: (-> @UI.setState showPlaylists: not @UI.state.showPlaylists).bind(@)
-        className: 'b-player--show-pl'
+        liName: 'b-player--show-pl'
+        iconClass: 'b-icon__th-list'
         tooltip: 'open/close playlists'
 
 

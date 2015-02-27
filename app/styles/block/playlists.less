@@ -1,15 +1,11 @@
-@playlistColor: black;
-@plankColor: #171717;
-@plankTextColor: white;
-@plankLiColor: grey;
-
 .b-playlists {
-  height: 200px;
-  position: relative;
-  bottom: 250px;
+  position: absolute;
+  bottom: 50px;
   width: 100%;
   background: @playlistColor;
-  &--plank {
+  padding-bottom: 25px;
+
+  &--menu {
     margin: 0;
     position: absolute;
     bottom: 0;
@@ -18,7 +14,7 @@
     background-color: @plankColor;
     color: @plankTextColor;
 
-    & li {
+    &--item{
       background-color: @plankLiColor;
       width: 150px;
       height: 25px;
@@ -27,6 +23,10 @@
       text-align: center;
       display: inline-block;
       cursor: pointer;
+
+      &__active{
+        background-color: lighten(@plankLiColor, 20%);
+      }
     }
   }
 }
