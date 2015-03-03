@@ -1,7 +1,16 @@
 Track = require './track'
+{collections} = require '../../dispatcher/api'
 
 module.exports = React.createClass
   displayName: 'Playlist'
+
+  drop: (ev)->
+    ev.preventDefault()
+    collections.push
+      action: 'update'
+      playlist: @props.playlist.addTrack(JSON.parse ev.dataTransfer.getData('track'))
+  dragOver: (ev) ->
+    ev.preventDefault()
 
   render: ->
     return false unless @props.playlist?
@@ -17,7 +26,7 @@ module.exports = React.createClass
     )
 
     return `(
-        <div className="b-playlist">
+        <div className="b-playlist" onDrop={this.drop} onDragOver={this.dragOver}>
           <div className="b-playlist--title">
             {this.props.playlist.getName()}
           </div>
