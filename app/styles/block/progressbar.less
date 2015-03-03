@@ -1,6 +1,5 @@
 .b-progressbar {
   position: relative;
-  top: 16px;
 
   &--container {
     background-color: @progressbarColor;
@@ -22,10 +21,17 @@
     color: @textColor;
   }
 
-  &--track-info {
-    float: left;
+  &--track--info {
+    display: inline-block;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal;
+    max-width: 50%;
   }
-  &--track-time {
+
+  &--track--time {
     float: right;
   }
 }

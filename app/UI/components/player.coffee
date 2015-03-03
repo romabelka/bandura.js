@@ -43,32 +43,37 @@ module.exports = React.createClass
         posMin : Math.floor(@props.position/60000)
         posSec : Math.floor((@props.position - Math.floor(@props.position/60000)*60000)/1000)
       showTime = "#{trackTime.posMin}:#{trackTime.posSec} / #{trackTime.min}:#{trackTime.sec}"
-
     return `(
-      <div className="b-player--wrapper">
+      <div className="b-bandura">
         <div className="b-player">
-          <div className="b-controls">
-            <div className="b-btn b-controls--button" onClick={this.prevTrack}>
-              <i className="b-icon b-icon__fast-backward-1"></i>
-            </div>
-            <div className="b-btn b-controls--button" onClick={this.playAction}>
-              <i className={'b-icon ' + playClass}></i>
-            </div>
-            <div className="b-btn b-controls--button" onClick={this.nextTrack}>
-              <i className="b-icon b-icon__fast-forward-1"></i>
+          <div className="b-player--section">
+            <div className="b-controls">
+              <div className="b-btn b-controls--button" onClick={this.prevTrack}>
+                <i className="b-icon b-icon__fast-backward-1"></i>
+              </div>
+              <div className="b-btn b-controls--button" onClick={this.playAction}>
+                <i className={'b-icon ' + playClass}></i>
+              </div>
+              <div className="b-btn b-controls--button" onClick={this.nextTrack}>
+                <i className="b-icon b-icon__fast-forward-1"></i>
+              </div>
             </div>
           </div>
+          <div className="b-player--section">
+            <div className="b-progressbar--wrapper">
+              <small className="b-progressbar--track--info">{trackInfo}</small>
+              <small className="b-progressbar--track--time">{showTime}</small>
 
-          <div className="b-progressbar--wrapper">
-            <span className="b-progressbar--track-info">{trackInfo}</span>
-            <span className="b-progressbar--track-time">{showTime}</span>
-
-            <Progressbar progress={this.props.position / this.props.duration} loaded = {this.props.loaded} />
+              <Progressbar progress={this.props.position / this.props.duration} loaded = {this.props.loaded} />
+            </div>
           </div>
-
-        <Volume volume={this.props.volume} mute={this.props.mute}/>
-        <Buttons enabledButtons={this.props.buttons} />
-      </div>
+          <div className="b-player--section">
+            <Volume volume={this.props.volume} mute={this.props.mute}/>
+          </div>
+          <div className="b-player--section">
+            <Buttons enabledButtons={this.props.buttons} />
+          </div>
+        </div>
         <Playlists PLCollection={this.props.PLCollection} isPlaying={this.props.playingStatus} visible={this.state.showPlaylists}/>
         <VidoScreen videos = {this.props.videos} visible={this.state.videoScreen} closeScreen={this.closeVideoScreen} />
       </div>
