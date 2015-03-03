@@ -72,13 +72,10 @@ class Bandura
   playTrack: (obj) ->
     track =
       if obj instanceof Track or not obj? then obj
-      else if _.isEmpty obj then currentTrack
+      else if _.isEmpty obj then throw new error 'track cant be empty object'
       else new Track obj
 
-    controls.push('stop')
-    activePlaylist.push(new Playlist([track])) if track
-    controls.push('play')
-
+    @setCustomPlaylist [track]
     return @
 
 
