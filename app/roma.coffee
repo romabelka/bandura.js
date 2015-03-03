@@ -12,3 +12,4 @@ window.bandura = new Bandura
 #====fixtures===
 window.playlists = require './fixtures/playlists'
 window.tracks = require './fixtures/tracks'
+require './fixtures/mainpage'

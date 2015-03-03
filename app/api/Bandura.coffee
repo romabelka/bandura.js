@@ -75,7 +75,10 @@ class Bandura
       else if _.isEmpty obj then throw new error 'track cant be empty object'
       else new Track obj
 
+    controls.push('stop')
     @setCustomPlaylist [track]
+    controls.push('play')
+
     return @
 
 
