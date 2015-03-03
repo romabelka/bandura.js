@@ -1,8 +1,8 @@
 tracks = require './tracks'
 playlists = require './playlists'
 $(->
-  $('.js-tracks').on 'click', 'td', (ev) ->
-    bandura.playTrack tracks[$(ev.currentTarget).data('track')]
-  $('.js-playlists').on 'click', 'td', (ev) ->
-    bandura.playPlaylist playlists[$(ev.currentTarget).data('playlist')]
+  for track in tracks
+    $('<td>').text(track.name).appendTo('.js-tracks').click ((tr)-> -> bandura.playTrack(tr))(track)
+  for playlist in playlists
+    $('<td>').text(playlist.getName()).appendTo('.js-playlists').click ((pl)-> -> bandura.playPlaylist(pl))(playlist)
 )
