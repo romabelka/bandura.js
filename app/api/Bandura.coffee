@@ -109,14 +109,11 @@ class Bandura
     return @
 
   #------------Playlist----------
-  destroyActivePlaylist: () ->
-    controls.push('stop')
-    activePlaylist.push(new Playlist())
-    return @
-
   playPlaylist: (pl) ->
     controls.push('stop')
-    activePlaylist.push(pl)
+    collections.push
+      action: 'updateActive'
+      playlist: pl
     controls.push('play')
     return @
 
@@ -130,12 +127,16 @@ class Bandura
 
   #-----------PlaylistCollections---------
   setCustomPlaylist: (tracks, currentTrack = 0) ->
-    #todo test me
-    activePlaylist.push(new Playlist tracks, 'Custom playlist', currentTrack, PLCollection.CUSTOM_ID)
+    #todo implement me
+    collections.push
+      action: 'updateActive'
+      playlist: new Playlist tracks, 'Custom playlist', currentTrack, PLCollection.CUSTOM_ID
 
   setActivePlaylist: (pl) ->
     controls.push('stop')
-    activePlaylist.push(pl)
+    collections.push
+      action: 'updateActive'
+      playlist: pl
     return @
 
   #[Array[Playlist]] or [PLCollection] => [Player]

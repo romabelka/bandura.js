@@ -45,7 +45,7 @@ class PLCollection
     return if @_activeId? is playlist.getId() then plc else plc.setActivePlaylist(playlist)
 
   setActivePlaylist: (playlist) ->
-    return new PLCollection @_playlists, true, @_plIds, playlist.getId()
+    return new PLCollection(@_playlists, true, @_plIds, playlist.getId())
 
   #============GETERS===========
   getPlaylistById: (id) ->

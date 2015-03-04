@@ -34,40 +34,52 @@ playerSettings.changes().combine(activePlaylist, (a,b) ->
 )
 #=============================================
 
+#activePlaylist.onValue((pl) -> collections.push({action: 'updateActive', playlist: pl}))
 
-playerActions = activePlaylist.combine(controls, (a,b) ->
+playlistsCollection = collections.scan(new PLCollection(), (collection, ev) ->
+  return ev.collection if ev.action is 'setNewCollection'
+  return collection[ev.action](ev.playlist)
+)
+
+playerActions = playlistsCollection.combine(controls, (a,b) ->
   {
-    playlist: a
-    action: b
+  collection: a
+  action: b
   }
 ).map((obj) ->
   if typeof obj.action is 'string'
     switch obj.action
       when 'stop'
-        soundManager.destroySound(obj.playlist.getActiveTrack().id)
-        Utils.extendImmutable obj.playlist, {playingStatus: 'Stoped'}
+        soundManager.destroySound(obj.collection.getActivePlaylist()?.getActiveTrack()?.id)
+        Utils.extendImmutable obj.collection.getActivePlaylist(), {playingStatus: 'Stoped'}
       when 'play'
+        console.log '----', obj.collection
         soundManager.pauseAll()
-        soundManager.createSound(obj.playlist.getActiveTrack())
-        soundManager.play(obj.playlist.getActiveTrack().id)
-        Utils.extendImmutable obj.playlist, {playingStatus: 'isPlaying'}
+        if obj.collection.getActivePlaylist().getActiveTrack()
+          soundManager.createSound(obj.collection.getActivePlaylist().getActiveTrack())
+          soundManager.play(obj.collection.getActivePlaylist().getActiveTrack().id)
+        Utils.extendImmutable obj.collection.getActivePlaylist(), {playingStatus: 'isPlaying'}
 
       when 'pause'
         soundManager.pauseAll()
-        Utils.extendImmutable obj.playlist, {playingStatus: 'Paused'}
+        Utils.extendImmutable obj.collection.getActivePlaylist(), {playingStatus: 'Paused'}
 
       when 'nextTrack'
-        nextTrack = obj.playlist.nextTrack()
+        nextTrack = obj.collection.getActivePlaylist().nextTrack()
         controls.push('stop')
-        activePlaylist.push(nextTrack)
+        collections.push
+          action: 'update'
+          playlist: nextTrack
         controls.push('play')
         Utils.extendImmutable nextTrack, {result: 'switched to next track'}
 
 
       when 'previousTrack'
-        previousTrack = obj.playlist.previousTrack()
+        previousTrack = obj.collection.getActivePlaylist().previousTrack()
         controls.push('stop')
-        activePlaylist.push(previousTrack)
+        collections.push
+          action: 'update'
+          playlist: previousTrack
         controls.push('play')
         Utils.extendImmutable previousTrack, {result: 'switched to previous track'}
 
@@ -80,12 +92,6 @@ playerActions = activePlaylist.combine(controls, (a,b) ->
 
 )
 
-activePlaylist.onValue((pl) -> collections.push({action: 'updateActive', playlist: pl}))
-
-playlistsCollection = collections.scan(new PLCollection(), (collection, ev) ->
-  return ev.collection if ev.action is 'setNewCollection'
-  return collection[ev.action](ev.playlist)
-)
 
 soundEvents.onValue (ev) ->
   switch ev

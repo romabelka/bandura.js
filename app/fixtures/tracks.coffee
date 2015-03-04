@@ -1,4 +1,4 @@
-Track = Track = require '../api/Track'
+Track = require '../api/Track'
 
 module.exports = [
   new Track
