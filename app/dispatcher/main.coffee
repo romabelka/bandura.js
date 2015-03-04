@@ -87,11 +87,11 @@ playlistsCollection = collections.scan(new PLCollection(), (collection, ev) ->
   return collection[ev.action](ev.playlist)
 )
 
-callbacks = buttons.scan({}, (buttons, ev) ->
-  #todo check _.extendImmutable
-  return Utils.extendImmutable buttons, ev
+callbacks = buttons.scan([], (buttons, ev) ->
+  return buttons.concat ev
 ).combine(activePlaylist.toProperty({}), (buttons, playlist) ->
-  newBtns = _.mapObject(buttons, (btn) -> _.extend(btn, callback: -> btn.action(playlist.getActiveTrack?(), playlist)))
-  newBtns
+  buttons
+    .map (btn) -> _.extend(btn, callback: -> btn.action(playlist.getActiveTrack?(), playlist))
+    .sort (a,b) -> a.order > b.order
 )
 module.exports = {progressbar, playerSettings, playlistsCollection, playerActions, videos, callbacks}

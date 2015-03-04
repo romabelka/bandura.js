@@ -33,23 +33,28 @@ class Bandura
         whileloading: -> progress.push(@)
 
     @UI = do render
-    defaultButtons =
-      remote:
-        action: (->@startRemote()).bind @
-        liClass: 'b-player--network'
-        iconClass: 'b-icon__network'
-        tooltip: 'Start remote control'
-      youtube:
-        action: @findYouTubeVideos.bind @
-        liClass: 'b-player--youtube'
-        iconClass: 'b-icon__youtube'
-        tooltip: 'Search video on youtube'
-      togglePlaylists:
-        action: (-> @UI.setState showPlaylists: not @UI.state.showPlaylists).bind @
-        liClass: 'b-player--show-pl'
-        iconClass: 'b-icon__th-list'
-        tooltip: 'open/close playlists'
-
+    defaultButtons = [
+      name: 'Remote'
+      order: 3
+      action: (->@startRemote()).bind @
+      liClass: 'b-player--network'
+      iconClass: 'b-icon__network'
+      tooltip: 'Start remote control'
+    ,
+      name: 'Youtube'
+      order: 2
+      action: @findYouTubeVideos.bind @
+      liClass: 'b-player--youtube'
+      iconClass: 'b-icon__youtube'
+      tooltip: 'Search video on youtube'
+    ,
+      order: 1
+      name: 'Toggle playlists'
+      action: (-> @UI.setState showPlaylists: not @UI.state.showPlaylists).bind @
+      liClass: 'b-player--show-pl'
+      iconClass: 'b-icon__th-list'
+      tooltip: 'open/close playlists'
+    ]
     buttons.push defaultButtons
 
 

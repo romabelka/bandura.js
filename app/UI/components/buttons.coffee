@@ -1,8 +1,8 @@
 module.exports = React.createClass
   render: ->
-    buttons = for name of @props.enabledButtons
-      `(<li className={'b-btn ' + this.props.enabledButtons[name].liClass} onClick={this.props.enabledButtons[name].callback} key={name}>
-      <i className={'b-icon ' + this.props.enabledButtons[name].iconClass}></i>
+    buttons = for btn in @props.enabledButtons
+      `(<li className={'b-btn ' + btn.liClass} onClick={btn.callback} key={btn.name}>
+      <i className={'b-icon ' + btn.iconClass}></i>
       </li>)`
 
 
