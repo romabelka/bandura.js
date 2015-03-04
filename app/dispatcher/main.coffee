@@ -45,8 +45,8 @@ playerActions = playlistsCollection.combine(controls, (a,b) ->
   action: b
   }
 ).map((obj) ->
+  playlist = obj.collection.getActivePlaylist()
   if typeof obj.action is 'string'
-    playlist = obj.collection.getActivePlaylist()
     switch obj.action
       when 'stop'
         soundManager.destroySound(playlist?.getActiveTrack()?.id)
@@ -85,7 +85,7 @@ playerActions = playlistsCollection.combine(controls, (a,b) ->
   else
     switch obj.action.type
       when 'setPosition'
-        track = soundManager.getSoundById(obj.playlist.getActiveTrack().id)
+        track = soundManager.getSoundById(playlist.getActiveTrack().id)
         position = track.duration * obj.action.percent
         track.setPosition(position)
 
