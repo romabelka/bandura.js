@@ -29,9 +29,6 @@ module.exports = React.createClass
 
     return `(
         <div className="b-playlist" onDrop={this.drop} onDragOver={this.dragOver}>
-          <div className="b-playlist--title">
-            {this.props.playlist.getName()}
-          </div>
           <ul className="b-playlist--tracks">
             {tracks}
           </ul>

@@ -5,12 +5,14 @@ module.exports = [
     id: '1204'
     name: 'These Days'
     artist: 'Justin Bieber'
+    cover: 'public/img/10.jpg'
     url: 'https://storage.tunehog.com/public/rrmusic/track/1204.mp3'
 
   new Track
     id: '1205'
     name: 'AJust Me Up'
     artist: 'Kurt Kobein'
+    cover: 'public/img/20.jpg'
     url: 'https://storage.tunehog.com/public/rrmusic/track/1205.mp3'
 
   new Track

@@ -1,10 +1,100 @@
 .b-track {
-  width: 100px;
-  height: 150px;
-  background-color: red;
-  color: white;
+  background-color: #454545;
+  color: #fff;
+  margin: 5px 5px 5px 0;
+  overflow: auto;
 
-  &__playing {
-    background-color: #008000;
+  &__active {
+    background-color: #ebeaea;
+  }
+
+  &__text{
+    margin: 5px 0;
+    font-size: small;
+    font-weight: bold;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    .b-track__active &{
+      color: #343434;
+    }
+  }
+  &__cover{
+    background-color: #454545;
+    height: 122px;
+    width: 122px;
+    overflow: hidden;
+    position: relative;
+    filter: blur(0px);
+
+    &__blur{
+      display: block;
+      min-width: 120%;
+      min-height: 120%;
+      margin-left: -10%;
+      margin-top: -10%;
+      background-size: 250px;
+      background-position: 50% 50%;
+      filter: blur(2px);
+    }
+
+    &__circle{
+      position: absolute;
+      right: 10%;
+      bottom: 10%;
+      top: 10%;
+      left: 10%;
+      border-radius: 50%;
+      background-position: 50% 50%;
+
+      box-shadow: 0 0 10px rgba(50, 50, 50, .9);
+      border: 2px solid #fff;
+
+      .b-track__playing &{
+        animation: preloader 1.5s infinite linear;
+      }
+    }
+
+    @keyframes preloader {
+      to{
+        transform:rotate(360deg)
+      }
+    }
+
+    &__btn-action{
+      position: absolute;
+      right: 40%;
+      bottom: 40%;
+      top: 40%;
+      left: 40%;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      background-repeat: no-repeat;
+      overflow: hidden;
+      background-size: 5px 5px;
+      text-align: center;
+      filter: blur(0px);
+      line-height: 20px;
+
+      .b-icon{
+        margin-left: 2px;
+      }
+    }
+
+    &__blur-circle{
+      position: absolute;
+      background-size: 250px;
+      background-position: 50% 50%;
+      filter: blur(2px);
+      top: -10%;
+      left: -10%;
+      right: -10%;
+      bottom: -10%;
+      border-radius: 50%;
+      overflow: hidden;
+      z-index: -1;
+    }
   }
 }
