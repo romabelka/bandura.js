@@ -1,12 +1,12 @@
-Utils =
+window.Utils =
   extendImmutable: (arg...) ->
     _.extend.apply @, [{}].concat(arg)
 
   randomId: ->
     Math.floor Math.random()*900 + 100
 
-  insertOn: (array, element, position) ->
-    array[...position].concat element, array[position..]
+  insertOn: (array, elements, position) ->
+    array[...position].concat elements, array[position..]
 
   removeFrom: (array, position) ->
     array[...position].concat array[position..]

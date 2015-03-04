@@ -25,17 +25,18 @@ class Playlist
     return @changeTrack(@_activeTrackIndex - 1)
 
 
-  # [Track, Int] => [Playlist]  track, optional: position, default add to end
-  addTrack: (track, position)->
+  # [[Track], Int] => [Playlist]  track, optional: position, default add to end
+  addTracks: (tracks, position)->
     if position
-      tracks = Utils.insertOn @_tracks, track, position
-      activeTrack = if position > @_activeTrackIndex then @_activeTrackIndex else @_activeTrackIndex + 1
+      newTracks = Utils.insertOn @_tracks, tracks, position
+      activeTrack = if position > @_activeTrackIndex then @_activeTrackIndex else @_activeTrackIndex + tracks.length
     else
-      tracks = @_tracks.concat track
+      newTracks = @_tracks.concat tracks
       activeTrack = @_activeTrackIndex
 
-    return new Playlist(tracks, @_name, activeTrack, @_id)
+    return new Playlist(newTracks, @_name, activeTrack, @_id)
 
+  addTrack: (track, position) -> @addTracks([track], position)
   # [Int] or [Track] => [Playlist]
   removeTrack: (opt) ->
     if opt instanceof Track
