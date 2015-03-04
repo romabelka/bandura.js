@@ -1,9 +1,11 @@
-{controls, activePlaylist} = require('../../dispatcher/api')
+{controls, collections} = require('../../dispatcher/api')
 module.exports = React.createClass
   displayName: 'Track'
   play: ->
     controls.push 'stop'
-    activePlaylist.push @props.playlist.changeTrack(@props.index)
+    collections.push
+      action: 'updateActive'
+      playlist: @props.playlist.changeTrack(@props.index)
     controls.push 'play'
   render: ->
     className = 'b-track'

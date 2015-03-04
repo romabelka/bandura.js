@@ -1,4 +1,4 @@
-{controls,progress, activePlaylist, collections, settingsChanges, videos, buttons, soundEvents} = require('./api')
+{controls,progress, collections, settingsChanges, videos, buttons, soundEvents} = require('./api')
 PLCollection = require('../api/PLCollection')
 Bandura = require('../api/Bandura')
 Utils = require('../utils/utils')
@@ -21,25 +21,23 @@ playerSettings = settingsChanges.scan({},(settings, changes) ->
   return Utils.extendImmutable(settings, changes)
 )
 
-
-#Changes volume of current track(SM can't change volume on all tracks)
-playerSettings.changes().combine(activePlaylist, (a,b) ->
-  {
-    settings: a
-    playlist: b
-  }
-).onValue((obj) ->
-  {settings, playlist} = obj
-  soundManager.setVolume(playlist.getActiveTrack().id, settings.volume)
-)
-#=============================================
-
-#activePlaylist.onValue((pl) -> collections.push({action: 'updateActive', playlist: pl}))
-
 playlistsCollection = collections.scan(new PLCollection(), (collection, ev) ->
   return ev.collection if ev.action is 'setNewCollection'
   return collection[ev.action](ev.playlist)
 )
+
+#Changes volume of current track(SM can't change volume on all tracks)
+playerSettings.changes().combine(playlistsCollection, (a,b) ->
+  {
+    settings: a
+    collection: b
+  }
+).onValue((obj) ->
+  {settings, collection} = obj
+  soundManager.setVolume(collection.getActivePlaylist()?.getActiveTrack()?.id, settings.volume)
+)
+#=============================================
+
 
 playerActions = playlistsCollection.combine(controls, (a,b) ->
   {
@@ -100,9 +98,9 @@ soundEvents.onValue (ev) ->
 
 callbacks = buttons.scan([], (buttons, ev) ->
   return buttons.concat ev
-).combine(activePlaylist.toProperty({}), (buttons, playlist) ->
+).combine(playlistsCollection, (buttons, collection) ->
   buttons
-    .map (btn) -> _.extend(btn, callback: -> btn.action(playlist.getActiveTrack?(), playlist))
+    .map (btn) -> _.extend(btn, callback: -> btn.action(collection.getActivePlaylist()?.getActiveTrack(), collection))
     .sort (a,b) -> a.order > b.order
 )
 
