@@ -2,11 +2,16 @@ VideoItem = require './videoItem'
 
 module.exports = React.createClass
   displayName: 'videoScreen'
+  getInitialState: ->
+    visibleVideo: no
+  clickVideo: (video)->
+    @setState visibleVideo: video
 
   render: ->
     return `(<div></div>)` unless (@props.videos? and @props.visible)
+    self = @
     videoItems = @props.videos.map (video) ->
-      `(<VideoItem video={video} key={video.id}/>)`
+      `(<VideoItem video={video} key={video.id} onClick={self.clickVideo} showVideo={video==self.state.visibleVideo}/>)`
     return `(
     <div className="b-video">
         <a href='#' className="b-video--close" onClick={this.props.closeScreen}>X</a>
