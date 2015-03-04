@@ -1,4 +1,4 @@
-{controls,progress, activePlaylist, collections, settingsChanges, videos, buttons} = require('../dispatcher/api')
+{controls,progress, activePlaylist, collections, settingsChanges, videos, buttons, soundEvents} = require('../dispatcher/api')
 #require('../dispatcher/api')
 PlayerSettings = require('./PlayerSettings')
 Track = require('./Track')
@@ -6,6 +6,7 @@ Playlist = require('./Playlist')
 PLCollection = require('./PLCollection')
 
 class Bandura
+  soundManagerEvents = ['load','play', 'pause', 'resume', 'stop', 'failure', 'finish']
   # Public
 
   constructor: (options) ->
@@ -32,7 +33,8 @@ class Bandura
         whileplaying: -> progress.push(@)
         whileloading: -> progress.push(@)
 
-    @UI = do render
+    soundManagerEvents.forEach (ev) -> soundManager.setup defaultOptions: "on#{ev}": -> soundEvents.push(ev)
+    {@UI, @events} = do render
     defaultButtons = [
       name: 'Remote'
       order: 3

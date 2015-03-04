@@ -1,4 +1,4 @@
-{controls,progress, activePlaylist, collections, settingsChanges, videos, buttons} = require('./api')
+{controls,progress, activePlaylist, collections, settingsChanges, videos, buttons, soundEvents} = require('./api')
 PLCollection = require('../api/PLCollection')
 Bandura = require('../api/Bandura')
 Utils = require('../utils/utils')
@@ -87,6 +87,11 @@ playlistsCollection = collections.scan(new PLCollection(), (collection, ev) ->
   return collection[ev.action](ev.playlist)
 )
 
+soundEvents.onValue (ev) ->
+  switch ev
+    when 'finish'
+      controls.push 'nextTrack'
+
 callbacks = buttons.scan([], (buttons, ev) ->
   return buttons.concat ev
 ).combine(activePlaylist.toProperty({}), (buttons, playlist) ->
@@ -94,4 +99,6 @@ callbacks = buttons.scan([], (buttons, ev) ->
     .map (btn) -> _.extend(btn, callback: -> btn.action(playlist.getActiveTrack?(), playlist))
     .sort (a,b) -> a.order > b.order
 )
-module.exports = {progressbar, playerSettings, playlistsCollection, playerActions, videos, callbacks}
+
+
+module.exports = {progressbar, playerSettings, playlistsCollection, playerActions, videos, callbacks, soundEvents}
