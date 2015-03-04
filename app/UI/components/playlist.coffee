@@ -20,7 +20,7 @@ module.exports = React.createClass
     tracks = _.map(this.props.playlist.getTracks(), (track, index) ->
       return `(
         <li key={index} className="b-playlist--tracks-item">
-          <Track track={track} isPlaying = {self.props.isPlaying && track == self.props.playlist.getActiveTrack()} key={index}/>
+          <Track playlist={self.props.playlist} track={track} index={index} isPlaying = {self.props.isPlaying && track == self.props.playlist.getActiveTrack()} key={index}/>
         </li>
       )`
     )
