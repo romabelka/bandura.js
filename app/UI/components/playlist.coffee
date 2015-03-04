@@ -17,10 +17,12 @@ module.exports = React.createClass
 
     self = @
 
-    tracks = _.map(this.props.playlist.getTracks(), (track, index) ->
+    tracks = _.map(this.props.playlist.getTracks(), (track, index) =>
+      isActive = @props.isActive and index is @props.playlist.getActiveTrackIndex()
+      isPlaying = isActive and @props.isPlaying
       return `(
         <li key={index} className="b-playlist--tracks-item">
-          <Track playlist={self.props.playlist} track={track} index={index} isPlaying = {self.props.isPlaying && track == self.props.playlist.getActiveTrack()} key={index}/>
+          <Track playlist={self.props.playlist} track={track} index={index} isPlaying={isPlaying} isActive={isActive} key={index}/>
         </li>
       )`
     )

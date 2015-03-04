@@ -29,13 +29,14 @@ module.exports = React.createClass
     )
     visiblePlaylist = @getVisiblePlaylist()
 
-    isPlaying = @props.isPlaying is 'isPlaying' and @props.PLCollection.getActivePlaylist().getId() is visiblePlaylist?.getId()
+    isActive = @props.PLCollection?.getActivePlaylist()?.getId() is visiblePlaylist?.getId()
+    isPlaying = @props.isPlaying is 'isPlaying' and isActive
     return `<div style={{display:'none'}} className="b-playlist--title"></div>` unless @props.visible
     return `(
       <div className="b-playlists">
         <ul className="b-playlists--menu">
           {playlists}
         </ul>
-        <Playlist playlist={visiblePlaylist} isPlaying={isPlaying}/>
+        <Playlist playlist={visiblePlaylist} isPlaying={isPlaying} isActive={isActive}/>
       </div>
     );`

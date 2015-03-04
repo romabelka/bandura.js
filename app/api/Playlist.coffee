@@ -12,6 +12,7 @@ class Playlist
 
   # [Int] => [Playlist]
   changeTrack: (trackIndex) ->
+    return @ if trackIndex is @_activeTrackIndex
     return new Playlist(@_tracks, @_name, trackIndex, @_id)
 
   nextTrack: ->
