@@ -1,0 +1,619 @@
+@charset "UTF-8";
+body,
+html {
+  font-family: sans-serif;
+}
+.react-draggable {
+  position: relative;
+}
+.b-bandura {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 54px;
+  background-color: #212121;
+}
+small {
+  font-size: 11px;
+  line-height: 20px;
+}
+.b-player {
+  display: table;
+  margin: 0 auto;
+}
+.b-player--section {
+  display: table-cell;
+  vertical-align: middle;
+}
+.b-player--show-pl {
+  color: white;
+}
+.b-player--buttons {
+  display: inline-block;
+  list-style: none;
+  margin: 0;
+}
+.b-player--buttons .b-btn {
+  margin: 0 5px;
+}
+@font-face {
+  font-family: 'new_player_icons';
+  src: url("../public/fonts/fontello/font/new_player_icons.eot");
+  src: url("../public/fonts/fontello/font/new_player_icons.eot#iefix") format('embedded-opentype'), url("../public/fonts/fontello/font/new_player_icons.woff") format('woff'), url("../public/fonts/fontello/font/new_player_icons.ttf") format('truetype'), url("../public/fonts/fontello/font/new_player_icons.svg#fontello") format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+.b-icon {
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+  /* '' */
+}
+.b-icon:before {
+  font-family: "new_player_icons";
+  font-style: normal;
+  font-weight: 400;
+  speak: none;
+  display: inline-block;
+  text-decoration: inherit;
+  text-align: left;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 54px;
+  margin: 0;
+  padding: 0;
+  width: auto;
+}
+.b-icon__pause-2:before {
+  content: '\e857';
+}
+.b-icon__fast-forward-1:before {
+  content: '\e855';
+}
+.b-icon__fast-backward-1:before {
+  content: '\e856';
+}
+.b-icon__stop:before {
+  content: '\e807';
+}
+.b-icon__stop-1:before {
+  content: '\e808';
+}
+.b-icon__play-1:before {
+  content: '\e80f';
+}
+.b-icon__play:before {
+  content: '\e80e';
+}
+.b-icon__th-list:before {
+  content: '\e809';
+}
+.b-icon__record:before {
+  content: '\e814';
+}
+.b-icon__list-add:before {
+  content: '\e83b';
+}
+.b-icon__wrench:before {
+  content: '\e850';
+}
+.b-icon__list:before {
+  content: '\e80a';
+}
+.b-icon__volume-up-1:before {
+  content: '\e81e';
+}
+.b-icon__volume-off-1:before {
+  content: '\e81b';
+}
+.b-icon__volume-down:before {
+  content: '\e81c';
+}
+.b-icon__vimeo:before {
+  content: '\e835';
+}
+.b-icon__video-circled:before {
+  content: '\e805';
+}
+.b-icon__video-2:before {
+  content: '\e82b';
+}
+.b-icon__twitter:before {
+  content: '\e836';
+}
+.b-icon__tumblr:before {
+  content: '\e833';
+}
+.b-icon__clock-1:before {
+  content: '\e84b';
+}
+.b-icon__thumbs-up:before {
+  content: '\e82d';
+}
+.b-icon__thumbs-down:before {
+  content: '\e82e';
+}
+.b-icon__th-list-1:before {
+  content: '\e80c';
+}
+.b-icon__th-large:before {
+  content: '\e84c';
+}
+.b-icon__stop-2:before {
+  content: '\e811';
+}
+.b-icon__star:before {
+  content: '\e841';
+}
+.b-icon__volume:before {
+  content: '\e81d';
+}
+.b-icon__basket-1:before {
+  content: '\e842';
+}
+.b-icon__search:before {
+  content: '\e812';
+}
+.b-icon__target:before {
+  content: '\e827';
+}
+.b-icon__resize-small:before {
+  content: '\e84f';
+}
+.b-icon__resize-full-2:before {
+  content: '\e817';
+}
+.b-icon__cw:before {
+  content: '\e851';
+}
+.b-icon__cancel:before {
+  content: '\e84d';
+}
+.b-icon__shuffle:before {
+  content: '\e806';
+}
+.b-icon__play-2:before {
+  content: '\e810';
+}
+.b-icon__picture:before {
+  content: '\e823';
+}
+.b-icon__picasa:before {
+  content: '\e832';
+}
+.b-icon__pause:before {
+  content: '\e830';
+}
+.b-icon__ok-circled:before {
+  content: '\e84e';
+}
+.b-icon__network:before {
+  content: '\e848';
+}
+.b-icon__mic:before {
+  content: '\e843';
+}
+.b-icon__magnet-1:before {
+  content: '\e852';
+}
+.b-icon__list-1:before {
+  content: '\e80d';
+}
+.b-icon__info-circled:before {
+  content: '\e82c';
+}
+.b-icon__indent-left:before {
+  content: '\e849';
+}
+.b-icon__forward:before {
+  content: '\e81f';
+}
+.b-icon__fast-forward:before {
+  content: '\e820';
+}
+.b-icon__fast-backward:before {
+  content: '\e822';
+}
+.b-icon__facebook:before {
+  content: '\e83e';
+}
+.b-icon__comment-alt:before {
+  content: '\e825';
+}
+.b-icon__down-open:before {
+  content: '\e847';
+}
+.b-icon__backward:before {
+  content: '\e821';
+}
+.b-icon__heart:before {
+  content: '\e828';
+}
+.b-icon__headphones:before {
+  content: '\e84a';
+}
+.b-icon__gift-1:before {
+  content: '\e831';
+}
+.b-icon__edit:before {
+  content: '\e83f';
+}
+.b-icon__download-alt:before {
+  content: '\e82f';
+}
+.b-icon__up-open:before {
+  content: '\e844';
+}
+.b-icon__right-open:before {
+  content: '\e845';
+}
+.b-icon__left-open:before {
+  content: '\e846';
+}
+.b-icon__heart-empty:before {
+  content: '\e829';
+}
+.b-icon__video-alt:before {
+  content: '\e840';
+}
+.b-icon__mail:before {
+  content: '\e82a';
+}
+.b-icon__chart:before {
+  content: '\e853';
+}
+.b-icon__googleplus:before {
+  content: '\e837';
+}
+.b-icon__eye-off:before {
+  content: '\e838';
+}
+.b-icon__comment:before {
+  content: '\e824';
+}
+.b-icon__cogs:before {
+  content: '\e839';
+}
+.b-icon__cog:before {
+  content: '\e83a';
+}
+.b-icon__vkontakte:before {
+  content: '\e834';
+}
+.b-icon__share:before {
+  content: '\e826';
+}
+.b-icon__basket:before {
+  content: '\e800';
+}
+.b-icon__resize-full:before {
+  content: '\e815';
+}
+.b-icon__magnet:before {
+  content: '\e83c';
+}
+.b-icon__chart-pie:before {
+  content: '\e819';
+}
+.b-icon__pause-1:before {
+  content: '\e854';
+}
+.b-icon__play-3:before {
+  content: '\e813';
+}
+.b-icon__beaker:before {
+  content: '\e802';
+}
+.b-icon__list-bullet:before {
+  content: '\e80b';
+}
+.b-icon__gauge:before {
+  content: '\e816';
+}
+.b-icon__sitemap:before {
+  content: '\e803';
+}
+.b-icon__youtube:before {
+  content: '\e83d';
+}
+.b-icon__gift:before {
+  content: '\e804';
+}
+.b-icon__volume-off:before {
+  content: '\e801';
+}
+.b-icon__volume-up:before {
+  content: '\e81a';
+}
+.b-icon__clock:before {
+  content: '\e818';
+}
+.b-icon__mute {
+  margin-right: 10px;
+  color: #c8c8c8;
+  font-size: 10px;
+  cursor: pointer;
+}
+.b-icon__mute:hover {
+  color: white;
+}
+.b-btn {
+  color: #454545;
+  display: inline-block;
+  cursor: pointer;
+}
+.b-btn:hover,
+.b-btn:active {
+  color: white;
+}
+.b-controls--button {
+  margin: 0 10px;
+  font-size: 25px;
+}
+.b-volume {
+  position: relative;
+  width: 90px;
+  margin-left: 40px;
+}
+.b-volume--container {
+  background-color: #acacac;
+  width: 60px;
+  height: 2px;
+  display: inline-block;
+  position: relative;
+  top: 28px;
+}
+.b-volume--draggable {
+  color: #29abe2;
+  width: 10px;
+}
+.b-progressbar {
+  position: relative;
+}
+.b-progressbar--container {
+  background-color: black;
+  height: 6px;
+}
+.b-progressbar--drag {
+  width: 10px;
+  height: 6px;
+  background-color: green;
+}
+.b-progressbar--loaded {
+  background-color: #3b3b3b;
+  height: 6px;
+}
+.b-progressbar--wrapper {
+  display: inline-block;
+  color: white;
+}
+.b-progressbar--track--info {
+  display: inline-block;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+  max-width: 50%;
+}
+.b-progressbar--track--time {
+  float: right;
+}
+.b-playlists {
+  position: absolute;
+  bottom: 50px;
+  width: 100%;
+  background: black;
+  padding-bottom: 25px;
+}
+.b-playlists--menu {
+  margin: 0;
+  position: absolute;
+  bottom: 0;
+  height: 25px;
+  width: 100%;
+  background-color: #171717;
+  color: white;
+}
+.b-playlists--menu--item {
+  background-color: grey;
+  width: 150px;
+  height: 25px;
+  line-height: 25px;
+  margin: 0 5px;
+  text-align: center;
+  display: inline-block;
+  cursor: pointer;
+}
+.b-playlists--menu--item__active {
+  background-color: #b3b3b3;
+}
+.b-playlist--title {
+  color: white;
+}
+.b-playlist--tracks {
+  margin: 0;
+}
+.b-playlist--tracks-item {
+  display: inline-block;
+}
+.b-track {
+  width: 100px;
+  height: 150px;
+  background-color: red;
+  color: white;
+}
+.b-track__playing {
+  background-color: #008000;
+}
+.b-video {
+  position: fixed;
+  background: white;
+  top: 20%;
+  left: 20%;
+  right: 20%;
+  bottom: 20%;
+  overflow: scroll;
+  box-shadow: 0 0 10px #999;
+}
+.b-video--close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  vertical-align: middle;
+  text-align: center;
+  color: white;
+  background: black;
+}
+.b-video--item {
+  width: 140px;
+  height: 105px;
+  display: inline-block;
+  margin: 10px;
+}
+.b-video--picture {
+  position: relative;
+}
+.b-video--picture--img {
+  width: 140px;
+  height: 105px;
+}
+.b-video--picture:after {
+  position: absolute;
+  content: '';
+  display: block;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  left: 50%;
+  margin-left: -6px;
+  bottom: -16px;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid black;
+}
+.video_active .b-video--picture:after {
+  opacity: 1;
+}
+.b-video--popup {
+  max-height: 0;
+  -webkit-transition: max-height 0.15s ease-out;
+          transition: max-height 0.15s ease-out;
+  position: relative;
+  overflow: hidden;
+}
+.video_active .b-video--popup {
+  max-height: 500px;
+  -webkit-transition: max-height 0.25s ease-in;
+          transition: max-height 0.25s ease-in;
+  position: static;
+  overflow: inherit;
+}
+.b-video--popup--height {
+  position: relative;
+  left: 0;
+  height: 0;
+  margin-bottom: -410px;
+}
+.b-video--popup--wrapper {
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  margin-top: 125px;
+  height: 390px;
+  width: 100%;
+  padding: 20px;
+  background: #202020;
+  text-align: center;
+  color: white;
+}
+
+/*# sourceMappingURL=bandura.css.map */
