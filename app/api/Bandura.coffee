@@ -112,9 +112,11 @@ class Bandura
   #------------Playlist----------
   playPlaylist: (pl) ->
     controls.push('stop')
-    collections.push
-      action: 'updateActive'
-      playlist: pl
+    if pl instanceof Playlist
+      collections.push
+        action: 'updateActive'
+        playlist: pl
+    else @setCustomPlaylist.apply(@, arguments)
     controls.push('play')
     return @
 
