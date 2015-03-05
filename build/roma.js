@@ -1666,20 +1666,6 @@ controls = require('../../dispatcher/api').controls;
 
 module.exports = React.createClass({
   displayName: 'Progressbar',
-  getInitialState: function() {
-    return {
-      position: {
-        top: 0,
-        left: 0
-      }
-    };
-  },
-  handleDrag: function(e, ui) {
-    return controls.push({
-      type: 'setPosition',
-      percent: ui.position.left / width
-    });
-  },
   setPosition: function(ev) {
     return controls.push({
       type: 'setPosition',
@@ -1691,14 +1677,7 @@ module.exports = React.createClass({
     React.createElement("div", {className: "b-progressbar", style: {width:width}}, 
       React.createElement("div", {className: "b-progressbar--container", onClick: this.setPosition}, 
       React.createElement("div", {className: "b-progressbar--loaded", style: {width: this.props.loaded ? this.props.loaded * width : 0}}), 
-        React.createElement(ReactDraggable, {
-        axis: "x", 
-        bound: "all box", 
-        onDrag: this.handleDrag, 
-        start: {y:-6, x:this.props.progress ? this.props.progress * width : 0}}, 
-
-          React.createElement("div", {className: "b-progressbar--drag"})
-        )
+         React.createElement("div", {className: "b-draggable b-progressbar--drag", style: {top: -6, left: this.props.progress ? this.props.progress * width : 0}})
       )
     )
     );;
@@ -1824,19 +1803,24 @@ module.exports = React.createClass({
 }).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/UI/components/videoScreen.js","/UI/components")
 },{"./videoItem":12,"1YiZ5S":4,"buffer":1}],14:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
-var Bandura, settingsChanges;
+var Bandura, changeVolume, settingsChanges;
 
 Bandura = require('../../api/Bandura');
 
 settingsChanges = require('../../dispatcher/api').settingsChanges;
 
+changeVolume = function(ev, refs) {
+  var volume;
+  volume = (ev.clientX - refs.container.getDOMNode().getBoundingClientRect().left) * 2;
+  return settingsChanges.push({
+    volume: volume
+  });
+};
+
 module.exports = React.createClass({displayName: "exports",
   getInitialState: function() {
     return {
-      position: {
-        top: -26,
-        left: 0
-      }
+      drag: false
     };
   },
   handleDrag: function(e, ui) {
@@ -1844,34 +1828,44 @@ module.exports = React.createClass({displayName: "exports",
       volume: ui.position.left * 2
     });
   },
-  setVolume: function(ev) {
-    return settingsChanges.push({
-      volume: (ev.clientX - ev.currentTarget.getBoundingClientRect().left) * 2
-    });
-  },
   mute: function() {
     return settingsChanges.push({
       mute: !this.props.mute
+    });
+  },
+  mouseDown: function(ev) {
+    this.setState({
+      drag: true
+    });
+    return changeVolume(ev, this.refs);
+  },
+  mouseMove: function(ev) {
+    if (!this.state.drag) {
+      return;
+    }
+    return changeVolume(ev, this.refs);
+  },
+  cancelDrag: function() {
+    return this.setState({
+      drag: false
     });
   },
   render: function() {
     var muteIcon;
     muteIcon = this.props.mute ? 'b-icon__volume-off-1' : 'b-icon__volume';
     return (
-    React.createElement("div", {className: "b-volume"}, 
-    React.createElement("i", {className: 'b-icon b-icon__mute ' + muteIcon, onClick: this.mute}), 
-    React.createElement("div", {className: "b-volume--container", onClick: this.setVolume}, 
-    React.createElement(ReactDraggable, {
-    axis: "x", 
-    handle: ".handle", 
-    bound: "all box", 
-    start: {y:-26, x:this.props.volume / 2}, 
-    onDrag: this.handleDrag
+    React.createElement("div", {
+      className: "b-volume", 
+      onMouseDown: this.mouseDown, 
+      onMouseMove: this.mouseMove, 
+      onMouseUp: this.cancelDrag, 
+      onMouseLeave: this.cancelDrag
     }, 
+    React.createElement("i", {className: 'b-icon b-icon__mute ' + muteIcon, onClick: this.mute}), 
+    React.createElement("div", {className: "b-volume--container", ref: "container"}, 
       React.createElement("div", {className: "b-volume--draggable"}, 
-      React.createElement("i", {className: "b-icon b-icon__record handle"})
+        React.createElement("i", {className: "b-icon b-icon__record b-draggable", style: {top:-26, left: this.props.volume / 2 - 5}})
       )
-    )
     )
     )
     );;
@@ -2683,7 +2677,7 @@ window.tracks = require('./fixtures/tracks');
 require('./fixtures/mainpage');
 
 
-}).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_e8517ad6.js","/")
+}).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_d3baeba.js","/")
 },{"./api/Bandura":15,"./fixtures/mainpage":25,"./fixtures/playlists":26,"./fixtures/tracks":27,"1YiZ5S":4,"buffer":1}],25:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var Track, playlists, tracks;
