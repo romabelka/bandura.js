@@ -1536,7 +1536,7 @@ module.exports = React.createClass({
 
 
 }).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/UI/components/player.js","/UI/components")
-},{"../../dispatcher/api":21,"./buttons":6,"./playlists":9,"./progressbar":10,"./videoScreen":13,"./volume":14,"1YiZ5S":4,"buffer":1}],8:[function(require,module,exports){
+},{"../../dispatcher/api":20,"./buttons":6,"./playlists":9,"./progressbar":10,"./videoScreen":13,"./volume":14,"1YiZ5S":4,"buffer":1}],8:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var Track, collections;
 
@@ -1589,7 +1589,7 @@ module.exports = React.createClass({
 
 
 }).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/UI/components/playlist.js","/UI/components")
-},{"../../dispatcher/api":21,"./track":11,"1YiZ5S":4,"buffer":1}],9:[function(require,module,exports){
+},{"../../dispatcher/api":20,"./track":11,"1YiZ5S":4,"buffer":1}],9:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var Playlist;
 
@@ -1686,7 +1686,7 @@ module.exports = React.createClass({
 
 
 }).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/UI/components/progressbar.js","/UI/components")
-},{"../../dispatcher/api":21,"1YiZ5S":4,"buffer":1}],11:[function(require,module,exports){
+},{"../../dispatcher/api":20,"1YiZ5S":4,"buffer":1}],11:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var collections, controls, ref;
 
@@ -1726,7 +1726,7 @@ module.exports = React.createClass({
 
 
 }).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/UI/components/track.js","/UI/components")
-},{"../../dispatcher/api":21,"1YiZ5S":4,"buffer":1}],12:[function(require,module,exports){
+},{"../../dispatcher/api":20,"1YiZ5S":4,"buffer":1}],12:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 module.exports = React.createClass({
   displayName: 'videoItem',
@@ -1874,7 +1874,7 @@ module.exports = React.createClass({displayName: "exports",
 
 
 }).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/UI/components/volume.js","/UI/components")
-},{"../../api/Bandura":15,"../../dispatcher/api":21,"1YiZ5S":4,"buffer":1}],15:[function(require,module,exports){
+},{"../../api/Bandura":15,"../../dispatcher/api":20,"1YiZ5S":4,"buffer":1}],15:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var Bandura, PLCollection, PlayerSettings, Playlist, Track, activePlaylist, buttons, collections, controls, progress, ref, render, settingsChanges, soundEvents, videos;
 
@@ -1965,6 +1965,9 @@ Bandura = (function() {
       }
     ];
     buttons.push(defaultButtons);
+    if (options.buttons != null) {
+      buttons.push(options.buttons);
+    }
   }
 
   Bandura.prototype.setVolume = function(vol) {
@@ -2093,19 +2096,6 @@ Bandura = (function() {
     return this;
   };
 
-  Bandura.valideVolume = function(vol) {
-    if (!_.isNumber(vol)) {
-      throw new Error('must be a number');
-    }
-    if (vol < 0) {
-      return 0;
-    } else if (vol > 100) {
-      return 100;
-    } else {
-      return vol;
-    }
-  };
-
   Bandura.prototype.startRemote = function(settings) {
     var remoteActions, ws;
     settings || (settings = this._remoteSettings);
@@ -2136,6 +2126,23 @@ Bandura = (function() {
     }));
   };
 
+  Bandura.prototype.addButtons = function(additionalButtons) {
+    return buttons.push(additionalButtons);
+  };
+
+  Bandura.valideVolume = function(vol) {
+    if (!_.isNumber(vol)) {
+      throw new Error('must be a number');
+    }
+    if (vol < 0) {
+      return 0;
+    } else if (vol > 100) {
+      return 100;
+    } else {
+      return vol;
+    }
+  };
+
   return Bandura;
 
 })();
@@ -2146,7 +2153,7 @@ render = require('../dispatcher/render');
 
 
 }).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/api/Bandura.js","/api")
-},{"../dispatcher/api":21,"../dispatcher/render":23,"./PLCollection":16,"./PlayerSettings":17,"./Playlist":18,"./Track":19,"1YiZ5S":4,"buffer":1}],16:[function(require,module,exports){
+},{"../dispatcher/api":20,"../dispatcher/render":22,"./PLCollection":16,"./PlayerSettings":17,"./Playlist":18,"./Track":19,"1YiZ5S":4,"buffer":1}],16:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var PLCollection, Playlist, Utils;
 
@@ -2262,7 +2269,7 @@ module.exports = PLCollection;
 
 
 }).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/api/PLCollection.js","/api")
-},{"../utils/utils":28,"./Playlist":18,"1YiZ5S":4,"buffer":1}],17:[function(require,module,exports){
+},{"../utils/utils":24,"./Playlist":18,"1YiZ5S":4,"buffer":1}],17:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var PlayerSettings;
 
@@ -2380,7 +2387,7 @@ module.exports = Playlist;
 
 
 }).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/api/Playlist.js","/api")
-},{"../utils/utils":28,"1YiZ5S":4,"buffer":1}],19:[function(require,module,exports){
+},{"../utils/utils":24,"1YiZ5S":4,"buffer":1}],19:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var Track;
 
@@ -2404,28 +2411,6 @@ module.exports = Track;
 }).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/api/Track.js","/api")
 },{"1YiZ5S":4,"buffer":1}],20:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
-var Track;
-
-Track = (function() {
-  Track.prototype.defaults = {
-    artist: 'unknown artist',
-    name: 'unknown track'
-  };
-
-  function Track(data) {
-    _.extend(this, this.defaults, data);
-  }
-
-  return Track;
-
-})();
-
-module.exports = Track;
-
-
-}).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/api/track.js","/api")
-},{"1YiZ5S":4,"buffer":1}],21:[function(require,module,exports){
-(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var dispatcherAPI;
 
 dispatcherAPI = {
@@ -2442,7 +2427,7 @@ module.exports = dispatcherAPI;
 
 
 }).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/dispatcher/api.js","/dispatcher")
-},{"1YiZ5S":4,"buffer":1}],22:[function(require,module,exports){
+},{"1YiZ5S":4,"buffer":1}],21:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var Bandura, PLCollection, Utils, buttons, callbacks, collections, controls, playerActions, playerSettings, playlistsCollection, progress, progressbar, ref, settingsChanges, soundEvents, videos;
 
@@ -2595,7 +2580,7 @@ module.exports = {
 
 
 }).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/dispatcher/main.js","/dispatcher")
-},{"../api/Bandura":15,"../api/PLCollection":16,"../utils/utils":28,"./api":21,"1YiZ5S":4,"buffer":1}],23:[function(require,module,exports){
+},{"../api/Bandura":15,"../api/PLCollection":16,"../utils/utils":24,"./api":20,"1YiZ5S":4,"buffer":1}],22:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var callbacks, playerActions, playerSettings, playlistsCollection, progressbar, ref, renderUI, soundEvents, videos;
 
@@ -2654,137 +2639,38 @@ module.exports = function() {
 
 
 }).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/dispatcher/render.js","/dispatcher")
-},{"../UI/UI":5,"./main":22,"1YiZ5S":4,"buffer":1}],24:[function(require,module,exports){
+},{"../UI/UI":5,"./main":21,"1YiZ5S":4,"buffer":1}],23:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 window.Bandura = require('./api/Bandura');
 
-window.bandura = new Bandura({
-  remote: {
-    host: 'ws://localhost:3000',
-    actions: {
-      Previous: 'previousTrack',
-      Next: 'nextTrack',
-      Play: 'play',
+
+/*
+window.bandura = new Bandura
+  remote:
+    host: 'ws://localhost:3000'
+    actions:
+      Previous: 'previousTrack'
+      Next: 'nextTrack'
+      Play: 'play'
       Pause: 'pause'
-    }
-  }
-});
+  buttons: [
+    name: 'Custom'
+    order: 4
+    action: (track)-> alert(track?.name)
+    liClass: 'b-player--network'
+    iconClass: 'b-icon__network'
+    tooltip: 'Some custom button'
+  ]
 
-window.playlists = require('./fixtures/playlists');
-
-window.tracks = require('./fixtures/tracks');
-
-require('./fixtures/mainpage');
-
-
-}).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_d3baeba.js","/")
-},{"./api/Bandura":15,"./fixtures/mainpage":25,"./fixtures/playlists":26,"./fixtures/tracks":27,"1YiZ5S":4,"buffer":1}],25:[function(require,module,exports){
-(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
-var Track, playlists, tracks;
-
-tracks = require('./tracks');
-
-playlists = require('./playlists');
-
-Track = require('../api/track');
-
-$(function() {
-  var el, i, j, len, len1, playlist, track;
-  for (i = 0, len = tracks.length; i < len; i++) {
-    track = tracks[i];
-    el = $('<td>').text(track.name).appendTo('.js-tracks');
-    el.click((function(tr) {
-      return function() {
-        return bandura.playTrack(tr);
-      };
-    })(track));
-    el.on('dragstart', (function(tr) {
-      return function(ev) {
-        return ev.originalEvent.dataTransfer.setData('track', JSON.stringify(tr));
-      };
-    })(track));
-  }
-  for (j = 0, len1 = playlists.length; j < len1; j++) {
-    playlist = playlists[j];
-    el = $('<td>').text(playlist.getName()).appendTo('.js-playlists');
-    el.click((function(pl) {
-      return function() {
-        return bandura.playPlaylist(pl);
-      };
-    })(playlist));
-  }
-  $('td').attr('draggable', true);
-  return $('#testing').on('drop', function(ev) {
-    ev.preventDefault();
-    track = new Track(JSON.parse(ev.originalEvent.dataTransfer.getData('track')));
-    return console.log('----', track);
-  }).on('dragover', function(ev) {
-    ev.preventDefault();
-    return console.log('----', 1111);
-  });
-});
+#====fixtures===
+window.playlists = require './fixtures/playlists'
+window.tracks = require './fixtures/tracks'
+require './fixtures/mainpage'
+ */
 
 
-}).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fixtures/mainpage.js","/fixtures")
-},{"../api/track":20,"./playlists":26,"./tracks":27,"1YiZ5S":4,"buffer":1}],26:[function(require,module,exports){
-(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
-var Playlist, tracks;
-
-Playlist = require('../api/Playlist');
-
-tracks = require('./tracks');
-
-module.exports = [new Playlist(tracks.slice(0, 3), 'Fixture playlist'), new Playlist(tracks.slice(3, 5), 'Second playlist'), new Playlist(tracks.slice(5), 'Third playlist')];
-
-
-}).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fixtures/playlists.js","/fixtures")
-},{"../api/Playlist":18,"./tracks":27,"1YiZ5S":4,"buffer":1}],27:[function(require,module,exports){
-(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
-var Track;
-
-Track = require('../api/Track');
-
-module.exports = [
-  new Track({
-    id: '1204',
-    name: 'These Days',
-    artist: 'Justin Bieber',
-    url: 'https://storage.tunehog.com/public/rrmusic/track/1204.mp3'
-  }), new Track({
-    id: '1205',
-    name: 'AJust Me Up',
-    artist: 'Kurt Kobein',
-    url: 'https://storage.tunehog.com/public/rrmusic/track/1205.mp3'
-  }), new Track({
-    id: '1206',
-    name: 'ABla-bla-bla',
-    genre: 'jazz',
-    artist: 'Elvis Prestley',
-    url: 'https://storage.tunehog.com/public/rrmusic/track/1206.mp3'
-  }), new Track({
-    id: '1207',
-    name: "These Days 2",
-    genre: 'funk',
-    artist: 'Justin Bieber',
-    url: 'https://storage.tunehog.com/public/rrmusic/track/1207.mp3'
-  }), new Track({
-    id: '1208',
-    name: 'AJust Me Up 2',
-    genre: 'rap',
-    artist: 'Kurt Kobein',
-    url: 'https://storage.tunehog.com/public/rrmusic/track/1208.mp3'
-  }), new Track({
-    id: '1209',
-    name: 'ABla-bla-bla 2',
-    genre: 'horror',
-    artist: 'Elvis Prestley',
-    url: 'https://storage.tunehog.com/public/rrmusic/track/1209.mp3'
-  })
-];
-
-
-}).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fixtures/tracks.js","/fixtures")
-},{"../api/Track":19,"1YiZ5S":4,"buffer":1}],28:[function(require,module,exports){
+}).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_67221a70.js","/")
+},{"./api/Bandura":15,"1YiZ5S":4,"buffer":1}],24:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var slice = [].slice;
 
@@ -2818,7 +2704,7 @@ module.exports = Utils;
 
 
 }).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/utils/utils.js","/utils")
-},{"1YiZ5S":4,"buffer":1}]},{},[24])
+},{"1YiZ5S":4,"buffer":1}]},{},[23])
 
 
 //# sourceMappingURL=roma.js.map

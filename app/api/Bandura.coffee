@@ -58,6 +58,7 @@ class Bandura
       tooltip: 'open/close playlists'
     ]
     buttons.push defaultButtons
+    buttons.push options.buttons if options.buttons?
 
 
 
@@ -157,14 +158,6 @@ class Bandura
     return @
 
 
-  #=======================static======================
-  @valideVolume = (vol) ->
-    throw new Error 'must be a number' unless _.isNumber vol
-
-    if vol < 0 then return 0
-    else if vol > 100 then return 100
-    else return vol
-
   #--------Remote------------------
   #settings can be set here or when Bandura is created('remote' field).
   #required: host; example host: 'ws://localhost:3000'
@@ -188,6 +181,18 @@ class Bandura
       url: url
       dataType: "jsonp"
     ).map((response) -> response.data.items)
+
+  #-----buttons-----------------
+  addButtons:(additionalButtons) ->
+    buttons.push additionalButtons
+  #=======================static======================
+  @valideVolume = (vol) ->
+    throw new Error 'must be a number' unless _.isNumber vol
+
+    if vol < 0 then return 0
+    else if vol > 100 then return 100
+    else return vol
+
 
 
 module.exports = Bandura
