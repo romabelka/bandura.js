@@ -1,4 +1,5 @@
 Utils = require('../utils/utils')
+Track = require './Track'
 
 class Playlist
   #Public
@@ -28,6 +29,8 @@ class Playlist
 
   # [[Track], Int] => [Playlist]  track, optional: position, default add to end
   addTracks: (tracks, position)->
+    unless tracks.every (track) -> track instanceOf Track
+      tracks = tracks.map (track) -> if track instanceOf Track then track else new Track(track)
     if position?
       newTracks = Utils.insertOn @_tracks, tracks, position
       activeTrack = if position > @_activeTrackIndex then @_activeTrackIndex else @_activeTrackIndex + tracks.length

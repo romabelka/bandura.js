@@ -153,7 +153,9 @@ class Bandura
     return @
 
   addPlaylist: (pl) ->
-    collections.push({action: 'addPlaylist', playlist: pl})
+    if Array.isArray(pl)
+      pl = new Playlist(pl, arguments[1])
+      collections.push({action: 'addPlaylist', playlist: pl})
     return @
 
   #[Track]
