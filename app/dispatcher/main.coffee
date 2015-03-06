@@ -49,7 +49,7 @@ playerActions = playlistsCollection.combine(controls, (a,b) ->
   if typeof obj.action is 'string'
     switch obj.action
       when 'stop'
-        soundManager.destroySound(playlist?.getActiveTrack()?.id)
+        soundManager.stop(playlist?.getActiveTrack()?.id)
         Utils.extendImmutable playlist, {playingStatus: 'Stoped'}
       when 'play'
         console.log '----', obj.collection
