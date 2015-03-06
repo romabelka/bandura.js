@@ -28,7 +28,7 @@ class Playlist
 
   # [[Track], Int] => [Playlist]  track, optional: position, default add to end
   addTracks: (tracks, position)->
-    if position
+    if position?
       newTracks = Utils.insertOn @_tracks, tracks, position
       activeTrack = if position > @_activeTrackIndex then @_activeTrackIndex else @_activeTrackIndex + tracks.length
     else

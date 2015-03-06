@@ -23,7 +23,10 @@ playerSettings = settingsChanges.scan({},(settings, changes) ->
 
 playlistsCollection = collections.scan(new PLCollection(), (collection, ev) ->
   return ev.collection if ev.action is 'setNewCollection'
-  return collection[ev.action](ev.playlist)
+  if ev.playlist?
+    return collection[ev.action](ev.playlist)
+  else
+    return collection[ev.action].apply(collection, ev.arguments)
 )
 
 #Changes volume of current track(SM can't change volume on all tracks)

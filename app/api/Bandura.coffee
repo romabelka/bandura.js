@@ -146,19 +146,21 @@ class Bandura
   setPlaylistsCollection: (collection) ->
     collection = new PLCollection(collection) unless collection instanceof PLCollection
     collections.push({action: 'setNewCollection', collection: collection})
-
     return @
 
   removePlaylist: (pl) ->
     collections.push({action: 'removePlaylist', playlist: pl})
-
     return @
 
   addPlaylist: (pl) ->
     collections.push({action: 'addPlaylist', playlist: pl})
-
     return @
 
+  #[Track]
+  addTracksToActivePlaylist: (tracks, index) ->
+    collections.push
+      action: 'addTracksToActivePlaylist'
+      arguments: arguments
 
   #--------Remote------------------
   #settings can be set here or when Bandura is created('remote' field).
