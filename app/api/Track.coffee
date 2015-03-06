@@ -7,4 +7,6 @@ class Track
   constructor: (data) ->
     _.extend(@, @defaults, data)
 
+  get: (param) -> @[param]
+
 module.exports = Track

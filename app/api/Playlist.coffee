@@ -3,7 +3,8 @@ Track = require './Track'
 
 class Playlist
   #Public
-  constructor: (@_tracks = [], @_name = 'User playlist', @_activeTrackIndex = 0, @_id = Utils.randomId()) ->
+  constructor: (tracks = [], @_name = 'User playlist', @_activeTrackIndex = 0, @_id = Utils.randomId()) ->
+    @_tracks = tracks.map (track) -> if (track instanceof Track) then track else new Track(track)
 
   getName: -> @_name
   getTracks: -> @_tracks
@@ -29,8 +30,6 @@ class Playlist
 
   # [[Track], Int] => [Playlist]  track, optional: position, default add to end
   addTracks: (tracks, position)->
-    unless tracks.every (track) -> track instanceOf Track
-      tracks = tracks.map (track) -> if track instanceOf Track then track else new Track(track)
     if position?
       newTracks = Utils.insertOn @_tracks, tracks, position
       activeTrack = if position > @_activeTrackIndex then @_activeTrackIndex else @_activeTrackIndex + tracks.length
