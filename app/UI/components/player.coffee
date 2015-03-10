@@ -24,7 +24,8 @@ module.exports = React.createClass
       when 'Stoped'
         controls.push 'play'
 
-  closeVideoScreen: ->
+  closeVideoScreen: (ev)->
+    ev.preventDefault()
     @setState videoScreen: no
 
   render: ->

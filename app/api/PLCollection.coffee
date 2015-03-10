@@ -47,6 +47,10 @@ class PLCollection
   setActivePlaylist: (playlist) ->
     return new PLCollection(@_playlists, true, @_plIds, playlist.getId())
 
+  addTracksToActivePlaylist: (tracks, index) ->
+    throw new Error 'no Active playlist' unless @getActivePlaylist()
+    return @updateActive(@getActivePlaylist().addTracks(tracks,index))
+
   #============GETERS===========
   getPlaylistById: (id) ->
     index = _.indexOf @_plIds, id, true

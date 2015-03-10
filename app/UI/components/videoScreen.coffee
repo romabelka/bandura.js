@@ -1,10 +1,11 @@
 VideoItem = require './videoItem'
-
+{controls} = require '../../dispatcher/api'
 module.exports = React.createClass
   displayName: 'videoScreen'
   getInitialState: ->
     visibleVideo: no
   clickVideo: (video)->
+    controls.push 'pause'
     @setState visibleVideo: video
 
   render: ->

@@ -23,7 +23,10 @@ playerSettings = settingsChanges.scan({},(settings, changes) ->
 
 playlistsCollection = collections.scan(new PLCollection(), (collection, ev) ->
   return ev.collection if ev.action is 'setNewCollection'
-  return collection[ev.action](ev.playlist)
+  if ev.playlist?
+    return collection[ev.action](ev.playlist)
+  else
+    return collection[ev.action].apply(collection, ev.arguments)
 )
 
 #Changes volume of current track(SM can't change volume on all tracks)
@@ -49,7 +52,7 @@ playerActions = playlistsCollection.combine(controls, (a,b) ->
   if typeof obj.action is 'string'
     switch obj.action
       when 'stop'
-        soundManager.destroySound(playlist?.getActiveTrack()?.id)
+        soundManager.stop(playlist?.getActiveTrack()?.id)
         Utils.extendImmutable playlist, {playingStatus: 'Stoped'}
       when 'play'
         console.log '----', obj.collection

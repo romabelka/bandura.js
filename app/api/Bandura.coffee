@@ -58,6 +58,7 @@ class Bandura
       tooltip: 'open/close playlists'
     ]
     buttons.push defaultButtons
+    buttons.push options.buttons if options.buttons?
 
 
 
@@ -111,9 +112,11 @@ class Bandura
   #------------Playlist----------
   playPlaylist: (pl) ->
     controls.push('stop')
-    collections.push
-      action: 'updateActive'
-      playlist: pl
+    if pl instanceof Playlist
+      collections.push
+        action: 'updateActive'
+        playlist: pl
+    else @setCustomPlaylist.apply(@, arguments)
     controls.push('play')
     return @
 
@@ -143,27 +146,23 @@ class Bandura
   setPlaylistsCollection: (collection) ->
     collection = new PLCollection(collection) unless collection instanceof PLCollection
     collections.push({action: 'setNewCollection', collection: collection})
-
     return @
 
   removePlaylist: (pl) ->
     collections.push({action: 'removePlaylist', playlist: pl})
-
     return @
 
   addPlaylist: (pl) ->
-    collections.push({action: 'addPlaylist', playlist: pl})
-
+    if Array.isArray(pl)
+      pl = new Playlist(pl, arguments[1])
+      collections.push({action: 'addPlaylist', playlist: pl})
     return @
 
-
-  #=======================static======================
-  @valideVolume = (vol) ->
-    throw new Error 'must be a number' unless _.isNumber vol
-
-    if vol < 0 then return 0
-    else if vol > 100 then return 100
-    else return vol
+  #[Track]
+  addTracksToActivePlaylist: (tracks, index) ->
+    collections.push
+      action: 'addTracksToActivePlaylist'
+      arguments: arguments
 
   #--------Remote------------------
   #settings can be set here or when Bandura is created('remote' field).
@@ -188,6 +187,18 @@ class Bandura
       url: url
       dataType: "jsonp"
     ).map((response) -> response.data.items)
+
+  #-----buttons-----------------
+  addButtons:(additionalButtons) ->
+    buttons.push additionalButtons
+  #=======================static======================
+  @valideVolume = (vol) ->
+    throw new Error 'must be a number' unless _.isNumber vol
+
+    if vol < 0 then return 0
+    else if vol > 100 then return 100
+    else return vol
+
 
 
 module.exports = Bandura
