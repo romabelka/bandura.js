@@ -24,10 +24,8 @@ gulp.task('css', function () {
 gulp.task('coffee', function () {
   return gulp.src(coffeeFiles)
     .pipe(plugins.plumber())
-    .pipe(plugins.sourcemaps.init())
     .pipe(plugins.coffee({bare: true}))
     .pipe(plugins.react())
-    .pipe(plugins.sourcemaps.write())
     .pipe(gulp.dest(tmp));
 });
 
