@@ -47,13 +47,8 @@ module.exports = React.createClass
               </div>
             </div>
           </div>
-          <div className="b-player--section">
-            <div className="b-progressbar--wrapper">
-            </div>
-          </div>
-          <div className="b-player--section">
-            <Volume volume={this.props.volume} mute={this.props.mute}/>
-          </div>
+          <div className="b-player--section" id='bandura-progressbar-section' />
+          <div className="b-player--section" id='bandura-volume-section' />
           <div className="b-player--section">
             <Buttons enabledButtons={this.props.buttons} />
           </div>

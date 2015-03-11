@@ -24,7 +24,7 @@ module.exports = React.createClass
       showTime = "#{trackTime.posMin}:#{trackTime.posSec} / #{trackTime.min}:#{trackTime.sec}"
       progress = @props.position / @props.duration
     return `(
-    <div>
+    <div className="b-progressbar--wrapper">
       <small className="b-progressbar--track--info">{trackInfo}</small>
       <small className="b-progressbar--track--time">{showTime}</small>
 

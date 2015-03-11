@@ -14,7 +14,7 @@ module.exports = ->
       loaded: progressbar.loaded
 
   playerSettings.onValue (settings) ->
-    UI.player.setProps settings
+    UI.volume?.setProps settings
 
 
   playerActions.onValue (obj) ->

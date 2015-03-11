@@ -45,8 +45,6 @@ gulp.task('js', ['lint', 'coffee'], function () {
       insertGlobals: true,
       debug: true
     }))
-    .pipe(plugins.sourcemaps.init({loadMaps: true}))
-    .pipe(plugins.sourcemaps.write('./'))
     .pipe(gulp.dest(dist))
 });
 
