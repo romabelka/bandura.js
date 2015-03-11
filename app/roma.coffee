@@ -1,6 +1,5 @@
 window.Bandura = require('./api/Bandura')
 
-###
 window.bandura = new Bandura
   remote:
     host: 'ws://localhost:3000'
@@ -22,4 +21,3 @@ window.bandura = new Bandura
 window.playlists = require './fixtures/playlists'
 window.tracks = require './fixtures/tracks'
 require './fixtures/mainpage'
-###

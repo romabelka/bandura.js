@@ -3,29 +3,27 @@ renderUI = require '../UI/UI'
 
 module.exports = ->
   UI = do renderUI
+  playlistsCollection.onValue (PLC) ->
+    UI.player.setProps PLCollection: PLC
+    UI.progressbar.setProps currentTrack: PLC?.getActivePlaylist()?.getActiveTrack()
+
   progressbar.onValue (progressbar) ->
-    UI.setProps
+    UI.progressbar.setProps
       position: progressbar.position
       duration: progressbar.duration
       loaded: progressbar.loaded
 
   playerSettings.onValue (settings) ->
-    UI.setProps settings
+    UI.volume?.setProps settings
 
-
-  playlistsCollection.onValue (PLC) ->
-    console.log '----', 'change in PLC'
-    UI.setProps
-      PLCollection: PLC
 
   playerActions.onValue (obj) ->
-    UI.setProps({playingStatus: obj.playingStatus}) if obj.playingStatus?
+    UI.player.setProps({playingStatus: obj.playingStatus}) if obj.playingStatus?
 
   videos.onValue (videos) ->
-    console.log '----', videos
-    UI.setProps videos: videos
+    UI.player.setProps videos: videos
 
-  callbacks.onValue (buttons) -> UI.setProps buttons: buttons
+  callbacks.onValue (buttons) -> UI.player.setProps buttons: buttons
 
   banduraEvents = soundEvents.combine(playlistsCollection, (se,plc) ->
     collection: plc

@@ -1,10 +1,39 @@
 .b-playlist {
+  &--scroll {
+    height: @playlistHeight;
+    width: 40px;
+    background-color: @scrollBackground;
+    opacity: 0.3;
+    position: fixed;
+    z-index: 10;
+    text-align: center;
+    &:hover {
+      opacity: 0.9;
+    }
+    &__back {
+      left: 0;
+    }
+    &__forward {
+      right: 0;
+    }
+  }
+
+  &--icon {
+    line-height: @playlistHeight;
+    font-size: 35px;
+    color: @scrollArrowCollor;
+  }
 
   &--title{
     color:white;
   }
   &--tracks{
     margin: 0;
+    height: 173px;
+    overflow: hidden;
+    width: 9999%;
+    padding: 0;
+    position: relative;
   }
   &--tracks-item {
     display: inline-block;
