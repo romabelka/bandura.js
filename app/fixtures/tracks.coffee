@@ -10,8 +10,8 @@ module.exports = [
 
   new Track
     id: '1205'
-    name: 'AJust Me Up'
-    artist: 'Kurt Kobein'
+    name: 'AJust Me Up test very long name'
+    artist: 'Kurt Kobein test veri long artist name'
     cover: 'public/img/20.jpg'
     url: 'https://storage.tunehog.com/public/rrmusic/track/1205.mp3'
 
