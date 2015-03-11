@@ -1,12 +1,14 @@
 Track = require './track'
 {collections} = require '../../dispatcher/api'
+#todo calculate this
+defaultTrackWidth = 127;
 
 module.exports = React.createClass
   displayName: 'Playlist'
   getInitialState: ->
     {
-      showLeftScroll:yes
-      showRightScroll:yes
+      showLeftScroll:no
+      showRightScroll:no
       position: 0
       scrolling: null
     }
@@ -19,23 +21,41 @@ module.exports = React.createClass
     ev.preventDefault()
 
   scrollLeft: (ev) ->
+    @setState showRightScroll: yes
     @setState scrolling: setInterval(=>
-      @setState position: @state.position - 50
+      if @state.position >=0
+        @finishScrolling()
+        @setState showLeftScroll: no
+      @setState position: @state.position + 50
     ,50)
   scrollRight: (ev) ->
+    @setState showLeftScroll: yes
     @setState scrolling: setInterval(=>
-      @setState position: @state.position + 50
+      if @state.position <= @refs.playlist.getDOMNode().getBoundingClientRect().width - @props.playlist.getTracks().length * defaultTrackWidth
+        @finishScrolling()
+        @setState showRightScroll: no
+        return
+      @setState position: @state.position - 50
     ,50)
 
   finishScrolling: ->
     clearInterval(@state.scrolling) if @state.scrolling?
 
   componentDidMount: () ->
-    ul = @refs.tracklist.getDOMNode()
+    tracks = @props.playlist?.getTracks()
+    return unless tracks
+    width = @refs.playlist.getDOMNode().getBoundingClientRect().width
+    @setState(showRightScroll: yes) if width < tracks.length * defaultTrackWidth
+
+  componentWillReceiveProps: (nextProps) ->
+    return unless nextProps.playlist?
+    changedPlaylist = @props.playlist?.getId() isnt nextProps.playlist.getId()
+    @setState({position: 0, showLeftScroll: no}) if changedPlaylist
+    @setState showRightScroll: @state.position >= @refs.playlist.getDOMNode().getBoundingClientRect().width - nextProps.playlist.getTracks().length * defaultTrackWidth
 
 
   render: ->
-    return false unless @props.playlist?
+    return `<div className="b-playlist" ref="playlist" />` unless @props.playlist?
 
     self = @
 
@@ -68,10 +88,10 @@ module.exports = React.createClass
     )` if @state.showRightScroll
 
     return `(
-        <div className="b-playlist" onDrop={this.drop} onDragOver={this.dragOver}>
+        <div className="b-playlist" onDrop={this.drop} onDragOver={this.dragOver} ref="playlist">
           {leftScroll}
           {rightScroll}
-          <ul className="b-playlist--tracks" ref="tracklist" style={{left:this.state.position}}>
+          <ul className="b-playlist--tracks" style={{left:this.state.position}}>
             {tracks}
           </ul>
         </div>
