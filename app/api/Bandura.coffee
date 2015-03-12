@@ -178,7 +178,7 @@ class Bandura
 
   #--------Youtube----------------
   findYouTubeVideos: (track) ->
-    @UI.setState videoScreen: true
+    @UI.player.setState videoScreen: true
     throw new Error('Noting is playing right now') unless track
     query = track.artist or '' + ' ' + track.name or ''
     protocol = window.location.protocol or 'http:'
