@@ -17,13 +17,17 @@
 
     &--item{
       background-color: @plankLiColor;
-      width: 150px;
+      max-width: 200px;
       height: 25px;
       line-height: 25px;
       margin: 0 5px;
+      padding:0 15px;
       text-align: center;
       display: inline-block;
       cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
 
       &__active{
         background-color: lighten(@plankLiColor, 20%);
