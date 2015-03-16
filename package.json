@@ -26,7 +26,6 @@
     "gulp-coffeelint": "^0.4.0",
     "gulp-less": "^3.0.0",
     "gulp-load-plugins": "^0.8.1",
-    "gulp-plumber": "^0.6.6",
     "gulp-react": "^2.0.0",
     "gulp-sourcemaps": "^1.5.0"
   }

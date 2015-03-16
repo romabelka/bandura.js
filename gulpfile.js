@@ -10,7 +10,6 @@ var coffeeFiles = './app/**/*.coffee';
 // CSS
 gulp.task('css', function () {
   return gulp.src('./app/styles/bandura.less')
-    .pipe(plugins.plumber())
     .pipe(plugins.sourcemaps.init())
     .pipe(plugins.less({
       paths: ['./app/styles']
@@ -23,7 +22,6 @@ gulp.task('css', function () {
 // Coffee
 gulp.task('coffee', function () {
   return gulp.src(coffeeFiles)
-    .pipe(plugins.plumber())
     .pipe(plugins.coffee({bare: true}))
     .pipe(plugins.react())
     .pipe(gulp.dest(tmp));
@@ -39,7 +37,6 @@ gulp.task('lint', function () {
 // JS
 gulp.task('js', ['lint', 'coffee'], function () {
   return gulp.src('./tmp/roma.js')
-    .pipe(plugins.plumber())
     .pipe(plugins.browserify({
       extensions: ['.js'],
       insertGlobals: true,

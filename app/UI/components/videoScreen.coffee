@@ -15,7 +15,7 @@ module.exports = React.createClass
       `(<VideoItem video={video} key={video.id} onClick={self.clickVideo} showVideo={video==self.state.visibleVideo}/>)`
     return `(
     <div className="b-video">
-        <span href='#' className="b-video--close" onClick={this.props.closeScreen}>X</span>
+        <span className="b-video--close" onClick={this.props.closeScreen}>&times;</span>
         {videoItems}
     </div>
 
