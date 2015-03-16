@@ -183,6 +183,7 @@ class Bandura
     query = track.artist or '' + ' ' + track.name or ''
     protocol = window.location.protocol or 'http:'
     url = protocol + "//gdata.youtube.com/feeds/api/videos/-/Music?q=#{query}&hd=true&v=2&alt=jsonc&safeSearch=strict"
+    #todo implement flatMapLatest
     videos.plug Bacon.fromPromise($.ajax
       url: url
       dataType: "jsonp"

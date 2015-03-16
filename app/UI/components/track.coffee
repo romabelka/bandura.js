@@ -1,4 +1,5 @@
 {controls, collections} = require('../../dispatcher/api')
+Tooltip = require('./Tooltip')
 module.exports = React.createClass
   displayName: 'Track'
   play: ->
@@ -26,7 +27,7 @@ module.exports = React.createClass
       else @play
 
     return `(
-      <div className={className} onClick={action}>
+      <Tooltip className={className} onClick={action}>
         <div className="b-track__cover">
           <div className="b-track__cover__blur b-track__cover-default-image" style={cssImage}></div>
           <div className="b-track__cover__circle  b-track__cover-default-image" style={cssImage}></div>
@@ -37,5 +38,5 @@ module.exports = React.createClass
         </div>
         <div className="b-track__text b-track__text_artist">{this.props.track.artist}</div>
         <div className="b-track__text b-track__text_name">{this.props.track.name}</div>
-      </div>
+      </Tooltip>
     );`
