@@ -7,6 +7,7 @@
   bottom: 100px;
   overflow: scroll;
   box-shadow: 0 0 10px #999;
+  padding: 40px 1%;
 
   &--close{
     position: absolute;
@@ -17,24 +18,40 @@
     line-height: 20px;
     vertical-align: middle;
     text-align: center;
-
-    color: white;
-    background: black;
+    color: black;
+    cursor: pointer;
   }
+
   &--item {
+    width: 14.2%;
+    padding: 1%;
+    height: 140px;
+    box-sizing: border-box;
+    display: inline-block;
+  }
+
+  &--title{
+    width: 100%;
+    font-size: 12px;
+    line-height: 32px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: center;
+  }
+
+  &--picture{
+    max-width: 100%;
     width: 140px;
     height: 105px;
-    display: inline-block;
-    margin: 10px;
+    margin: 0 auto;
 
-  }
-
-  &--picture {
-    position: relative;
-    &--img{
-      width: 140px;
-      height: 105px;
+    img{
+      max-width: 100%;
     }
+  }
+  &--wrapper {
+    position: relative;
 
     &:after{
       position: absolute;
@@ -45,7 +62,7 @@
       height: 0;
       left: 50%;
       margin-left: -6px;
-      bottom: -16px;
+      bottom: -13px;
       border-left: 6px solid transparent;
       border-right: 6px solid transparent;
       border-bottom: 6px solid black;
@@ -64,7 +81,6 @@
     overflow: hidden;
     transition: max-height 0.15s ease-out;
 
-
     .video_active &{
       max-height: 500px;
       transition: max-height 0.25s ease-in;
@@ -76,13 +92,13 @@
       position: relative;
       left: 0;
       height: 0;
-      margin-bottom: -410px;
+      margin-bottom: -425px;
     }
     &--wrapper{
       box-sizing: border-box;
       position: absolute;
       left: 0;
-      margin-top: 125px;
+      margin-top: 150px;
       height: 390px;
       width: 100%;
 

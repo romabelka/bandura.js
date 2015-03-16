@@ -13,8 +13,11 @@ module.exports = React.createClass
             </div>
             <div className='b-video--popup--wrapper'><iframe width="560" height="315" src={"https://www.youtube.com/embed/"+this.props.video.id} frameBorder="0" allowFullScreen /></div>
           </div>
-          <div className='b-video--picture'>
-            <img className='b-video--picture--img' src={this.props.video.thumbnail.hqDefault}/>
+          <div className='b-video--wrapper'>
+            <div className='b-video--picture'>
+              <img src={this.props.video.thumbnail.hqDefault}/>
+            </div>
+            <div className='b-video--title'>{this.props.video.title}</div>
           </div>
 
       </div>
@@ -22,8 +25,12 @@ module.exports = React.createClass
     else
       `(
       <div className='b-video--item' onClick={this.handleClick}>
-        <div className='b-video--picture'>
-          <img className='b-video--picture--img' src={this.props.video.thumbnail.hqDefault}/>
+        <div className='b-video--wrapper'>
+          <div className='b-video--picture'>
+            <img src={this.props.video.thumbnail.hqDefault}/>
+          </div>
+          <div className='b-video--title'>{this.props.video.title}</div>
         </div>
+
       </div>
       )`
