@@ -5,7 +5,7 @@ module.exports = React.createClass
   getInitialState: ->
     visibleVideo: no
   clickVideo: (video)->
-    controls.push 'pause'
+    controls.push action: 'pause'
     @setState visibleVideo: video
 
   render: ->

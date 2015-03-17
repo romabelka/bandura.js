@@ -83,49 +83,49 @@ class Bandura
       else if _.isEmpty obj then throw new error 'track cant be empty object'
       else new Track obj
 
-    controls.push('stop')
+    controls.push(action: 'stop')
     @setCustomPlaylist [track]
-    controls.push('play')
+    controls.push(action: 'play')
 
     return @
 
 
   pause: () ->
-    controls.push('pause')
+    controls.push(action: 'pause')
     return @
 
   stop: () ->
-    controls.push('stop')
+    controls.push(action: 'stop')
     return @
 
   play: () ->
-    controls.push('play')
+    controls.push(action: 'play')
     return @
 
   setPosition: (percent) ->
     controls.push
-      type: 'setPosition'
+      action : 'setPosition'
       percent: percent
 
     return @
 
   #------------Playlist----------
   playPlaylist: (pl) ->
-    controls.push('stop')
+    controls.push(action: 'stop')
     if pl instanceof Playlist
       collections.push
         action: 'updateActive'
         playlist: pl
     else @setCustomPlaylist.apply(@, arguments)
-    controls.push('play')
+    controls.push(action: 'play')
     return @
 
   nextTrack: () ->
-    controls.push('nextTrack')
+    controls.push(action: 'nextTrack')
     return @
 
   previousTrack: () ->
-    controls.push('previousTrack')
+    controls.push(action: 'previousTrack')
     return @
 
   #-----------PlaylistCollections---------
@@ -136,7 +136,7 @@ class Bandura
       playlist: new Playlist tracks, 'Custom playlist', currentTrack, PLCollection.CUSTOM_ID
 
   setActivePlaylist: (pl) ->
-    controls.push('stop')
+    controls.push(action: 'stop')
     collections.push
       action: 'updateActive'
       playlist: pl

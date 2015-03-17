@@ -13,17 +13,17 @@ module.exports = React.createClass
     videoScreen: no
 
   prevTrack: ->
-    controls.push('previousTrack')
+    controls.push action: 'previousTrack'
   nextTrack: ->
-    controls.push('nextTrack')
+    controls.push action: 'nextTrack'
   playAction: ->
     switch this.props.playingStatus
       when 'isPlaying'
-        controls.push 'pause'
+        controls.push action: 'pause'
       when 'Paused'
-        controls.push 'play'
+        controls.push action: 'play'
       when 'Stoped'
-        controls.push 'play'
+        controls.push action: 'play'
 
   closeVideoScreen: (ev)->
     ev.preventDefault()
