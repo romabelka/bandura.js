@@ -42,54 +42,9 @@ playerSettings.changes().combine(playlistsCollection, (a,b) ->
 #=============================================
 
 
-playerActions = playlistsCollection.combine(controls, (a,b) ->
-  {
-  collection: a
-  task: b
-  }
-).map(({collection, task}) ->
-  #todo refactor this
+playerActions = playlistsCollection.sampledBy(controls, (collection, task) ->
   playlist = collection.getActivePlaylist()
-  switch task.action
-    when 'stop'
-      soundManager.stop(playlist?.getActiveTrack()?.id)
-      Utils.extendImmutable playlist, {playingStatus: 'Stoped'}
-    when 'play'
-      console.log '----', collection
-      soundManager.pauseAll()
-      if playlist.getActiveTrack()
-        soundManager.createSound(playlist.getActiveTrack())
-        soundManager.play(playlist.getActiveTrack().id)
-      Utils.extendImmutable playlist, {playingStatus: 'isPlaying'}
-
-    when 'pause'
-      soundManager.pauseAll()
-      Utils.extendImmutable playlist, {playingStatus: 'Paused'}
-
-    when 'nextTrack'
-      nextTrack = playlist.nextTrack()
-      controls.push(action: 'stop')
-      collections.push
-        action: 'update'
-        playlist: nextTrack
-      controls.push(action: 'play')
-      Utils.extendImmutable nextTrack, {result: 'switched to next track'}
-
-
-    when 'previousTrack'
-      previousTrack = playlist.previousTrack()
-      controls.push(action: 'stop')
-      collections.push
-        action: 'update'
-        playlist: previousTrack
-      controls.push(action: 'play')
-      Utils.extendImmutable previousTrack, {result: 'switched to previous track'}
-
-    when 'setPosition'
-      track = soundManager.getSoundById(playlist.getActiveTrack().id)
-      position = track.duration * task.percent
-      track.setPosition(position)
-
+  controlsMethods[task.action](playlist, task)
 )
 
 
@@ -116,3 +71,42 @@ videoSet = videos.flatMapLatest((query) ->
 )).map((response) -> response.data.items)
 
 module.exports = {progressbar, playerSettings, playlistsCollection, playerActions, videoSet, callbacks, soundEvents}
+
+controlsMethods =
+  stop: (playlist) ->
+    soundManager.stop(playlist?.getActiveTrack()?.id)
+    Utils.extendImmutable playlist, {playingStatus: 'Stoped'}
+  play: (playlist) ->
+    soundManager.pauseAll()
+    if playlist?.getActiveTrack()
+      soundManager.createSound(playlist.getActiveTrack())
+      soundManager.play(playlist.getActiveTrack().id)
+    Utils.extendImmutable playlist, {playingStatus: 'isPlaying'}
+
+  pause: (playlist) ->
+    soundManager.pauseAll()
+    Utils.extendImmutable playlist, {playingStatus: 'Paused'}
+
+  nextTrack: (playlist) ->
+    nextTrack = playlist.nextTrack()
+    @stop(playlist)
+    collections.push
+      action: 'update'
+      playlist: nextTrack
+    controls.push action: 'play'
+    Utils.extendImmutable nextTrack, {result: 'switched to next track'}
+
+  previousTrack: (playlist) ->
+    previousTrack = playlist.previousTrack()
+    @stop(playlist)
+    collections.push
+      action: 'update'
+      playlist: previousTrack
+    controls.push action: 'play'
+    Utils.extendImmutable previousTrack, {result: 'switched to previous track'}
+
+  setPosition: (playlist, task) ->
+    track = soundManager.getSoundById(playlist.getActiveTrack().id)
+    position = track.duration * task.percent
+    track.setPosition(position)
+
