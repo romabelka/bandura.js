@@ -6,7 +6,7 @@ module.exports = React.createClass
 
   setPosition: (ev) ->
     controls.push
-      type: 'setPosition'
+      action : 'setPosition'
       percent: (ev.clientX - ev.currentTarget.getBoundingClientRect().left) / width
 
   render: () ->

@@ -2,15 +2,15 @@
 module.exports = React.createClass
   displayName: 'Track'
   play: ->
-    controls.push 'stop'
+    controls.push action: 'stop'
     collections.push
       action: 'updateActive'
       playlist: @props.playlist.changeTrack(@props.index)
-    controls.push 'play'
+    controls.push action: 'play'
   pause: ->
-    controls.push 'pause'
+    controls.push action: 'pause'
   resume: ->
-    controls.push 'play'
+    controls.push action: 'play'
 
   render: ->
     className = 'b-track'

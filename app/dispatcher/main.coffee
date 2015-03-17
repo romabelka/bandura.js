@@ -45,52 +45,50 @@ playerSettings.changes().combine(playlistsCollection, (a,b) ->
 playerActions = playlistsCollection.combine(controls, (a,b) ->
   {
   collection: a
-  action: b
+  task: b
   }
-).map((obj) ->
-  playlist = obj.collection.getActivePlaylist()
-  if typeof obj.action is 'string'
-    switch obj.action
-      when 'stop'
-        soundManager.stop(playlist?.getActiveTrack()?.id)
-        Utils.extendImmutable playlist, {playingStatus: 'Stoped'}
-      when 'play'
-        console.log '----', obj.collection
-        soundManager.pauseAll()
-        if playlist.getActiveTrack()
-          soundManager.createSound(playlist.getActiveTrack())
-          soundManager.play(playlist.getActiveTrack().id)
-        Utils.extendImmutable playlist, {playingStatus: 'isPlaying'}
+).map(({collection, task}) ->
+  #todo refactor this
+  playlist = collection.getActivePlaylist()
+  switch task.action
+    when 'stop'
+      soundManager.stop(playlist?.getActiveTrack()?.id)
+      Utils.extendImmutable playlist, {playingStatus: 'Stoped'}
+    when 'play'
+      console.log '----', collection
+      soundManager.pauseAll()
+      if playlist.getActiveTrack()
+        soundManager.createSound(playlist.getActiveTrack())
+        soundManager.play(playlist.getActiveTrack().id)
+      Utils.extendImmutable playlist, {playingStatus: 'isPlaying'}
 
-      when 'pause'
-        soundManager.pauseAll()
-        Utils.extendImmutable playlist, {playingStatus: 'Paused'}
+    when 'pause'
+      soundManager.pauseAll()
+      Utils.extendImmutable playlist, {playingStatus: 'Paused'}
 
-      when 'nextTrack'
-        nextTrack = playlist.nextTrack()
-        controls.push('stop')
-        collections.push
-          action: 'update'
-          playlist: nextTrack
-        controls.push('play')
-        Utils.extendImmutable nextTrack, {result: 'switched to next track'}
+    when 'nextTrack'
+      nextTrack = playlist.nextTrack()
+      controls.push(action: 'stop')
+      collections.push
+        action: 'update'
+        playlist: nextTrack
+      controls.push(action: 'play')
+      Utils.extendImmutable nextTrack, {result: 'switched to next track'}
 
 
-      when 'previousTrack'
-        previousTrack = playlist.previousTrack()
-        controls.push('stop')
-        collections.push
-          action: 'update'
-          playlist: previousTrack
-        controls.push('play')
-        Utils.extendImmutable previousTrack, {result: 'switched to previous track'}
+    when 'previousTrack'
+      previousTrack = playlist.previousTrack()
+      controls.push(action: 'stop')
+      collections.push
+        action: 'update'
+        playlist: previousTrack
+      controls.push(action: 'play')
+      Utils.extendImmutable previousTrack, {result: 'switched to previous track'}
 
-  else
-    switch obj.action.type
-      when 'setPosition'
-        track = soundManager.getSoundById(playlist.getActiveTrack().id)
-        position = track.duration * obj.action.percent
-        track.setPosition(position)
+    when 'setPosition'
+      track = soundManager.getSoundById(playlist.getActiveTrack().id)
+      position = track.duration * task.percent
+      track.setPosition(position)
 
 )
 
@@ -98,7 +96,7 @@ playerActions = playlistsCollection.combine(controls, (a,b) ->
 soundEvents.onValue (ev) ->
   switch ev
     when 'finish'
-      controls.push 'nextTrack'
+      controls.push action: 'nextTrack'
 
 callbacks = buttons.scan([], (buttons, ev) ->
   return buttons.concat ev
