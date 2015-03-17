@@ -1,5 +1,5 @@
 renderUI = require '../UI/UI'
-{progressbar, playerSettings, playlistsCollection, playerActions, videos, callbacks, soundEvents} = require './main'
+{progressbar, playerSettings, playlistsCollection, playerActions, videoSet, callbacks, soundEvents} = require './main'
 
 module.exports = ->
   UI = do renderUI
@@ -20,7 +20,8 @@ module.exports = ->
   playerActions.onValue (obj) ->
     UI.player.setProps({playingStatus: obj.playingStatus}) if obj.playingStatus?
 
-  videos.onValue (videos) ->
+  videoSet.onValue (videos) ->
+    console.log '----', videos
     UI.player.setProps videos: videos
 
   callbacks.onValue (buttons) -> UI.player.setProps buttons: buttons

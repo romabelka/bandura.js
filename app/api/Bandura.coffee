@@ -181,13 +181,7 @@ class Bandura
     @UI.player.setState videoScreen: true
     throw new Error('Noting is playing right now') unless track
     query = track.artist or '' + ' ' + track.name or ''
-    protocol = window.location.protocol or 'http:'
-    url = protocol + "//gdata.youtube.com/feeds/api/videos/-/Music?q=#{query}&hd=true&v=2&alt=jsonc&safeSearch=strict"
-    #todo implement flatMapLatest
-    videos.plug Bacon.fromPromise($.ajax
-      url: url
-      dataType: "jsonp"
-    ).map((response) -> response.data.items)
+    videos.push query
 
   #-----buttons-----------------
   addButtons:(additionalButtons) ->

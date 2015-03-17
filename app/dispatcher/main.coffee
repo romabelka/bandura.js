@@ -108,5 +108,13 @@ callbacks = buttons.scan([], (buttons, ev) ->
     .sort (a,b) -> a.order > b.order
 )
 
+videoSet = videos.flatMapLatest((query) ->
+  protocol = window.location.protocol or 'http:'
+  url = protocol + "//gdata.youtube.com/feeds/api/videos/-/Music?q=#{query}&hd=true&v=2&alt=jsonc&safeSearch=strict"
+  Bacon.fromPromise(
+    $.ajax
+      url: url
+      dataType: "jsonp"
+)).map((response) -> response.data.items)
 
-module.exports = {progressbar, playerSettings, playlistsCollection, playerActions, videos, callbacks, soundEvents}
+module.exports = {progressbar, playerSettings, playlistsCollection, playerActions, videoSet, callbacks, soundEvents}
