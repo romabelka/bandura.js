@@ -1,4 +1,4 @@
-{controls,progress, activePlaylist, collections, settingsChanges, videos, buttons, soundEvents} = require('../dispatcher/api')
+{controls,progress, collections, settingsChanges, videos, buttons, soundEvents, notify} = require('../dispatcher/api')
 #require('../dispatcher/api')
 PlayerSettings = require('./PlayerSettings')
 Track = require('./Track')
@@ -186,6 +186,9 @@ class Bandura
   #-----buttons-----------------
   addButtons:(additionalButtons) ->
     buttons.push additionalButtons
+
+  notify: (text) ->
+    notify.push text
   #=======================static======================
   @valideVolume = (vol) ->
     throw new Error 'must be a number' unless _.isNumber vol

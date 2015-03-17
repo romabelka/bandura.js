@@ -1,5 +1,5 @@
 renderUI = require '../UI/UI'
-{progressbar, playerSettings, playlistsCollection, playerActions, videoSet, callbacks, soundEvents} = require './main'
+{progressbar, playerSettings, playlistsCollection, playerActions, videoSet, callbacks, soundEvents, notifications} = require './main'
 
 module.exports = ->
   UI = do renderUI
@@ -25,6 +25,8 @@ module.exports = ->
     UI.player.setProps videos: videos
 
   callbacks.onValue (buttons) -> UI.player.setProps buttons: buttons
+
+  notifications.onValue (lastN) -> UI.player.setProps notifications: lastN
 
   banduraEvents = soundEvents.combine(playlistsCollection, (se,plc) ->
     collection: plc

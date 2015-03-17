@@ -6,5 +6,6 @@ dispatcherAPI =
   videos          : new Bacon.Bus()
   buttons         : new Bacon.Bus()
   soundEvents     : new Bacon.Bus()
+  notify          : new Bacon.Bus()
 
 module.exports = dispatcherAPI

@@ -1,4 +1,4 @@
-{controls,progress, collections, settingsChanges, videos, buttons, soundEvents} = require('./api')
+{controls,progress, collections, settingsChanges, videos, buttons, soundEvents, notify} = require('./api')
 PLCollection = require('../api/PLCollection')
 Bandura = require('../api/Bandura')
 Utils = require('../utils/utils')
@@ -71,5 +71,10 @@ videoSet = videos.flatMapLatest((query) ->
       dataType: "jsonp"
 )).map((response) -> response.data.items)
 
-module.exports = {progressbar, playerSettings, playlistsCollection, playerActions, videoSet, callbacks, soundEvents}
+notifications = notify.map((text) ->
+  text: text
+  timestamp: Date.now()
+).slidingWindow(10)
+
+module.exports = {progressbar, playerSettings, playlistsCollection, playerActions, videoSet, callbacks, soundEvents, notifications}
 

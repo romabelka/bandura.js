@@ -54,7 +54,7 @@ module.exports = React.createClass
             <Buttons enabledButtons={this.props.buttons} />
           </div>
         </div>
-        <Notification/>
+        <Notification notifications = {this.props.notifications}/>
         <Playlists PLCollection={this.props.PLCollection} isPlaying={this.props.playingStatus} visible={this.state.showPlaylists}/>
         <VidoScreen videos = {this.props.videos} visible={this.state.videoScreen} closeScreen={this.closeVideoScreen} />
       </div>
