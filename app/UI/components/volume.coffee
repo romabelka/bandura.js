@@ -34,7 +34,9 @@ module.exports = React.createClass
       onMouseUp={this.cancelDrag}
       onMouseLeave={this.cancelDrag}
     >
-    <i className= {'b-icon b-icon__mute ' + muteIcon} onClick={this.mute}></i>
+    <span className='b-btn b-tooltip' data-tooltip='Mute volume'>
+      <i className= {'b-icon b-icon__mute ' + muteIcon + ''} onClick={this.mute}></i>
+    </span>
     <div className="b-volume--container" ref="container">
       <div className="b-volume--draggable">
         <i className="b-icon b-icon__record b-draggable" style={{top:-26, left: this.props.volume / 2 - 5}}></i>
