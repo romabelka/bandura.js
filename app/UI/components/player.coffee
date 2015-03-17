@@ -1,5 +1,6 @@
 {controls} = require('../../dispatcher/api')
 Playlists = require './playlists'
+Notification = require './notification'
 Volume = require './volume'
 Progressbar = require './progressbar'
 Buttons = require './buttons'
@@ -53,6 +54,7 @@ module.exports = React.createClass
             <Buttons enabledButtons={this.props.buttons} />
           </div>
         </div>
+        <Notification/>
         <Playlists PLCollection={this.props.PLCollection} isPlaying={this.props.playingStatus} visible={this.state.showPlaylists}/>
         <VidoScreen videos = {this.props.videos} visible={this.state.videoScreen} closeScreen={this.closeVideoScreen} />
       </div>
