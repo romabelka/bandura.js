@@ -2,6 +2,7 @@
 PLCollection = require('../api/PLCollection')
 Bandura = require('../api/Bandura')
 Utils = require('../utils/utils')
+controlsMethods = require './methods'
 
 #========frequently changed values============
 progressbar = progress.map((smTrack) ->
@@ -44,7 +45,7 @@ playerSettings.changes().combine(playlistsCollection, (a,b) ->
 
 playerActions = playlistsCollection.sampledBy(controls, (collection, task) ->
   playlist = collection.getActivePlaylist()
-  controlsMethods[task.action](playlist, task)
+  do controlsMethods(playlist, task)[task.action]
 )
 
 
@@ -71,42 +72,4 @@ videoSet = videos.flatMapLatest((query) ->
 )).map((response) -> response.data.items)
 
 module.exports = {progressbar, playerSettings, playlistsCollection, playerActions, videoSet, callbacks, soundEvents}
-
-controlsMethods =
-  stop: (playlist) ->
-    soundManager.stop(playlist?.getActiveTrack()?.id)
-    Utils.extendImmutable playlist, {playingStatus: 'Stoped'}
-  play: (playlist) ->
-    soundManager.pauseAll()
-    if playlist?.getActiveTrack()
-      soundManager.createSound(playlist.getActiveTrack())
-      soundManager.play(playlist.getActiveTrack().id)
-    Utils.extendImmutable playlist, {playingStatus: 'isPlaying'}
-
-  pause: (playlist) ->
-    soundManager.pauseAll()
-    Utils.extendImmutable playlist, {playingStatus: 'Paused'}
-
-  nextTrack: (playlist) ->
-    nextTrack = playlist.nextTrack()
-    @stop(playlist)
-    collections.push
-      action: 'update'
-      playlist: nextTrack
-    controls.push action: 'play'
-    Utils.extendImmutable nextTrack, {result: 'switched to next track'}
-
-  previousTrack: (playlist) ->
-    previousTrack = playlist.previousTrack()
-    @stop(playlist)
-    collections.push
-      action: 'update'
-      playlist: previousTrack
-    controls.push action: 'play'
-    Utils.extendImmutable previousTrack, {result: 'switched to previous track'}
-
-  setPosition: (playlist, task) ->
-    track = soundManager.getSoundById(playlist.getActiveTrack().id)
-    position = track.duration * task.percent
-    track.setPosition(position)
 
