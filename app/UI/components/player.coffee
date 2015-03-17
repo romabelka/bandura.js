@@ -36,13 +36,13 @@ module.exports = React.createClass
         <div className="b-player">
           <div className="b-player--section">
             <div className="b-controls">
-              <div className="b-btn b-controls--button" onClick={this.prevTrack}>
+              <div className="b-btn b-controls--button  b-tooltip" onClick={this.prevTrack} data-tooltip="Previous track">
                 <i className="b-icon b-icon__fast-backward-1"></i>
               </div>
-              <div className="b-btn b-controls--button" onClick={this.playAction}>
+              <div className="b-btn b-controls--button  b-tooltip" onClick={this.playAction} data-tooltip="Play/Pause">
                 <i className={'b-icon ' + playClass}></i>
               </div>
-              <div className="b-btn b-controls--button" onClick={this.nextTrack}>
+              <div className="b-btn b-controls--button  b-tooltip" onClick={this.nextTrack} data-tooltip="Next Track">
                 <i className="b-icon b-icon__fast-forward-1"></i>
               </div>
             </div>
