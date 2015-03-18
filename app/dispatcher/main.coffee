@@ -5,13 +5,7 @@ Utils = require('../utils/utils')
 controlsMethods = require './methods'
 
 #========frequently changed values============
-progressbar = progress.map((smTrack) ->
-  {
-  position: smTrack.position
-  duration: smTrack.duration
-  loaded: smTrack.bytesLoaded / smTrack.bytesTotal
-  }
-)
+
 playerSettings = settingsChanges.scan({},(settings, changes) ->
   if changes.mute? and changes.mute then soundManager.mute() else soundManager.unmute()
   if changes.volume?
@@ -28,6 +22,17 @@ playlistsCollection = collections.scan(new PLCollection(), (collection, ev) ->
     return collection[ev.action](ev.playlist)
   else
     return collection[ev.action].apply(collection, ev.arguments)
+)
+#intrested in activeTrack progress only
+progressbar = playlistsCollection.sampledBy(progress,(collection, smTrack) ->
+  isActive = collection.getActivePlaylist().getActiveTrack().id is smTrack.id
+  {smTrack, isActive}
+).filter(({isActive}) -> isActive).map(({smTrack}) ->
+  {
+  position: smTrack.position
+  duration: smTrack.duration
+  loaded: smTrack.bytesLoaded / smTrack.bytesTotal
+  }
 )
 
 #Changes volume of current track(SM can't change volume on all tracks)
