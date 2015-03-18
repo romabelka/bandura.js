@@ -45,9 +45,11 @@ playerSettings.changes().combine(playlistsCollection, (a,b) ->
 
 playerActions = playlistsCollection.sampledBy(controls, (collection, task) ->
   playlist = collection.getActivePlaylist()
-  do controlsMethods(playlist, task)[task.action]
-)
-
+  try
+    do controlsMethods(playlist, task)[task.action]
+  catch err
+    new Bacon.Error(err)
+).flatMap((e) -> e).skipDuplicates()
 
 soundEvents.onValue (ev) ->
   switch ev
@@ -71,10 +73,10 @@ videoSet = videos.flatMapLatest((query) ->
       dataType: "jsonp"
 )).map((response) -> response.data.items)
 
-notifications = notify.map((text) ->
+errors = playerActions.errors().flatMapError((err)->err.message)
+notifications = notify.merge(errors).map((text) ->
   text: text
   timestamp: Date.now()
 ).slidingWindow(10)
-
 module.exports = {progressbar, playerSettings, playlistsCollection, playerActions, videoSet, callbacks, soundEvents, notifications}
 
