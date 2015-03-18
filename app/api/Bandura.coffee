@@ -177,8 +177,12 @@ class Bandura
   startRemote: (settings) ->
     settings or= @_remoteSettings
     ws = new WebSocket(settings.host)
-    remoteActions = Bacon.fromEventTarget ws , 'message', (ev) -> settings.actions?[ev.data] or ev.data
-    controls.plug(remoteActions)
+    ws.onopen = =>
+      remoteActions = Bacon.fromEventTarget ws , 'message', (ev) -> settings.actions?[ev.data] or ev.data
+      controls.plug(remoteActions)
+      @notify 'Remote control is ready'
+    ws.onerror = =>
+      @notify "Can't start remote control"
 
   #--------Youtube----------------
   findYouTubeVideos: (track) ->
