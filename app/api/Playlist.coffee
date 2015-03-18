@@ -27,6 +27,9 @@ class Playlist
 
     return @changeTrack(@_activeTrackIndex - 1)
 
+  hasNext: -> @_activeTrackIndex < @_tracks.length - 1
+  hasPrevious: -> @_activeTrackIndex > 0
+
 
   # [[Track], Int] => [Playlist]  track, optional: position, default add to end
   addTracks: (tracks, position)->

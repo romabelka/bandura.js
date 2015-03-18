@@ -6,6 +6,7 @@ Progressbar = require './progressbar'
 Buttons = require './buttons'
 VidoScreen = require './videoScreen'
 
+btnClasses = 'b-btn b-controls--button  b-tooltip'
 module.exports = React.createClass
   displayName: 'Player'
   getInitialState: ->
@@ -31,19 +32,24 @@ module.exports = React.createClass
 
   render: ->
     playClass = if @props.playingStatus is 'isPlaying' then 'b-icon__pause' else 'b-icon__play'
-    currentTrack = @props.PLCollection?.getActivePlaylist()?.getActiveTrack()
+    activePlaylist = @props.PLCollection?.getActivePlaylist()
+    currentTrack = activePlaylist?.getActiveTrack()
+    hasNext = activePlaylist?.hasNext()
+    hasPrev = activePlaylist?.hasPrevious()
+    canPlay = currentTrack?
+
     return `(
       <div className="b-bandura">
         <div className="b-player">
           <div className="b-player--section">
             <div className="b-controls">
-              <div className="b-btn b-controls--button  b-tooltip" onClick={this.prevTrack} data-tooltip="Previous track">
+              <div className={hasPrev ? btnClasses:btnClasses+' disabled'} onClick={hasPrev ? this.prevTrack : null} data-tooltip="Previous track">
                 <i className="b-icon b-icon__fast-backward-1"></i>
               </div>
-              <div className="b-btn b-controls--button  b-tooltip" onClick={this.playAction} data-tooltip="Play/Pause">
+              <div className={canPlay ? btnClasses:btnClasses+' disabled'} onClick={canPlay ? this.playAction : null} data-tooltip="Play/Pause">
                 <i className={'b-icon ' + playClass}></i>
               </div>
-              <div className="b-btn b-controls--button  b-tooltip" onClick={this.nextTrack} data-tooltip="Next Track">
+              <div className={hasNext ? btnClasses:btnClasses+' disabled'} onClick={hasNext ? this.nextTrack : null} data-tooltip="Next Track">
                 <i className="b-icon b-icon__fast-forward-1"></i>
               </div>
             </div>
