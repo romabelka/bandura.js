@@ -7,6 +7,10 @@ PLCollection = require('./PLCollection')
 
 class Bandura
   soundManagerEvents = ['load','play', 'pause', 'resume', 'stop', 'failure', 'finish']
+  buttonsOrder =
+    remote: 3
+    youtube: 2
+    playlists: 1
   # Public
 
   constructor: (options) ->
@@ -37,28 +41,28 @@ class Bandura
     {@UI, @events} = do render
     defaultButtons = [
       name: 'Remote'
-      order: 3
+      order: buttonsOrder.remote
       action: (->@startRemote()).bind @
       liClass: 'b-player--network'
       iconClass: 'b-icon__network'
       tooltip: 'Start remote control'
     ,
       name: 'Youtube'
-      order: 2
+      order: buttonsOrder.youtube
       action: @findYouTubeVideos.bind @
       liClass: 'b-player--youtube'
       iconClass: 'b-icon__youtube'
       tooltip: 'Search video on youtube'
     ,
-      order: 1
+      order: buttonsOrder.playlists
       name: 'Toggle playlists'
       action: (-> @UI.player.setState showPlaylists: not @UI.player.state.showPlaylists).bind @
       liClass: 'b-player--show-pl'
       iconClass: 'b-icon__th-list'
       tooltip: 'open/close playlists'
     ]
-    buttons.push defaultButtons
-    buttons.push options.buttons if options.buttons?
+    buttons.push buttons: defaultButtons
+    buttons.push(buttons: options.buttons) if options.buttons?
 
 
 
@@ -186,6 +190,13 @@ class Bandura
   #-----buttons-----------------
   addButtons:(additionalButtons) ->
     buttons.push additionalButtons
+    return @
+
+  # ([String])
+  removeButtons: (names) ->
+    buttons.push
+      remove: true
+      buttons: names
 
   notify: (text) ->
     notify.push text
