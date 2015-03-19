@@ -4,13 +4,9 @@ PlayerSettings = require('./PlayerSettings')
 Track = require('./Track')
 Playlist = require('./Playlist')
 PLCollection = require('./PLCollection')
+defaultBtns = require('./defaultBtns')
 
 class Bandura
-  soundManagerEvents = ['load','play', 'pause', 'resume', 'stop', 'failure', 'finish']
-  buttonsOrder =
-    remote: 3
-    youtube: 2
-    playlists: 1
   # Public
 
   constructor: (options) ->
@@ -39,28 +35,8 @@ class Bandura
 
     soundManagerEvents.forEach (ev) -> soundManager.setup defaultOptions: "on#{ev}": -> soundEvents.push(ev)
     {@UI, @events} = do render
-    defaultButtons = [
-      name: 'Remote'
-      order: buttonsOrder.remote
-      action: (->@startRemote()).bind @
-      liClass: 'b-player--network'
-      iconClass: 'b-icon__network'
-      tooltip: 'Start remote control'
-    ,
-      name: 'Youtube'
-      order: buttonsOrder.youtube
-      action: @findYouTubeVideos.bind @
-      liClass: 'b-player--youtube'
-      iconClass: 'b-icon__youtube'
-      tooltip: 'Search video on youtube'
-    ,
-      order: buttonsOrder.playlists
-      name: 'Toggle playlists'
-      action: (-> @UI.player.setState showPlaylists: not @UI.player.state.showPlaylists).bind @
-      liClass: 'b-player--show-pl'
-      iconClass: 'b-icon__th-list'
-      tooltip: 'open/close playlists'
-    ]
+    {remoteBtn, youtubeBtn, togglePlaylistsBtn} = defaultBtns(@)
+    defaultButtons = [remoteBtn, youtubeBtn, togglePlaylistsBtn]
     buttons.push buttons: defaultButtons
     buttons.push(buttons: options.buttons) if options.buttons?
 
@@ -178,9 +154,15 @@ class Bandura
     settings or= @_remoteSettings
     ws = new WebSocket(settings.host)
     ws.onopen = =>
-      remoteActions = Bacon.fromEventTarget ws , 'message', (ev) -> settings.actions?[ev.data] or ev.data
+      remoteActions = Bacon.fromEventTarget ws , 'message', (ev) -> action: settings.actions?[ev.data] or ev.data
       controls.plug(remoteActions)
       @notify 'Remote control is ready'
+      @removeButtons(['Remote'])
+      @addButtons([defaultBtns(@).stopRemoteBtn(ws)])
+    ws.onclose = =>
+      @notify "Remote control has been closed"
+      @removeButtons(['Stop remote'])
+      @addButtons([defaultBtns(@).remoteBtn])
     ws.onerror = =>
       @notify "Can't start remote control"
 
@@ -193,7 +175,7 @@ class Bandura
 
   #-----buttons-----------------
   addButtons:(additionalButtons) ->
-    buttons.push additionalButtons
+    buttons.push buttons: additionalButtons
     return @
 
   # ([String])
@@ -211,6 +193,13 @@ class Bandura
     if vol < 0 then return 0
     else if vol > 100 then return 100
     else return vol
+
+  #========Private========
+  soundManagerEvents = ['load','play', 'pause', 'resume', 'stop', 'failure', 'finish']
+
+
+
+
 
 
 
