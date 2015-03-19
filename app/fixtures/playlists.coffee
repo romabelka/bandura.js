@@ -1,4 +1,4 @@
-Playlist = require '../api/Playlist'
+Playlist = Bandura.Playlist
 tracks = require './tracks'
 
 module.exports = [

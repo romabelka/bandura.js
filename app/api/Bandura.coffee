@@ -1,10 +1,10 @@
 {controls,progress, collections, settingsChanges, videos, buttons, soundEvents, notify} = require('../dispatcher/api')
 #require('../dispatcher/api')
 PlayerSettings = require('./PlayerSettings')
+defaultBtns = require('./defaultBtns')
 Track = require('./Track')
 Playlist = require('./Playlist')
 PLCollection = require('./PLCollection')
-defaultBtns = require('./defaultBtns')
 
 class Bandura
   # Public
@@ -135,7 +135,7 @@ class Bandura
   addPlaylist: (pl) ->
     if Array.isArray(pl)
       pl = new Playlist(pl, arguments[1])
-      collections.push({action: 'addPlaylist', playlist: pl})
+    collections.push({action: 'addPlaylist', playlist: pl})
     return @
 
   #[Track]
@@ -194,7 +194,12 @@ class Bandura
     else if vol > 100 then return 100
     else return vol
 
-  #========Private========
+  @Track = Track
+  @Playlist = Playlist
+  @PLCollection = PLCollection
+
+
+#========Private========
   soundManagerEvents = ['load','play', 'pause', 'resume', 'stop', 'failure', 'finish']
 
 

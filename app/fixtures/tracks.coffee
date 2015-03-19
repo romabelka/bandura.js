@@ -1,4 +1,4 @@
-Track = require '../api/Track'
+Track = Bandura.Track
 
 module.exports = [
   new Track

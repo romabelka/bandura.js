@@ -1,6 +1,24 @@
-tracks = require './tracks'
-playlists = require './playlists'
-Track = require '../api/track'
+window.tracks = require './fixtures/tracks'
+window.playlists = require './fixtures/playlists'
+Track = Bandura.Track
+
+window.bandura = new Bandura
+  remote:
+    host: 'ws://localhost:3000'
+    actions:
+      Previous: 'previousTrack'
+      Next: 'nextTrack'
+      Play: 'play'
+      Pause: 'pause'
+  buttons: [
+    name: 'Custom'
+    order: 4
+    action: (track)-> alert(track?.name)
+    liClass: 'b-player--network'
+    iconClass: 'b-icon__network'
+    tooltip: 'Some custom button'
+  ]
+
 $(->
   for track in tracks
     el = $('<td>').text(track.name).appendTo('.js-tracks')
