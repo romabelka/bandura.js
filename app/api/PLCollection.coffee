@@ -5,47 +5,44 @@ class PLCollection
   @CUSTOM_ID = 0
   @FAVORITE_ID = 1
 
-  constructor: (playlists, sorted = false, ids = null, activeId=null) ->
+  constructor: (playlists, activeId=null) ->
     if playlists?
-      @_playlists = if sorted then playlists else _.sortBy playlists, (pl) -> pl.getId()
+      @_playlists = playlists
     else
       @_playlists = [
         new Playlist [], 'Custom playlist', 0, PLCollection.CUSTOM_ID
         new Playlist [], 'Favourite', 0, PLCollection.FAVORITE_ID
       ]
-    #its important to have ids in the same order that playlists
     @_activeId = activeId
-    @_plIds = ids or _.map @_playlists, (pl) -> pl.getId()
+    @_plIds = @_playlists.map((pl) -> pl.getId())
 
 
   #able to use it as update to
-  addPlaylist: (playlist) ->
+  addPlaylist: (playlist, position = null) ->
     id = playlist.getId()
     throw new Error 'Collection allready contains this playlist' if _.contains(@_plIds, id)
-
-    position = _.sortedIndex(@_plIds, id)
-    return new PLCollection Utils.insertOn(@_playlists, playlist, position), true, Utils.insertOn(@_plIds, id, position), @_activeId
+    return new PLCollection Utils.insertOn(@_playlists, playlist, position or @_playlists.length), @_activeId
 
   removePlaylist: (playlist) ->
-    position = _.sortedIndex(@_plIds, playlist.getId())
+    position = @_playlists.indexOf(playlist)
+    activeId = if @_activeId is playlist.getId() then null else @_activeId
+    return new PLCollection Utils.removeFrom(@_playlists, position), activeId
 
-    return new PLCollection Utils.removeFrom(@_playlists, position), true, Utils.removeFrom(@_plIds, position), @_activeId
-
-  #updates a single playlist in collection(not removes or create it => no ids changed)
   update: (playlist) ->
-    index = _.indexOf @_plIds, playlist.getId(),true
-    return @addPlaylist(playlist) if index < 0
-    list = @_playlists
-    list[index] = playlist
-
-    return new PLCollection list, true, @_plIds, @_activeId
+    #--updating by index--
+    #no Array find
+    currentPl = @getPlaylistById(playlist.getId())
+    return @addPlaylist(playlist) unless currentPl
+    index = @_playlists.indexOf currentPl
+    list = Utils.updateOn @_playlists, index, playlist
+    return new PLCollection list, @_activeId
 
   updateActive: (playlist) ->
     plc = @update(playlist)
     return if @_activeId? is playlist.getId() then plc else plc.setActivePlaylist(playlist)
 
   setActivePlaylist: (playlist) ->
-    return new PLCollection(@_playlists, true, @_plIds, playlist.getId())
+    return new PLCollection(@_playlists, playlist.getId())
 
   addTracksToActivePlaylist: (tracks, index) ->
     throw new Error 'no Active playlist' unless @getActivePlaylist()
@@ -53,25 +50,22 @@ class PLCollection
 
   #============GETERS===========
   getPlaylistById: (id) ->
-    index = _.indexOf @_plIds, id, true
-    throw new Error "there are no playlist with id=#{id}" if index < 0
-    return @_playlists[index]
+    @_playlists.filter((pl) -> pl.getId() is id)[0]
+    #throw new Error "there are no playlist with id=#{id}" unless playlist?
+    #return playlist
 
   getAllPlaylists: () ->
     return @_playlists
 
   #returns null if no active playlist
   getActivePlaylist: () ->
-    try
-      @getPlaylistById(@_activeId)
-    catch err
-      return null
+    @getPlaylistById(@_activeId)
 
   getCustomPlaylist: () ->
-    return @_playlists[@CUSTOM_ID]
+    return @getPlaylistById(@CUSTOM_ID)
 
   getFavoritePlaylist: () ->
-    return @_playlists[@FAVORITE_ID]
+    return @getPlaylistById(@FAVORITE_ID)
 
 
 

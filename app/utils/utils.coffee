@@ -11,9 +11,13 @@ window.Utils =
   removeFrom: (array, position) ->
     array[...position].concat array[position..]
 
+  updateOn: (array, position, newVal) ->
+    @insertOn(@removeFrom(array,position), newVal, position)
+
   allIndexOf: (array, element) ->
     _.reduce(array, (acc, el, index) ->
       if el is element then acc.concat(index) else acc
     , [])
+
 
 module.exports = Utils
