@@ -10,6 +10,9 @@ $(->
   for playlist in playlists
     el = $('<td>').text(playlist.getName()).appendTo('.js-playlists')
     el.click ((pl)-> -> bandura.playPlaylist(pl))(playlist)
+    el2 = $('<td>').html('<button title="' + playlist.getName() + '">add playlist</button> ').appendTo('.js-playlists-add')
+    el2.click ((pl)-> -> bandura.addPlaylist(pl._tracks, pl._name))(playlist)
+
   $('td').attr('draggable', true)
 
   $('#testing').on('drop', (ev) ->

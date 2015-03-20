@@ -6,12 +6,11 @@ defaultTrackWidth = 127;
 module.exports = React.createClass
   displayName: 'Playlist'
   getInitialState: ->
-    {
-      showLeftScroll:no
-      showRightScroll:no
-      position: 0
-      scrolling: null
-    }
+    showLeftScroll:no
+    showRightScroll:no
+    position: 0
+    scrolling: null
+
   drop: (ev)->
     ev.preventDefault()
     collections.push
@@ -23,11 +22,12 @@ module.exports = React.createClass
   scrollLeft: (ev) ->
     @setState showRightScroll: yes
     @setState scrolling: setInterval(=>
-      if @state.position >=0
+      if @state.position >= 0
         @finishScrolling()
         @setState showLeftScroll: no
-      @setState position: @state.position + 50
+      @setState position: @state.position + 45
     ,50)
+
   scrollRight: (ev) ->
     @setState showLeftScroll: yes
     @setState scrolling: setInterval(=>
@@ -35,7 +35,7 @@ module.exports = React.createClass
         @finishScrolling()
         @setState showRightScroll: no
         return
-      @setState position: @state.position - 50
+      @setState position: @state.position - 45
     ,50)
 
   finishScrolling: ->
@@ -45,7 +45,7 @@ module.exports = React.createClass
     tracks = @props.playlist?.getTracks()
     return unless tracks
     width = @refs.playlist.getDOMNode().getBoundingClientRect().width
-    @setState(showRightScroll: yes) if width < tracks.length * defaultTrackWidth
+    @setState showRightScroll: width < tracks.length * defaultTrackWidth
 
   componentWillReceiveProps: (nextProps) ->
     return unless nextProps.playlist?
@@ -70,20 +70,20 @@ module.exports = React.createClass
     )
     leftScroll = `(
     <div className='b-playlist--scroll b-playlist--scroll__back'
-      onMouseDown={this.scrollLeft}
+      onMouseEnter={this.scrollLeft}
       onMouseUp={this.finishScrolling}
       onMouseLeave={this.finishScrolling}
     >
-        <i className="b-icon b-icon__left-open b-playlist--icon" />
+        <i className="b-icon b-icon__left-open" />
     </div>)
     ` if @state.showLeftScroll
     rightScroll = `(
     <div className='b-playlist--scroll b-playlist--scroll__forward'
-    onMouseDown={this.scrollRight}
+    onMouseEnter={this.scrollRight}
     onMouseUp={this.finishScrolling}
     onMouseLeave={this.finishScrolling}
     >
-    <i className="b-icon b-icon__right-open b-playlist--icon" />
+    <i className="b-icon b-icon__right-open" />
     </div>
     )` if @state.showRightScroll
 
