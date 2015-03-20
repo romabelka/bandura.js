@@ -6,21 +6,53 @@
   background: @playlistColor;
   padding-bottom: 25px;
 
+  &--scroll {
+    position: absolute;
+    bottom:0;
+    height: @playlistTitlesHeight;
+    width: 40px;
+    background-color: @scrollBackground;
+    opacity: 0.3;
+
+    z-index: 10;
+    text-align: center;
+
+    .b-icon{
+      font-size: 18px;
+      color: @scrollArrowCollor;
+      line-height: @playlistTitlesHeight;
+    }
+
+    &:hover {
+      opacity: 0.9;
+    }
+
+    &__back {
+      left: 0;
+    }
+
+    &__forward {
+      right: 0;
+    }
+  }
+
   &--menu {
     margin: 0;
+    padding:0;
     position: absolute;
     bottom: 0;
-    height: 25px;
-    width: 100%;
+    height: @playlistTitlesHeight;
+    width: 9999%;
+    overflow: hidden;
     background-color: @plankColor;
     color: @plankTextColor;
 
     &--item{
       background-color: @plankLiColor;
-      max-width: 200px;
+      width: 150px;
       height: 25px;
       line-height: 25px;
-      margin: 0 5px;
+      margin-left: 5px;
       padding:0 15px;
       text-align: center;
       display: inline-block;
@@ -28,9 +60,14 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      border: 1px solid transparent;
 
       &__active{
         background-color: lighten(@plankLiColor, 20%);
+      }
+
+      &__selected{
+        border:1px solid #eee;
       }
     }
   }
