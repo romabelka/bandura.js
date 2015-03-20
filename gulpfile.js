@@ -36,7 +36,7 @@ gulp.task('lint', function () {
 
 // JS
 gulp.task('js', ['lint', 'coffee'], function () {
-  return gulp.src('./tmp/roma.js')
+  return gulp.src(['./tmp/roma.js','./tmp/fixtures/testpage.js'])
     .pipe(plugins.browserify({
       extensions: ['.js'],
       insertGlobals: true,

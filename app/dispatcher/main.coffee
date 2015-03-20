@@ -62,7 +62,10 @@ soundEvents.onValue (ev) ->
       controls.push action: 'nextTrack'
 
 callbacks = buttons.scan([], (buttons, ev) ->
-  return buttons.concat ev
+  if ev.remove
+    return buttons.filter((btn) -> not (btn.name in ev.buttons))
+  else
+    return buttons.concat ev.buttons
 ).combine(playlistsCollection, (buttons, collection) ->
   buttons
     .map (btn) -> _.extend(btn, callback: -> btn.action(collection.getActivePlaylist()?.getActiveTrack(), collection))
