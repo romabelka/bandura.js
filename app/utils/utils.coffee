@@ -19,5 +19,12 @@ window.Utils =
       if el is element then acc.concat(index) else acc
     , [])
 
+  extend: (a,args...)->
+    args.forEach (obj) ->
+      for key of obj
+        a[key] = obj[key] if obj.hasOwnProperty(key) and obj[key]?
+    return a
+
+
 
 module.exports = Utils

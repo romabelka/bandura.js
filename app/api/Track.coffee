@@ -1,3 +1,5 @@
+utils = require '../utils/utils'
+
 class Track
   defaults: {
     artist: 'unknown artist'
@@ -5,7 +7,7 @@ class Track
   }
 
   constructor: (data) ->
-    _.extend(@, @defaults, data)
+    utils.extend(@, @defaults, data)
 
   get: (param) -> @[param]
 
