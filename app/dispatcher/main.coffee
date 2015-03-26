@@ -68,7 +68,7 @@ callbacks = buttons.scan([], (buttons, ev) ->
     return buttons.concat ev.buttons
 ).combine(playlistsCollection, (buttons, collection) ->
   buttons
-    .map (btn) -> _.extend(btn, callback: -> btn.action(collection.getActivePlaylist()?.getActiveTrack(), collection))
+    .map (btn) -> Utils.extend(btn, callback: -> btn.action(collection.getActivePlaylist()?.getActiveTrack(), collection))
     .sort (a,b) -> a.order > b.order
 )
 

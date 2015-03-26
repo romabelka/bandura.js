@@ -1,6 +1,6 @@
 window.Utils =
   extendImmutable: (arg...) ->
-    _.extend.apply @, [{}].concat(arg)
+    @extend.apply @, [{}].concat(arg)
 
   randomId: ->
     Math.floor Math.random()*900 + 100
@@ -25,6 +25,14 @@ window.Utils =
         a[key] = obj[key] if obj.hasOwnProperty(key) and obj[key]?
     return a
 
-
+###
+  TODO:
+  _.contains
+  _.isEmpty
+  _.isNumber
+  _.map
+  _.reduce
+  _.without
+###
 
 module.exports = Utils
