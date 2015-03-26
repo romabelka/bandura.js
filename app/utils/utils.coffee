@@ -6,10 +6,10 @@ window.Utils =
     Math.floor Math.random()*900 + 100
 
   insertOn: (array, elements, position) ->
-    array[...position].concat elements, array[position..]
+    array[...position].concat elements, array[position+1..]
 
   removeFrom: (array, position) ->
-    array[...position].concat array[position..]
+    array[...position].concat array[position...]
 
   updateOn: (array, position, newVal) ->
     @insertOn(@removeFrom(array,position), newVal, position)
