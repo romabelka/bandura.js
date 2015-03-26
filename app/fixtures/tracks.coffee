@@ -47,47 +47,33 @@ module.exports = [
     id: '1210'
     name: null
     genre: 'jazz'
-    artist: 'Track Without name'
-    url: 'https://storage.tunehog.com/public/rrmusic/track/1206.mp3'
-
-  new Track
-    id: '1210'
-    name: undefined
-    genre: 'jazz'
-    artist: 'Track Without name'
-    url: 'https://storage.tunehog.com/public/rrmusic/track/1206.mp3'
-
-  new Track
-    id: '1210'
-    name: ''
-    genre: 'jazz'
-    artist: 'Track Without name'
+    artist: 'Track With null name'
     url: 'https://storage.tunehog.com/public/rrmusic/track/1206.mp3'
 
   new Track
     id: '1211'
-    name: 'Track Without genre'
+    name: 'Track With null genre'
     genre: null
     artist: 'Elvis Prestley'
     url: 'https://storage.tunehog.com/public/rrmusic/track/1206.mp3'
 
   new Track
     id: '1212'
-    name: 'Track Without artist'
+    name: 'Track With undefined artist'
     genre: 'jazz'
     artist: undefined
     url: 'https://storage.tunehog.com/public/rrmusic/track/1206.mp3'
 
   new Track
     id: '1213'
-    name: 'Track Without url'
+    name: 'Track With null url'
     genre: 'jazz'
     artist: 'Elvis Prestley'
     url: null
 
   new Track
     id: null
-    name: 'Track Without id'
+    name: 'Track With null id'
     genre: 'jazz'
     artist: 'Elvis Prestley'
     url: 'https://storage.tunehog.com/public/rrmusic/track/1206.mp3'
@@ -98,4 +84,17 @@ module.exports = [
     genre: null
     artist: null
     url: null
+
+  new Track
+    id: '1214'
+    genre: 'track without name and artist'
+    url: 'https://storage.tunehog.com/public/rrmusic/track/1206.mp3'
+
+  new Track
+    id: '1215'
+    name: ''
+    genre: 'jazz'
+    artist: 'Track With empty name'
+    url: 'https://storage.tunehog.com/public/rrmusic/track/1206.mp3'
+
 ]

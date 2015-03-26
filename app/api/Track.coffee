@@ -1,4 +1,4 @@
-utils = require '../utils/utils'
+Utils = require('../utils/utils')
 
 class Track
   defaults: {
@@ -7,7 +7,7 @@ class Track
   }
 
   constructor: (data) ->
-    utils.extend(@, @defaults, data)
+    Utils.extend(@, @defaults, data)
 
   get: (param) -> @[param]
 

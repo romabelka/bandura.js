@@ -1,6 +1,6 @@
 window.Utils =
   extendImmutable: (arg...) ->
-    _.extend.apply @, [{}].concat(arg)
+    @extend.apply @, [{}].concat(arg)
 
   randomId: ->
     Math.floor Math.random()*900 + 100
