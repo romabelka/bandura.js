@@ -14,9 +14,11 @@ module.exports = React.createClass
     videoItems = @props.videos.map (video) ->
       `(<VideoItem video={video} key={video.id} onClick={self.clickVideo} showVideo={video==self.state.visibleVideo}/>)`
     return `(
-    <div className="b-video">
-        <span className="b-video--close" onClick={this.props.closeScreen}>&times;</span>
-        {videoItems}
-    </div>
+      <div className="b-video--background">
+        <div className="b-video">
+            <span className="b-video--close" onClick={this.props.closeScreen}>&times;</span>
+            {videoItems}
+        </div>
+      </div>
 
     )`
