@@ -3,7 +3,7 @@ PLCollection = require('../api/PLCollection')
 Bandura = require('../api/Bandura')
 Utils = require('../utils/utils')
 controlsMethods = require './methods'
-stopActions = ['removePlaylist']
+
 #========frequently changed values============
 
 playerSettings = settingsChanges.scan({},(settings, changes) ->
@@ -18,8 +18,8 @@ playerSettings = settingsChanges.scan({},(settings, changes) ->
 
 playlistsCollection = collections.scan(new PLCollection(), (collection, ev) ->
   return ev.collection if ev.action is 'setNewCollection'
+  controls.push(action: 'stop') if needStop(collection, ev)
   if ev.playlist?
-    controls.push(action: 'stop') if (ev.action in stopActions) and ev.playlist is collection.getActivePlaylist()
     return collection[ev.action](ev.playlist)
   else
     return collection[ev.action].apply(collection, ev.arguments)
@@ -89,3 +89,9 @@ notifications = notify.merge(errors).map((text) ->
 ).slidingWindow(10)
 module.exports = {progressbar, playerSettings, playlistsCollection, playerActions, videoSet, callbacks, soundEvents, notifications}
 
+needStop = (collection, ev) ->
+  stopActions = ['removePlaylist']
+  if ev.action is 'removeTrack'
+    [pl, tr] = ev.arguments
+    return pl is collection.getActivePlaylist() and pl.getActiveTrack() is tr
+  (ev.action in stopActions) and ev.playlist is collection.getActivePlaylist()

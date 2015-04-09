@@ -28,6 +28,9 @@ class PLCollection
     activeId = if @_activeId is playlist.getId() then null else @_activeId
     return new PLCollection Utils.removeFrom(@_playlists, position), activeId
 
+  removeTrack: (playlist, track) ->
+    return @update(playlist.removeTrack(track))
+
   update: (playlist) ->
     #--updating by index--
     #no Array find

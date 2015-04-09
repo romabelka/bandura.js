@@ -11,7 +11,11 @@ module.exports = React.createClass
     controls.push action: 'pause'
   resume: ->
     controls.push action: 'play'
-  removeTrackFromPlaylist: ->
+  removeTrackFromPlaylist: (ev)->
+    ev.stopPropagation()
+    collections.push
+      action: 'removeTrack'
+      arguments: [@props.playlist, @props.track]
     # remove track from playlist logic
   render: ->
     className = 'b-track'
