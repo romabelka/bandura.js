@@ -1,4 +1,5 @@
 Playlist = require './playlist'
+{collections} = require '../../dispatcher/api'
 
 module.exports = React.createClass
   displayName: 'Playlists'
@@ -12,8 +13,9 @@ module.exports = React.createClass
     elWidth: null
     screenWidth: null
 
-  removePlaylist: (id) ->
-# remove playlist logic
+  removePlaylist: (pl) ->
+    return ->
+      collections.push({action: 'removePlaylist', playlist: pl})
 
   showPlaylist: (id) ->
     return =>
@@ -74,7 +76,7 @@ module.exports = React.createClass
         className += 'b-playlists--menu--item__selected ' if pl.getId() is @state.visiblePlaylistId
 
       return `(
-        <li onClick = {self.showPlaylist(pl.getId())} className={className} key={pl.getId()}><i onClick={self.removePlaylist(pl.getId())} className='b-icon b-icon__cancel'></i>{pl.getName()}</li>
+        <li onClick = {self.showPlaylist(pl.getId())} className={className} key={pl.getId()}><i onClick={self.removePlaylist(pl)} className='b-icon b-icon__cancel'></i>{pl.getName()}</li>
       )`
     )
 

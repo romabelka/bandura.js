@@ -3,7 +3,7 @@ PLCollection = require('../api/PLCollection')
 Bandura = require('../api/Bandura')
 Utils = require('../utils/utils')
 controlsMethods = require './methods'
-
+stopActions = ['removePlaylist']
 #========frequently changed values============
 
 playerSettings = settingsChanges.scan({},(settings, changes) ->
@@ -19,13 +19,14 @@ playerSettings = settingsChanges.scan({},(settings, changes) ->
 playlistsCollection = collections.scan(new PLCollection(), (collection, ev) ->
   return ev.collection if ev.action is 'setNewCollection'
   if ev.playlist?
+    controls.push(action: 'stop') if (ev.action in stopActions) and ev.playlist is collection.getActivePlaylist()
     return collection[ev.action](ev.playlist)
   else
     return collection[ev.action].apply(collection, ev.arguments)
 )
 #intrested in activeTrack progress only
 progressbar = playlistsCollection.sampledBy(progress,(collection, smTrack) ->
-  isActive = collection.getActivePlaylist().getActiveTrack().id is smTrack.id
+  isActive = collection.getActivePlaylist()?.getActiveTrack().id is smTrack.id
   {smTrack, isActive}
 ).filter(({isActive}) -> isActive).map(({smTrack}) ->
   {

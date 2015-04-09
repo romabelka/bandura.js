@@ -9,7 +9,7 @@ window.Utils =
     array[...position].concat elements, array[position+1..]
 
   removeFrom: (array, position) ->
-    array[...position].concat array[position...]
+    array[...position].concat array[position+1..]
 
   updateOn: (array, position, newVal) ->
     @insertOn(@removeFrom(array,position), newVal, position)

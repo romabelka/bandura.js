@@ -13,8 +13,9 @@ module.exports = React.createClass
     currentTrack = @props.currentTrack
     trackInfo = 'Nothing is playing right now'
     showTime = ''
+    loaded = 0
 
-    if @props.position?
+    if @props.position? and currentTrack?
       trackInfo = "#{currentTrack.name} : #{currentTrack.artist}" if currentTrack?
       trackTime =
         min : Math.floor(@props.duration/60000)
@@ -23,6 +24,7 @@ module.exports = React.createClass
         posSec : Math.floor((@props.position - Math.floor(@props.position/60000)*60000)/1000)
       showTime = "#{trackTime.posMin}:#{trackTime.posSec} / #{trackTime.min}:#{trackTime.sec}"
       progress = @props.position / @props.duration
+      loaded = @props.loaded
     return `(
     <div className="b-progressbar--wrapper">
       <small className="b-progressbar--track--info">{trackInfo}</small>
@@ -31,7 +33,7 @@ module.exports = React.createClass
 
       <div className="b-progressbar" style={{width:width}}>
         <div className="b-progressbar--container" onClick = {this.setPosition}>
-        <div className="b-progressbar--loaded" style={{width: this.props.loaded ? this.props.loaded * width : 0}}></div>
+        <div className="b-progressbar--loaded" style={{width: loaded ? loaded * width : 0}}></div>
            <div className="b-draggable b-progressbar--drag" style={{top: -6, left: progress ? progress * width : 0}}></div>
         </div>
       </div>
