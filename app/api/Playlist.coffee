@@ -3,7 +3,7 @@ Track = require './Track'
 
 class Playlist
   #Public
-  constructor: (tracks = [], @_name = 'User playlist', @_activeTrackIndex = 0, @_id = Utils.randomId()) ->
+  constructor: (tracks = [], @_name = 'User playlist', @_activeTrackIndex, @_id = Utils.randomId()) ->
     @_tracks = tracks.map (track) -> if (track instanceof Track) then track else new Track(track)
 
   getName: -> @_name
@@ -27,32 +27,31 @@ class Playlist
 
     return @changeTrack(@_activeTrackIndex - 1)
 
-  hasNext: -> @_activeTrackIndex < @_tracks.length - 1
+  hasNext: -> (@_activeTrackIndex or 0) < @_tracks.length - 1
   hasPrevious: -> @_activeTrackIndex > 0
 
 
   # [[Track], Int] => [Playlist]  track, optional: position, default add to end
   addTracks: (tracks, position)->
+    newTracks = Utils.insertOn @_tracks, tracks, position
     if position?
-      newTracks = Utils.insertOn @_tracks, tracks, position
       activeTrack = if position > @_activeTrackIndex then @_activeTrackIndex else @_activeTrackIndex + tracks.length
     else
-      newTracks = @_tracks.concat tracks
       activeTrack = @_activeTrackIndex
-
+    activeTrack = undefined  unless @_activeTrackIndex
     return new Playlist(newTracks, @_name, activeTrack, @_id)
 
   addTrack: (track, position) -> @addTracks([track], position)
   # [Int] or [Track] => [Playlist]
-  removeTrack: (opt) ->
-    if opt instanceof Track
-      tracks = _.without(@_tracks, opt)
-      delta = _.sortedIndex(Utils.allIndexOf(@_tracks, opt), @_activeTrackIndex)
-      activeTrack = @_activeTrackIndex - delta
-    else
-      tracks = Utils.removeFrom(@_tracks, opt)
-      activeTrack = if opt <= @_activeTrackIndex then @_activeTrackIndex else @_activeTrackIndex - 1
-
+  removeTrack: (track) ->
+    position = @_tracks.indexOf(track)
+    tracks = Utils.removeFrom(@_tracks, position)
+    activeTrack =
+      if position < @_activeTrackIndex
+        @_activeTrackIndex
+      else if position > @_activeTrackIndex
+        @_activeTrackIndex - 1
+      else undefined
     return new Playlist(tracks, @_name, activeTrack, @_id)
 
 
