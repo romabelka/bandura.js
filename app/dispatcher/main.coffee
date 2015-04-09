@@ -87,6 +87,8 @@ notifications = notify.merge(errors).map((text) ->
   text: text
   timestamp: Date.now()
 ).slidingWindow(10)
+
+
 module.exports = {progressbar, playerSettings, playlistsCollection, playerActions, videoSet, callbacks, soundEvents, notifications}
 
 needStop = (collection, ev) ->
