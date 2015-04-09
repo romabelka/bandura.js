@@ -11,7 +11,8 @@ module.exports = React.createClass
     controls.push action: 'pause'
   resume: ->
     controls.push action: 'play'
-
+  removeTrackFromPlaylist: ->
+    # remove track from playlist logic
   render: ->
     className = 'b-track'
     className += ' b-track__playing' if @props.isPlaying
@@ -27,6 +28,7 @@ module.exports = React.createClass
 
     return `(
       <div className={className} onClick={action}>
+        <i className="b-icon b-icon__cancel" onClick={this.removeTrackFromPlaylist}></i>
         <div className="b-track__cover">
           <div className="b-track__cover__blur b-track__cover-default-image" style={cssImage}></div>
           <div className="b-track__cover__circle  b-track__cover-default-image" style={cssImage}></div>

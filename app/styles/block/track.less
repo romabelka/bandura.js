@@ -3,6 +3,18 @@
   color: #fff;
   margin: 5px 5px 5px 0;
   overflow: auto;
+  position: relative;
+
+  > .b-icon{
+    font-size: 8px;
+    line-height: 1em;
+    font-weight: 300;
+    position: absolute;
+    top:2px;
+    right:2px;
+    z-index: 1;
+    cursor:crosshair;
+  }
 
   &__active {
     background-color: #ebeaea;

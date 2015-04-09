@@ -12,6 +12,9 @@ module.exports = React.createClass
     elWidth: null
     screenWidth: null
 
+  removePlaylist: (id) ->
+# remove playlist logic
+
   showPlaylist: (id) ->
     return =>
       @setState
@@ -71,7 +74,7 @@ module.exports = React.createClass
         className += 'b-playlists--menu--item__selected ' if pl.getId() is @state.visiblePlaylistId
 
       return `(
-        <li onClick = {self.showPlaylist(pl.getId())} className={className} key={pl.getId()}>{pl.getName()}</li>
+        <li onClick = {self.showPlaylist(pl.getId())} className={className} key={pl.getId()}><i onClick={self.removePlaylist(pl.getId())} className='b-icon b-icon__cancel'></i>{pl.getName()}</li>
       )`
     )
 
