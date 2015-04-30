@@ -1,10 +1,13 @@
 window.tracks = require './fixtures/tracks'
 window.playlists = require './fixtures/playlists'
 Track = Bandura.Track
-
+# GET /api/users/me - user uri
+# remote: ws://remote.domain/user_uri - for all bandura instances of this user
+# remote: ws://remote.domain/user_uri/id - for this player
+# STOMP - protocol
 window.bandura = new Bandura
   remote:
-    host: 'ws://localhost:3000'
+    host: 'ws://remote.tunehog.com'
     actions:
       Previous: 'previousTrack'
       Next: 'nextTrack'
@@ -36,8 +39,6 @@ $(->
   $('#testing').on('drop', (ev) ->
     ev.preventDefault()
     track = new Track JSON.parse(ev.originalEvent.dataTransfer.getData 'track')
-    console.log '----', track
   ).on 'dragover', (ev) ->
     ev.preventDefault()
-    console.log '----', 1111
 )

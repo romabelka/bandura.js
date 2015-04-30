@@ -11,10 +11,12 @@ module.exports = (instance) ->
     liClass: 'b-player--network'
     iconClass: 'b-icon__network'
     tooltip: 'Start remote control'
-  stopRemoteBtn : (ws)->
+  stopRemoteBtn : (ws1, ws2)->
     name: 'Stop remote'
     order: buttonsOrder.remote
-    action: ->ws.close()
+    action: ->
+      ws1.close()
+      ws2.close()
     liClass: 'b-player--network'
     iconClass: 'b-icon__network'
     tooltip: 'Stop remote control'

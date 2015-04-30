@@ -1,5 +1,4 @@
 {controls,progress, collections, settingsChanges, videos, buttons, soundEvents, notify} = require('../dispatcher/api')
-#require('../dispatcher/api')
 PlayerSettings = require('./PlayerSettings')
 defaultBtns = require('./defaultBtns')
 Track = require('./Track')
@@ -148,22 +147,26 @@ class Bandura
   #settings can be set here or when Bandura is created('remote' field).
   #required: host; example host: 'ws://localhost:3000'
   #optional: actions; to map your actions to Bandura's format, example 'next track': 'nextTrack';
-
+  setRemote: (data) ->
+    _.extend(@_remoteSettings, data)
 
   startRemote: (settings) ->
     settings or= @_remoteSettings
-    ws = new WebSocket(settings.host)
-    ws.onopen = =>
-      remoteActions = Bacon.fromEventTarget ws , 'message', (ev) -> action: settings.actions?[ev.data] or ev.data
+    return @notify('please login to use remote') unless settings.userURI
+    all = new WebSocket(settings.host + '/'+ settings.userURI)
+    instance = new WebSocket(settings.host + '/'+ settings.userURI + '/' + Utils.randomId())
+    all.onopen = =>
+      remoteActions = Bacon.fromEventTarget(all , 'message', (ev) -> action: settings.actions?[ev.data] or ev.data)
+        .merge(Bacon.fromEventTarget(instance , 'message', (ev) -> action: settings.actions?[ev.data] or ev.data))
       controls.plug(remoteActions)
       @notify 'Remote control is ready'
       @removeButtons(['Remote'])
-      @addButtons([defaultBtns(@).stopRemoteBtn(ws)])
-    ws.onclose = =>
+      @addButtons([defaultBtns(@).stopRemoteBtn(all, instance)])
+    all.onclose = =>
       @notify "Remote control has been closed"
       @removeButtons(['Stop remote'])
       @addButtons([defaultBtns(@).remoteBtn])
-    ws.onerror = =>
+    all.onerror = =>
       @notify "Can't start remote control"
 
   #--------Youtube----------------
