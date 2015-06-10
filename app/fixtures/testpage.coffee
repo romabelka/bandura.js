@@ -26,6 +26,8 @@ $(->
   for track in tracks
     el = $('<td>').text(track.name).appendTo('.js-tracks')
     el.click ((tr)-> -> bandura.playTrack(tr))(track)
+    el2 = $('<td>').html('<button title="' + track.name + '">add track to Current Playlist</button> ').appendTo('.js-tracks')
+    el2.click ((tr)-> -> bandura.addTracksToActivePlaylist(tr))(track)
     el.on 'dragstart', ((tr) -> (ev)-> ev.originalEvent.dataTransfer.setData 'track', JSON.stringify tr)(track)
 
   for playlist in playlists
