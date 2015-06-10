@@ -80,7 +80,7 @@ videoSet = videos.flatMapLatest((query) ->
     $.ajax
       url: url
       dataType: "jsonp"
-)).flatMap (response) -> if response.data.items then response.data.items else new Bacon.Error(new Error('Nothing found'))
+)).flatMap (response) -> if not response.error and response.data.items then response.data.items else new Bacon.Error(new Error('Nothing found'))
 
 errors = playerActions.errors().merge(videoSet.errors()).flatMapError((err)->err.message)
 notifications = notify.merge(errors).map((text) ->
