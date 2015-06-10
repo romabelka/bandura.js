@@ -13,7 +13,7 @@
     top:2px;
     right:2px;
     z-index: 1;
-    cursor:crosshair;
+    cursor:pointer;
   }
 
   &__active {
@@ -76,6 +76,7 @@
 
       box-shadow: 0 0 10px rgba(50, 50, 50, .9);
       border: 2px solid #fff;
+      cursor: pointer;
 
       .b-track__playing &{
         animation: preloader 1.5s infinite linear;
@@ -95,17 +96,17 @@
       bottom: 40%;
       top: 40%;
       left: 40%;
-      border: 2px solid #fff;
+      box-shadow: 0 0 0 2px #fff;
       border-radius: 50%;
       background-repeat: no-repeat;
       overflow: hidden;
       background-size: 5px 5px;
       text-align: center;
       filter: blur(0px);
-      line-height: 20px;
 
       .b-icon{
-        margin-left: 2px;
+        cursor: pointer;
+        line-height: 22px;
       }
     }
 
