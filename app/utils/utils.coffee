@@ -3,10 +3,15 @@ window.Utils =
     @extend.apply @, [{}].concat(arg)
 
   randomId: ->
-    Math.floor Math.random()*900 + 100
+    Math.floor Math.random() * 900 + 100
 
   insertOn: (array, elements, position) ->
-    array[...position].concat elements, array[position+1..]
+#    insert to the end if no position specified
+    position = array.length if not position?
+
+    args = [position, 0].concat(elements)
+    Array.prototype.splice.apply(array, args)
+    return array
 
   removeFrom: (array, position) ->
     array[...position].concat array[position+1..]
