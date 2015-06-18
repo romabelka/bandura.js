@@ -8,10 +8,10 @@ window.Utils =
   insertOn: (array, elements, position) ->
 #    insert to the end if no position specified
     position = array.length if not position?
-
+    result = array.slice(0)
     args = [position, 0].concat(elements)
-    Array.prototype.splice.apply(array, args)
-    return array
+    Array.prototype.splice.apply(result, args)
+    return result
 
   removeFrom: (array, position) ->
     array[...position].concat array[position+1..]
