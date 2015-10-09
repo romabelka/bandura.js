@@ -1,0 +1,86 @@
+.b-playlists {
+  position: absolute;
+  bottom: 50px;
+  width: 100%;
+  height: @playlistHeight;
+  background: @playlistColor;
+  padding-bottom: 25px;
+
+  &--scroll {
+    position: absolute;
+    bottom:0;
+    height: @playlistTitlesHeight;
+    width: 40px;
+    background-color: @scrollBackground;
+    opacity: 0.3;
+
+    z-index: 10;
+    text-align: center;
+
+    .b-icon{
+      font-size: 18px;
+      color: @scrollArrowCollor;
+      line-height: @playlistTitlesHeight;
+    }
+
+    &:hover {
+      opacity: 0.9;
+    }
+
+    &__back {
+      left: 0;
+    }
+
+    &__forward {
+      right: 0;
+    }
+  }
+
+  &--menu {
+    margin: 0;
+    padding:0;
+    position: absolute;
+    bottom: 0;
+    height: @playlistTitlesHeight;
+    width: 9999%;
+    overflow: hidden;
+    background-color: @plankColor;
+    color: @plankTextColor;
+
+    &--item{
+      position: relative;
+      background-color: @plankLiColor;
+      width: 150px;
+      height: 25px;
+      line-height: 25px;
+      margin-left: 5px;
+      padding:0 15px;
+      text-align: center;
+      display: inline-block;
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      border: 1px solid transparent;
+
+      > .b-icon{
+        font-size: 8px;
+        line-height: 1em;
+        font-weight: 300;
+        position: absolute;
+        top:2px;
+        right:2px;
+        cursor:pointer;
+        z-index: 1;
+      }
+
+      &__active{
+        background-color: lighten(@plankLiColor, 20%);
+      }
+
+      &__selected{
+        border:1px solid #eee;
+      }
+    }
+  }
+}

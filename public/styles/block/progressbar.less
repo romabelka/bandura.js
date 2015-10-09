@@ -1,0 +1,37 @@
+.b-progressbar {
+  position: relative;
+
+  &--container {
+    background-color: @progressbarColor;
+    height: 6px;
+  }
+  &--drag {
+    width: 10px;
+    height: 6px;
+    background-color: green;
+  }
+
+  &--loaded {
+    background-color: @loaderColor;
+    height: 6px;
+  }
+
+  &--wrapper {
+    display: inline-block;
+    color: @textColor;
+  }
+
+  &--track--info {
+    display: inline-block;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal;
+    max-width: 50%;
+  }
+
+  &--track--time {
+    float: right;
+  }
+}

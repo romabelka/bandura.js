@@ -1,0 +1,48 @@
+.b-playlist {
+  &--scroll {
+    height: @playlistHeight;
+    width: 40px;
+    background-color: @scrollBackground;
+    opacity: 0.3;
+    position: absolute;
+    z-index: 10;
+    text-align: center;
+
+    .b-icon{
+      font-size: 35px;
+      color: @scrollArrowCollor;
+      line-height: @playlistHeight;
+    }
+
+    &:hover {
+      opacity: 0.9;
+    }
+
+    &__back {
+      left: 0;
+    }
+
+    &__forward {
+      right: 0;
+    }
+  }
+
+  &--title{
+    color:white;
+  }
+
+  &--tracks{
+    margin: 0;
+    height: @playlistHeight;
+    overflow: hidden;
+    width: 9999%;
+    padding: 0;
+    position: relative;
+  }
+
+  &--tracks-item {
+    display: inline-block;
+    vertical-align: top;
+    width: 125px;
+  }
+}
