@@ -1,0 +1,33 @@
+{
+  "name": "bandura",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rastopyr <rastopyr@gmail.com> (http://rastopyr.github.io/)",
+  "license": "MIT",
+  "dependencies": {
+    "bacon": "0.0.1",
+    "gulp-concat": "^2.6.0",
+    "jquery": "^2.1.4",
+    "lodash": "^3.10.1",
+    "react": "^0.13.3",
+    "soundmanager2": "^2.97.20150601-a"
+  },
+  "devDependencies": {
+    "babelify": "^6.3.0",
+    "browserify": "^11.2.0",
+    "del": "^2.0.2",
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.0.2",
+    "gulp-browserify": "^0.5.1",
+    "gulp-less": "^3.0.3",
+    "gulp-load-plugins": "^1.0.0-rc.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^1.4.1",
+    "through2": "^2.0.0"
+  }
+}

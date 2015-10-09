@@ -1,0 +1,8 @@
+{
+  "extends": "airbnb",
+
+  "rules": {
+    "react/prop-types": 0,
+    "no-nested-ternary": 1,
+  }
+}
