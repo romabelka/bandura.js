@@ -15,7 +15,7 @@ export default React.createClass({
       >
         <i className={'b-icon ' + btn.iconClass}></i>
       </li>);
-    });
+    }, this);
 
     return (
       <ol

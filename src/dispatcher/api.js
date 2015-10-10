@@ -1,13 +1,27 @@
 
-import Bacon from 'bacon';
+import Bacon from 'baconjs';
+
+const controls = new Bacon.Bus();
+const progress = new Bacon.Bus();
+const collections = new Bacon.Bus();
+const settingsChanges = new Bacon.Bus();
+const videos = new Bacon.Bus();
+const buttons = new Bacon.Bus();
+const soundEvents = new Bacon.Bus();
+const notify = new Bacon.Bus();
+
+export {
+  controls, progress, collections, settingsChanges,
+  videos, buttons, soundEvents, notify
+};
 
 export default {
-  controls: new Bacon.Bus(),
-  progress: new Bacon.Bus(),
-  collections: new Bacon.Bus(),
-  settingsChanges: new Bacon.Bus(),
-  videos: new Bacon.Bus(),
-  buttons: new Bacon.Bus(),
-  soundEvents: new Bacon.Bus(),
-  notify: new Bacon.Bus(),
+  controls,
+  progress,
+  collections,
+  settingsChanges,
+  videos,
+  buttons,
+  soundEvents,
+  notify,
 };

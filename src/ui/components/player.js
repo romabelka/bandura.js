@@ -5,11 +5,9 @@ import { controls } from '../../dispatcher/api';
 
 import Playlists from './screen';
 import Notification from './notification';
-// import Progress from './progress';
 import Buttons from './buttons';
 
 import Screen from './screen';
-// import Volume from './volume';
 
 const btnClasses = 'b-btn b-controls--button  b-tooltip';
 

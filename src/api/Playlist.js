@@ -2,13 +2,13 @@
 import Track from './Track';
 import Utils from '../utils';
 
-class Playlist {
+export default class Playlist {
   constructor(tracks = [], name = 'User playlist', activeTrackIndex) {
     this._id = Utils.randomId();
     this._name = name;
     this._activeTrackIndex = activeTrackIndex || 0;
 
-    this._tracks = tracks.map(function(track) {
+    this._tracks = tracks.map((track) => {
       return track instanceof Track ? track : new Track(track);
     });
   }
@@ -38,7 +38,7 @@ class Playlist {
   }
 
   hasNext() {
-    return (this.getActiveTrackIndex() || 0) < this.tracks.length -1;
+    return (this.getActiveTrackIndex() || 0) < this.tracks.length - 1;
   }
 
   hasPrevious() {
@@ -50,7 +50,7 @@ class Playlist {
       return this;
     }
 
-    return new Playlist(this._tracks, this._name, trackIndex, this._id)
+    return new Playlist(this._tracks, this._name, trackIndex, this._id);
   }
 
   nextTrack() {
@@ -62,7 +62,7 @@ class Playlist {
   }
 
   previousTrack() {
-    if(this.getActiveTrackIndex() <= 0) {
+    if (this.getActiveTrackIndex() <= 0) {
       throw new Error('no previous track');
     }
 

@@ -2,9 +2,9 @@
 import _ from 'lodash';
 
 export function extendImmutable() {
-  return _.chain(arguments).toArray().reduce(function(extended, val) {
+  return _.chain(arguments).toArray().reduce((extended, val) => {
     return _.merge(extended, val);
-  }, {}).value()
+  }, {}).value();
 }
 
 export function randomId() {
@@ -12,19 +12,17 @@ export function randomId() {
 }
 
 export function allIndexOf(array, element) {
-    return array.reduce(function(acc, el, index) {
-      if (el === element) {
-        return acc.concat(index);
-      }
+  return array.reduce((acc, el, index) => {
+    if (el === element) {
+      return acc.concat(index);
+    }
 
-      return acc;
-    }, []);
+    return acc;
+  }, []);
 }
 
 export function insertOn(array, elements, position) {
-  let returnedArray = array.slice(0);
-
-  if(!position) {
+  if (!position) {
     position = array.length;
   }
 
@@ -38,5 +36,14 @@ export function removeFrom(array, position) {
 }
 
 export function updateOn(array, position, newVal) {
-  return removeFrom(array, position)
+  return removeFrom(array, position);
 }
+
+export default {
+  extendImmutable,
+  randomId,
+  allIndexOf,
+  insertOn,
+  removeFrom,
+  updateOn,
+};

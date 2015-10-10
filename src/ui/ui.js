@@ -8,20 +8,16 @@ import Progressbar from './components/progress';
 export default function() {
   const container = document.body.appendChild(document.createElement('div'));
 
-  const components = {
-    player: <UIPlayer playingStatus={this.playingStatus} buttons={[]}/>,
-    progress: <Progressbar />,
-    volume: <Volume />,
-  };
+  const components = {};
 
-  React.render(components.player, container, () => {
-    React.render(
-      components.progress,
+  components.player = React.render(<UIPlayer buttons={[]}/>, container, () => {
+    components.progressbar = React.render(
+      <Progressbar />,
       document.getElementById('bandura-progressbar-section')
     );
 
-    React.render(
-      components.volume,
+    components.volume = React.render(
+      <Volume />,
       document.getElementById('bandura-volume-section')
     );
   });

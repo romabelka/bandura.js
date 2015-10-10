@@ -3,14 +3,14 @@ const order = [2, 1, 0];
 
 export default function(instance) {
   return {
-    remote: {
-      name: 'Remote',
-      order: order[0],
-      action: instance.startRemote.bind(instance),
-      liClass: 'b-player--network',
-      iconClass: 'b-icon__network',
-      tooltip: 'Start remote control',
-    },
+    // remote: {
+    //   name: 'Remote',
+    //   order: order[0],
+    //   action: instance.startRemote.bind(instance),
+    //   liClass: 'b-player--network',
+    //   iconClass: 'b-icon__network',
+    //   tooltip: 'Start remote control',
+    // },
     stopRemote: {
       name: 'Stop remote',
       order: order[0],

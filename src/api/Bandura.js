@@ -1,5 +1,5 @@
 
-import SoundManager from 'soundmanager2';
+import { soundManager as SoundManager } from 'soundmanager2';
 import _ from 'lodash';
 
 import {
@@ -265,3 +265,4 @@ export default class Bandura {
 Bandura.Track = Track;
 Bandura.Playlist = Playlist;
 Bandura.PLCollection = PLCollection;
+Bandura.validVolume = validVolume;

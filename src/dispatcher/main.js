@@ -1,6 +1,6 @@
 
-import SoundManager from 'soundmanager2';
-import Bacon from 'bacon';
+import { soundManager as SoundManager } from 'soundmanager2';
+import Bacon from 'baconjs';
 import _ from 'lodash';
 import $ from 'jquery';
 
@@ -61,7 +61,7 @@ export const playlistsCollection = collections.scan(new PLC(), (coll, ev) => {
 export const progressbar = playlistsCollection.sampledBy(
   progress, (coll, smTrack) => {
     return {
-      isActive: coll.getActivePlaylist().getActiveTrack().id === smTrack.id,
+      isActive: coll.getActiveTrackId() === smTrack.id,
       smTrack,
     };
   }).filter(({ isActive }) => isActive).map(({ smTrack }) => {
@@ -82,7 +82,7 @@ playerSettings.changes().combine(playlistsCollection, (a, b) => {
   const collection = obj.collection;
 
   SoundManager.setVolume(
-    collection.getActivePlaylist().getActiveTrack().id,
+    collection.getActiveTrackId(),
     settings.volume
   );
 });
@@ -116,17 +116,17 @@ export const callbacks = buttons.scan([], (btns, ev) => {
   return buttons.concat(ev.buttons);
 }).combine(playlistsCollection, (btns, collection) => {
   return btns.map((btn) => {
-    return Utils.extend(btn, {
+    Utils.extend(btn, {
       callback: () => {
         btn.action(
-          collection.getActivePlaylist().getActiveTrack(),
+          collection.getActiveTrack(),
           collection
         );
       },
     });
-  }).sort((a, b) => {
-    return a.order > b.order;
   });
+
+  // .sort((a, b) => a.order > b.order );
 });
 
 export const videoSet = videos.flatMapLatest((query) => {
@@ -155,3 +155,5 @@ export const notifications = notify.merge(errors).map((text) => {
     timestamp: Date.now(),
   };
 }).slidingWindow(10);
+
+export { soundEvents };

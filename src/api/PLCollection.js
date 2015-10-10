@@ -99,4 +99,24 @@ export default class PLCollection {
   getFavoritePlaylist() {
     return this.getPlaylistById(FAVORITE_ID);
   }
+
+  getActiveTrack() {
+    const activePl = this.getActivePlaylist();
+
+    if (!activePl) {
+      return null;
+    }
+
+    return activePl.getActiveTrack();
+  }
+
+  getActiveTrackId() {
+    const activeTrack = this.getActiveTrack();
+
+    if (!activeTrack) {
+      return null;
+    }
+
+    return activeTrack.id;
+  }
 }

@@ -15,7 +15,7 @@ export default function render() {
     });
 
     UI.progressbar.setProps({
-      currentTrack: PLC.getActivePlaylist().getActiveTrack(),
+      currentTrack: PLC.getActiveTrack(),
     });
   });
 
