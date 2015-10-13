@@ -6,6 +6,10 @@ import { controls, collections } from './api';
 
 export default function(playlist, task) {
   function stop() {
+    if (!playlist) {
+      return playlist;
+    }
+
     const activeTrack = playlist.getActiveTrack();
 
     if (!activeTrack) {

@@ -61,7 +61,7 @@ export default React.createClass({
   },
 
   resume() {
-    return controls.push({ action: 'resume' });
+    return controls.push({ action: 'play' });
   },
 
   removeTrackFromPlaylist(e) {
