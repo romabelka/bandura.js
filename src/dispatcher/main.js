@@ -61,7 +61,7 @@ export const playlistsCollection = collections.scan(new PLC(), (coll, ev) => {
 export const progressbar = playlistsCollection.sampledBy(
   progress, (coll, smTrack) => {
     return {
-      isActive: coll.getActiveTrackId() === smTrack.id,
+      isActive: ( coll ? coll.getActiveTrackId() : null) === smTrack.id,
       smTrack,
     };
   }).filter(({ isActive }) => isActive).map(({ smTrack }) => {
@@ -81,8 +81,9 @@ playerSettings.changes().combine(playlistsCollection, (a, b) => {
   const settings = obj.settings;
   const collection = obj.collection;
 
+
   SoundManager.setVolume(
-    collection.getActiveTrackId(),
+    collection ? collection.getActiveTrackId() : null,
     settings.volume
   );
 });
@@ -94,7 +95,8 @@ export const playerActions = playlistsCollection.sampledBy(
     try {
       return controlsMethods(playlist, task)[task.action]();
     } catch (e) {
-      new Bacon.Error(e);
+      console.log(e);
+      return new Bacon.Error(e);
     }
   }
 ).flatMap((e) => e).skipDuplicates();
@@ -113,10 +115,10 @@ export const callbacks = buttons.scan([], (btns, ev) => {
     return btns.filter((btn) => !_.contains(ev.buttons, btn.name));
   }
 
-  return buttons.concat(ev.buttons);
+  return btns.concat(ev.buttons);
 }).combine(playlistsCollection, (btns, collection) => {
   return btns.map((btn) => {
-    Utils.extend(btn, {
+    return Utils.extendImmutable(btn, {
       callback: () => {
         btn.action(
           collection.getActiveTrack(),
@@ -124,22 +126,19 @@ export const callbacks = buttons.scan([], (btns, ev) => {
         );
       },
     });
-  });
-
-  // .sort((a, b) => a.order > b.order );
+  }).sort((a, b) => a.order > b.order );
 });
 
 export const videoSet = videos.flatMapLatest((query) => {
-  const protocol = window.location.protocol || 'http:';
-  const url = protocol + `//gdata.youtube.com/feeds/api/videos/-/Music?q=${query}&hd=true&v=2&alt=jsonc&safeSearch=strict`;
+  const url = `https://www.googleapis.com/youtube/v3/search?&part=snippet&q=${query}&type=video&videoCategoryId=19&key=AIzaSyAtH93CIUo3NvA2nvL3ltsYtl319P1vsNo`;
 
   return Bacon.fromPromise($.ajax({
     url: url,
-    dataType: 'jsonp',
+    dataType: 'json',
   }));
 }).flatMap((response) => {
-  if (!response.error && response.data.items) {
-    return response.data.items;
+  if (!response.error && response.items) {
+    return response.items;
   }
 
   return new Bacon.Error(new Error('Nothing found'));

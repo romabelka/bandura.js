@@ -6,7 +6,7 @@ import { notify } from '../../dispatcher/api';
 
 export default React.createClass({
   render() {
-    const buttons = _.map(this.props.enabledButtons, function(btn) {
+    const buttons = _.map(this.props.enabledButtons, (btn) => {
       return (<li
         className={'b-btn ' + btn.liClass + ' b-tooltip'}
         onClick={this.handleClick(btn)}

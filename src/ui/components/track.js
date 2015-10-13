@@ -45,6 +45,14 @@ export default React.createClass({
   },
 
   play() {
+    controls.push({ action: 'stop' });
+
+    collections.push({
+      action: 'updateActive',
+      playlist: this.props.playlist.changeTrack(this.props.index),
+    });
+
+
     return controls.push({ action: 'play' });
   },
 
@@ -59,7 +67,7 @@ export default React.createClass({
   removeTrackFromPlaylist(e) {
     e.stopPropagation();
 
-    collections.push({
+    return collections.push({
       action: 'removeTrack',
       arguments: [this.props.playlist, this.props.track],
     });

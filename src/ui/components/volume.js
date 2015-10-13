@@ -8,29 +8,32 @@ export default React.createClass({
     return { drag: false };
   },
 
+
   render() {
-    const muteIcon = this.props.mute ?
-      'b-icon__volume-off-1' : 'b-icon__volume';
+    // const muteIcon = this.props.mute ?
+    //   'b-icon__volume-off-1' : 'b-icon__volume';
 
     return (
-      <div
-        className="b-volume"
+      <div className="b-volume"
         onMouseDown={this.mouseDown}
         onMouseMove={this.mouseMove}
         onMouseUp={this.cancelDrag}
-        onMouseLeave={this.cancelDrag}
-      >
-        <span className="b-btn b-tooltip" data-tooltip="Mute volume">
-          <i
-            className= {`b-icon b-icon__mute ${muteIcon}`}
-            onClick={this.mute}>
-          </i>
-        </span>
-        <div className="b-volume--container" ref="container">
-          <div className="b-volume--draggable">
+        onMouseLeave={this.cancelDrag}>
+        {/***
+                <span className="b-btn b-tooltip" data-tooltip="Mute volume">
+                  <i
+                    className= {`b-icon b-icon__mute ${muteIcon}`}
+                    onClick={this.mute}>
+                  </i>
+                </span>
+        ***/}
+        <div className="b-volume--container" ref="container"
+          >
+          <div className="b-volume--draggable" ref="draggable">
             <i
               className="b-icon b-icon__record b-draggable"
-              style={{top: - 26, left: this.props.volume / 2 - 5}}>
+              ref="drag_volume"
+              style={{top: - 26, left: this.leftByProps() }}>
             </i>
           </div>
         </div>
@@ -42,12 +45,32 @@ export default React.createClass({
     this.setState({ drag: false });
   },
 
+  leftByProps() {
+    return (this.props.volume / 2) - 7;
+  },
+
   changeVolume(e, refs) {
-    return settingsChanges.push({
-      volume: (
-        e.clientX - refs.container
-          .getDOMNode().getBoundingClientRect().left
-      ) * 2,
+    const container = refs.container;
+    const contNode = container.getDOMNode();
+    const contRect = contNode.getBoundingClientRect();
+
+    if (e.clientX < contRect.left) {
+      settingsChanges.push({
+        volume: 0,
+      });
+      return;
+    }
+
+    if (e.clientX > (contRect.left + contNode.offsetWidth)) {
+      settingsChanges.push({
+        volume: 100,
+      });
+
+      return;
+    }
+
+    settingsChanges.push({
+      volume: ((e.clientX - contRect.left) / 0.5),
     });
   },
 

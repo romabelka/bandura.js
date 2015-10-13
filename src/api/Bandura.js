@@ -80,7 +80,9 @@ export default class Bandura {
     const db = Buttons(this);
 
     buttons.push({
-      buttons: [db.remoteBtn, db.youtubeBtn, db.togglePlaylistsBtn],
+      buttons: [
+        // db.remote,
+        db.youtube, db.togglePlaylists],
     });
 
     if (options.buttons) {
@@ -229,7 +231,7 @@ export default class Bandura {
   addTracksToActivePlaylist() {
     collections.push({
       action: 'addTracksToActivePlaylist',
-      arguments: arguments,
+      playlist: arguments,
     });
   }
 
@@ -239,6 +241,7 @@ export default class Bandura {
     }
 
     this.UI.player.setState({ videoScreen: true });
+
     videos.push(
       `${track.artist} ${track.name}`
     );

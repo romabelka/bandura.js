@@ -8,7 +8,7 @@ const FAVORITE_ID = 1;
 
 export default class PLCollection {
 
-  constructor(playlists, activeId = null) {
+  constructor(playlists, activeId = 0) {
     this._plIds = _.pluck(playlists, 'id');
     this._activeId = activeId;
     this._playlists = playlists ? playlists : [
@@ -75,13 +75,11 @@ export default class PLCollection {
       throw new Error('no Active playlist');
     }
 
-    this.updateActive(this.getActivePlaylist().addTracks(tracks, index));
+    return this.updateActive(this.getActivePlaylist().addTracks(_.flatten(tracks), index));
   }
 
   getPlaylistById(id) {
-    return _.find(this._playlists, function(pl) {
-      return pl.getId() === id;
-    });
+    return _.find(this._playlists, (pl) => pl.getId() === id);
   }
 
   getAllPlaylists() {

@@ -17,7 +17,7 @@ export default function() {
     );
 
     components.volume = React.render(
-      <Volume />,
+      <Volume volume={45} />,
       document.getElementById('bandura-volume-section')
     );
   });

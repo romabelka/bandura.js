@@ -15,28 +15,28 @@ export default React.createClass({
               <iframe
                 width="560"
                 height="315"
-                src={`https://www.youtube.com/embed/${this.props.video.id}`}
+                src={`https://www.youtube.com/embed/${this.props.video.id.videoId}`}
                 frameBorder="0"
                 allowFullScreen />
             </div>
           </div>
           <div className="b-video--wrapper">
             <div className="b-video--picture">
-              <img src={this.props.video.thumbnail.hqDefault}/>
+              <img src={this.props.video.snippet.thumbnails.default.url}/>
             </div>
-            <div className="b-video--title">{this.props.video.title}</div>
+            <div className="b-video--title">{this.props.video.snippet.title}</div>
           </div>
         </div>
       );
     }
-
+    {console.log(this.props.video);}
     return (
       <div className="b-video--item" onClick={this.handleClick}>
         <div className="b-video--wrapper">
           <div className="b-video--picture">
-            <img src={this.props.video.thumbnail.hqDefault}/>
+            <img src={this.props.video.snippet.thumbnails.default.url}/>
           </div>
-          <div className="b-video--title">{this.props.video.title}</div>
+          <div className="b-video--title">{this.props.video.snippet.title}</div>
         </div>
       </div>
     );

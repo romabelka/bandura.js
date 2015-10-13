@@ -3,7 +3,7 @@ import React from 'react';
 
 import { controls } from '../../dispatcher/api';
 
-import Playlists from './screen';
+import Playlists from './playlists';
 import Notification from './notification';
 import Buttons from './buttons';
 
@@ -18,6 +18,7 @@ export default React.createClass({
     return {
       showPlaylists: false,
       videoScreen: false,
+      playingStatus: false,
     };
   },
 

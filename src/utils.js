@@ -22,13 +22,11 @@ export function allIndexOf(array, element) {
 }
 
 export function insertOn(array, elements, position) {
-  if (!position) {
-    position = array.length;
-  }
+  const pos = position ? position : array.length;
 
-  return array.slice(0, position).concat(
-    elements instanceof Array ? elements [elements] : []
-  ).concat(array.slice(position + 1));
+  return array.slice(0, pos).concat(
+    elements instanceof Array ? elements : [elements]
+  ).concat(array.slice(pos + 1, array.length));
 }
 
 export function removeFrom(array, position) {
@@ -36,7 +34,7 @@ export function removeFrom(array, position) {
 }
 
 export function updateOn(array, position, newVal) {
-  return removeFrom(array, position);
+  return insertOn(removeFrom(array, position), newVal, position);
 }
 
 export default {

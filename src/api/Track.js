@@ -8,7 +8,7 @@ export default class Track {
   }
 
   constructor(options) {
-    return Utils.extend(this, this.defaults, options);
+    return Utils.extendImmutable(this, this.defaults, options);
   }
 
   get(param) {

@@ -21,18 +21,18 @@ export default React.createClass({
   },
 
   componentWillReceiveProps() {
-    const ref = this.props.PLCollection;
-    const ref1 = this.props.PLCollection;
+    const PLColl = this.props.PLCollection;
 
-    if ((ref !== null ? ref.getAllPlaylists().length : void 0) < 3) {
+    if ((PLColl ? PLColl.getAllPlaylists().length : 0) < 3) {
       return;
     }
+
     if (!this.state.screenWidth) {
       return;
     }
 
     this.setState({
-      showRightScroll: this.state.screenWidth <= (ref1 !== null ? ref1.getAllPlaylists().length : void 0) * this.state.elWidth,
+      showRightScroll: this.state.screenWidth <= (PLColl ? PLColl.getAllPlaylists().length : 0) * this.state.elWidth,
     });
   },
 
@@ -43,18 +43,21 @@ export default React.createClass({
 
     const screenWidth = this.refs.playlists.getDOMNode().getBoundingClientRect().width;
     const itemWidth = this.refs.playlists.getDOMNode().children[0].children[0].getBoundingClientRect().width + 5;
-    const ref = this.props.PLCollection;
+
 
     this.setState({
       screenWidth: screenWidth,
       elWidth: itemWidth,
-      showRightScroll: screenWidth <= (ref !== null ? ref.getAllPlaylists().length : void 0) * itemWidth,
+      showRightScroll: screenWidth <= (
+        this.props.PLCollection ?
+          this.props.PLCollection.getAllPlaylists().length : 0
+      ) * itemWidth,
     });
   },
 
   getVisiblePlaylist() {
-    if (this.props.PLCollection !== null) {
-      if (this.state.visiblePlaylistId !== null) {
+    if (this.props.PLCollection) {
+      if (this.state.visiblePlaylistId) {
         return this.props.PLCollection.getPlaylistById(this.state.visiblePlaylistId);
       }
 
@@ -74,8 +77,10 @@ export default React.createClass({
       iteratedPls.getActivePlaylist() : null;
 
     const visiblePlaylist = this.getVisiblePlaylist();
+
     const isActive = activePlaylist ?
       activePlaylist.getId() === visiblePlaylist.getId() : false;
+
     const isPlaying = isActive && this.props.isPlaying === 'isPlaying';
 
     const playlists = _.map(

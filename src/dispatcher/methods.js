@@ -1,5 +1,5 @@
 
-import SoundManager from 'soundmanager2';
+import { soundManager as SoundManager } from 'soundmanager2';
 import Utils from '../utils';
 
 import { controls, collections } from './api';

@@ -19,8 +19,7 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    const ref = this.props.playlist;
-    const tracks = ref !== null ? ref.getTracks() : void 0;
+    const tracks = this.props.playlist ? this.props.playlist.getTracks() : [];
 
     if (!tracks) {
       return;
@@ -39,8 +38,10 @@ export default React.createClass({
       return;
     }
 
-    const ref = this.props.playlist;
-    const changedPlaylist = (ref !== null ? ref.getId() : void 0) !== nextProps.playlist.getId();
+    const pl = this.props.playlist;
+    const changedPlaylist = pl ? pl.getId() === nextProps.playlist.getId() : false;
+
+    const plNode = this.refs.playlist.getDOMNode();
 
     if (changedPlaylist) {
       this.setState({
@@ -49,8 +50,12 @@ export default React.createClass({
       });
     }
 
+    if (!nextProps.playlist) {
+      return;
+    }
+
     this.setState({
-      showRightScroll: this.state.position >= this.refs.playlist.getDOMNode().getBoundingClientRect().width - nextProps.playlist.getTracks().length * defaultTrackWidth,
+      showRightScroll: this.state.position >= plNode.getBoundingClientRect().width - nextProps.playlist.getTracks().length * defaultTrackWidth,
     });
   },
 
@@ -59,11 +64,13 @@ export default React.createClass({
     let rightScroll;
     let tracks;
 
+    const plTracks = this.props.playlist ? this.props.playlist.getTracks() : [];
+
     if (this.props.playlist === null) {
       return <div className="b-playlist" ref="playlist" />;
     }
 
-    tracks = _.map(this.props.playlist.getTracks(), (track, index) => {
+    tracks = _.map(plTracks, (track, index) => {
       const isActive = this.props.isActive && index === this.props.playlist.getActiveTrackIndex();
       const isPlaying = isActive && this.props.isPlaying;
 

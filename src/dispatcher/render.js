@@ -15,7 +15,7 @@ export default function render() {
     });
 
     UI.progressbar.setProps({
-      currentTrack: PLC.getActiveTrack(),
+      currentTrack: PLC ? PLC.getActiveTrack() : null,
     });
   });
 
@@ -27,14 +27,14 @@ export default function render() {
     })
   );
 
-  playerSettings.onValue((settings) =>
-    UI.volume.setProps(settings)
-  );
+  playerSettings.onValue((settings) => {
+    UI.volume.setProps(settings);
+  });
 
 
-  playerActions.onValue((obj) => {
+  playerActions.onValue((obj = {}) => {
     if (obj.playingStatus) {
-      return UI.player.setProps({playingStatus: obj.playingStatus});
+      return UI.player.setProps({ playingStatus: obj.playingStatus });
     }
   });
 
