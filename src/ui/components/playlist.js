@@ -34,7 +34,7 @@ export default React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.playlist === null) {
+    if (!nextProps || !nextProps.playlist) {
       return;
     }
 
@@ -66,7 +66,7 @@ export default React.createClass({
 
     const plTracks = this.props.playlist ? this.props.playlist.getTracks() : [];
 
-    if (this.props.playlist === null) {
+    if (!this.props.playlist) {
       return <div className="b-playlist" ref="playlist" />;
     }
 
@@ -181,7 +181,7 @@ export default React.createClass({
     });
   },
   finishScrolling() {
-    if (this.state.scrolling !== null) {
+    if (this.state.scrolling) {
       return clearInterval(this.state.scrolling);
     }
   },
