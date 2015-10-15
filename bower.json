@@ -1,0 +1,24 @@
+{
+  "name": "bandura.js",
+  "version": "2.0.0",
+  "homepage": "https://github.com/romabelka/bandura.js",
+  "authors": [
+    "Roman Iakobhuk <kaboom.ua@gmail.com>",
+    "Rastopyr <rastopyr@gmail.com> (http://rastopyr.github.io/)",
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.3",
+    "react": "~0.12.0",
+    "bacon": "~0.7.0",
+    "underscore": "~1.8.0",
+    "SoundManager2": "git@github.com:scottschiller/SoundManager2.git#master"
+  }
+}

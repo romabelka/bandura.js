@@ -1,12 +1,15 @@
 {
   "name": "bandura",
-  "version": "0.0.0",
+  "version": "2.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Rastopyr <rastopyr@gmail.com> (http://rastopyr.github.io/)",
+  "authors": [
+    "Roman Iakobhuk <kaboom.ua@gmail.com>",
+    "Rastopyr <rastopyr@gmail.com> (http://rastopyr.github.io/)",
+  ],
   "license": "MIT",
   "dependencies": {
     "baconjs": "^0.7.75",
