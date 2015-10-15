@@ -1,19 +1,33 @@
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
+  debug: true,
+  devtool: 'source-map',
   entry: [
-    './src/bandura.js'
+    './src/bandura.js',
+    './public/styles/bandura.less',
   ],
   output: {
-      publicPath: '/dist',
-      filename: 'bundle.js'
+    publicPath: './dist',
+    path: './dist',
+    filename: 'bundle.js',
   },
-  devtool: 'source-map',
   module: {
     loaders: [
-      { test: /\.js$/, include: path.join(__dirname, 'src'), loader: 'babel-loader' }
-    ]
+      {
+        test: /\.js$/,
+        include: path.join(__dirname, 'src'),
+        loader: 'babel-loader',
+      },
+      {
+        test: /\.less$/,
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader'),
+      },
+    ],
   },
-  debug: true
+  plugins: [
+    new ExtractTextPlugin('bandura.css'),
+  ],
 };

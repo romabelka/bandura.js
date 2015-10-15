@@ -92,12 +92,15 @@ export const playerActions = playlistsCollection.sampledBy(
   controls, (collection, task) => {
     const playlist = collection.getActivePlaylist();
 
-    try {
-      return controlsMethods(playlist, task)[task.action]();
-    } catch (e) {
-      console.log(e);
-      return new Bacon.Error(e);
-    }
+    console.log(task.action);
+
+    return controlsMethods(playlist, task)[task.action]();
+
+    // try {
+    //   return controlsMethods(playlist, task)[task.action]();
+    // } catch (e) {
+    //   return new Bacon.Error(e);
+    // }
   }
 ).flatMap((e) => e).skipDuplicates();
 
