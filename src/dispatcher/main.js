@@ -43,7 +43,6 @@ export const playerSettings = settingsChanges.scan({}, (settings, changes) => {
   return Utils.extendImmutable(settings, changes);
 });
 
-
 export const playlistsCollection = collections.scan(new PLC(), (coll, ev) => {
   if (ev.action === 'setNewCollection') {
     return ev.collection;
@@ -53,24 +52,28 @@ export const playlistsCollection = collections.scan(new PLC(), (coll, ev) => {
     controls.push({ action: 'stop' });
   }
 
-  return coll[ev.action].apply(
-    coll, ev.playlist ? [ev.playlist] : ev.arguments
-  );
+  try {
+    return coll[ev.action].apply(
+      coll, ev.playlist ? [ev.playlist] : ev.arguments
+    );
+  } catch (e) {
+    notify.push(e.message);
+    throw e;
+  }
 });
 
-export const progressbar = playlistsCollection.sampledBy(
-  progress, (coll, smTrack) => {
-    return {
-      isActive: ( coll ? coll.getActiveTrackId() : null) === smTrack.id,
-      smTrack,
-    };
-  }).filter(({ isActive }) => isActive).map(({ smTrack }) => {
-    return {
-      position: smTrack.position,
-      duration: smTrack.duration,
-      loaded: smTrack.bytesLoaded / smTrack.bytesTotal,
-    };
-  });
+export const progressbar = playlistsCollection.sampledBy(progress, (coll) => {
+  return {
+    isActive: !!SoundManager.getSoundById(coll.getActiveTrackId()),
+    smTrack: SoundManager.getSoundById(coll.getActiveTrackId()),
+  };
+}).filter(({ isActive }) => isActive).map(({ smTrack }) => {
+  return {
+    position: smTrack.position,
+    duration: smTrack.duration,
+    loaded: smTrack.bytesLoaded / smTrack.bytesTotal,
+  };
+});
 
 playerSettings.changes().combine(playlistsCollection, (a, b) => {
   return {
@@ -92,18 +95,13 @@ export const playerActions = playlistsCollection.sampledBy(
   controls, (collection, task) => {
     const playlist = collection.getActivePlaylist();
 
-    console.log(task.action);
-
-    return controlsMethods(playlist, task)[task.action]();
-
-    // try {
-    //   return controlsMethods(playlist, task)[task.action]();
-    // } catch (e) {
-    //   return new Bacon.Error(e);
-    // }
+    try {
+      return controlsMethods(playlist, task)[task.action]();
+    } catch (e) {
+      return new Bacon.Error(e);
+    }
   }
 ).flatMap((e) => e).skipDuplicates();
-
 
 soundEvents.onValue((ev) => {
   if (ev === 'finish') {
@@ -149,11 +147,13 @@ export const videoSet = videos.flatMapLatest((query) => {
 
 const errors = playerActions.errors()
   .merge(videoSet.errors())
-  .flatMapError((err) => err.message);
+  .flatMapError((err) => {
+    return err.message;
+  });
 
 export const notifications = notify.merge(errors).map((text) => {
   return {
-    text: text,
+    text,
     timestamp: Date.now(),
   };
 }).slidingWindow(10);

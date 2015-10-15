@@ -29,14 +29,10 @@ export default React.createClass({
   },
 
   updateNotes(incomingNotes) {
-    const notes = (
-      incomingNotes.notifications || this.state.notifications
-    ).filter(function(note) {
-
-      return (Date.now() - note.timestamp) < noteLifeTime;
-    });
-
-    console.log(incomingNotes, notes.length);
+    const notes = _.filter(
+      incomingNotes ? incomingNotes.notifications : this.state.notifications,
+      (note) => (Date.now() - note.timestamp) < noteLifeTime
+    );
 
     this.setState({
       notifications: notes,
