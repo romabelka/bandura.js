@@ -25,7 +25,7 @@ export default React.createClass({
         posSec: Math.floor((this.props.position - Math.floor(this.props.position / 60000) * 60000) / 1000),
       };
 
-      showTime = `${trackTime.posMin}:${trackTime.posSec} / ${trackTime.min}:${trackTime.sec}`;
+      showTime = `${trackTime.posMin}:${trackTime.posSec} / ${trackTime.min}:${trackTime.max}`;
       progress = this.props.position / this.props.duration;
       loaded = this.props.loaded;
     }

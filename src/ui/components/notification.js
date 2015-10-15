@@ -10,7 +10,7 @@ export default React.createClass({
   },
 
   componentWillReceiveProps(newProps) {
-    return this.updateNotes(newProps.notifications);
+    return this.updateNotes(newProps);
   },
 
   render() {
@@ -30,10 +30,13 @@ export default React.createClass({
 
   updateNotes(incomingNotes) {
     const notes = (
-      incomingNotes || this.state.notifications
+      incomingNotes.notifications || this.state.notifications
     ).filter(function(note) {
-      return (Date.now() + note.timestamp) < noteLifeTime;
+
+      return (Date.now() - note.timestamp) < noteLifeTime;
     });
+
+    console.log(incomingNotes, notes.length);
 
     this.setState({
       notifications: notes,
