@@ -3,7 +3,7 @@ import Track from './Track';
 import Utils from '../utils';
 
 export default class Playlist {
-  constructor(tracks = [], name = 'User playlist', activeTrackIndex, id) {
+  constructor(tracks = [], name = 'User playlist', id, activeTrackIndex) {
     this._id = id ? id : Utils.randomId();
     this._name = name;
     this._activeTrackIndex = activeTrackIndex || 0;
@@ -50,7 +50,7 @@ export default class Playlist {
       return this;
     }
 
-    return new Playlist(this._tracks, this._name, trackIndex, this._id);
+    return new Playlist(this._tracks, this._name, this._id, trackIndex);
   }
 
   nextTrack() {
@@ -85,7 +85,7 @@ export default class Playlist {
 
     return new Playlist(
       Utils.insertOn(this.getTracks(), tracks, position),
-      this.getName(), activeTrack, this.getId()
+      this.getName(), this.getId(), activeTrack
     );
   }
 
@@ -106,6 +106,6 @@ export default class Playlist {
       activeTrackIndex = this.getActiveTrackIndex() - 1;
     }
 
-    return new Playlist(tracks, this.getName(), activeTrackIndex, this.getId());
+    return new Playlist(tracks, this.getName(), this.getId(), activeTrackIndex);
   }
 }

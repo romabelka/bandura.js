@@ -9,7 +9,7 @@ const FAVORITE_ID = 1;
 export default class PLCollection {
 
   constructor(playlists, activeId = 0) {
-    this._plIds = _.pluck(playlists, 'id');
+    this._plIds = _.pluck(playlists, '_id');
     this._activeId = activeId;
     this._playlists = playlists ? playlists : [
       new Playlist([], 'Custom playlist', 0, CUSTOM_ID),

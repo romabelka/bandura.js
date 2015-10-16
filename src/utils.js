@@ -30,11 +30,13 @@ export function insertOn(array, elements, position) {
 }
 
 export function removeFrom(array, position) {
-  return array.slice(0, position).concat(array.slice(position + 1));
+  return array.slice(0, position).concat(array.slice(position));
 }
 
 export function updateOn(array, position, newVal) {
-  return insertOn(removeFrom(array, position), newVal, position);
+  return insertOn(
+    array.slice(0, position).concat(array.slice(position))
+    , newVal, position);
 }
 
 export default {

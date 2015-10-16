@@ -217,8 +217,9 @@ export default class Bandura {
     return this;
   }
 
-  addPlaylist(pl) {
-    const p = Array.isArray(pl) ? new Playlist(pl, arguments[1]) : pl;
+  addPlaylist(pl, name, id, activeTrackIndex) {
+    const p = Array.isArray(pl) ?
+      new Playlist(pl, name, id, activeTrackIndex) : pl;
 
     collections.push({
       action: 'addPlaylist',
