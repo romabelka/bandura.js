@@ -58,7 +58,7 @@ export default class Playlist {
       throw new Error('no next track');
     }
 
-    return this.changeTrack(this.getActiveTrackIndex + 1);
+    return this.changeTrack(this.getActiveTrackIndex() + 1);
   }
 
   previousTrack() {
