@@ -109,17 +109,17 @@ export default class Bandura {
   }
 
   pause() {
-    settingsChanges.push({ action: 'pause' });
+    controls.push({ action: 'pause' });
     return this;
   }
 
   play() {
-    settingsChanges.push({ action: 'play' });
+    controls.push({ action: 'play' });
     return this;
   }
 
   stop() {
-    settingsChanges.push({ action: 'stop' });
+    controls.push({ action: 'stop' });
     return this;
   }
 
@@ -262,6 +262,10 @@ export default class Bandura {
 
   notify(text) {
     notify.push(text);
+  }
+
+  desctruct() {
+
   }
 }
 

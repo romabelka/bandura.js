@@ -1,6 +1,6 @@
 {
   "name": "bandura",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "authors": [
     "Roman Iakobhuk <kaboom.ua@gmail.com>",
-    "Rastopyr <rastopyr@gmail.com> (http://rastopyr.github.io/)",
+    "Rastopyr <rastopyr@gmail.com> (http://rastopyr.github.io/)"
   ],
   "license": "MIT",
   "dependencies": {
@@ -16,8 +16,7 @@
     "jquery": "^2.1.4",
     "lodash": "^3.10.1",
     "react": "^0.13.3",
-    "soundmanager2": "^2.97.20150601-a",
-    "style-loader": "^0.12.4"
+    "soundmanager2": "^2.97.20150601-a"
   },
   "devDependencies": {
     "babel-core": "^5.8.25",
@@ -26,6 +25,7 @@
     "css-loader": "^0.19.0",
     "extract-text-webpack-plugin": "^0.8.2",
     "less-loader": "^2.2.1",
+    "style-loader": "^0.12.4",
     "webpack": "^1.12.2",
     "webpack-dev-server": "^1.12.0"
   }

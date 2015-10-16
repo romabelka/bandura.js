@@ -10,7 +10,6 @@ module.exports = {
     './public/styles/bandura.less',
   ],
   output: {
-    publicPath: './dist',
     path: './dist',
     filename: 'bundle.js',
   },
