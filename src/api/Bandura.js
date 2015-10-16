@@ -76,6 +76,7 @@ export default class Bandura {
 
     this.UI = r.UI;
     this.events = r.events;
+    this.pevents = r.pevents;
 
     const db = Buttons(this);
 
