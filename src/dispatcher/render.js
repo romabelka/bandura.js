@@ -51,7 +51,6 @@ export default function render() {
 
   return {
     UI: UI,
-    pevents: playerActions,
     events: soundEvents.combine(playlistsCollection, (se, plc) => {
       return {
         collection: plc,
