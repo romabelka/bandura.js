@@ -44197,6 +44197,10 @@
 	        'div',
 	        { className: 'b-volume--container', ref: 'container'
 	        },
+	        _react2['default'].createElement('div', {
+	          className: 'b-volume--container-background',
+	          style: { width: this.leftByProps() }
+	        }),
 	        _react2['default'].createElement(
 	          'div',
 	          { className: 'b-volume--draggable', ref: 'draggable' },

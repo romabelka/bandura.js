@@ -3,19 +3,27 @@
   width: 90px;
   margin-left: 40px;
 
+
+
   &--container {
-    background-color: @volumeBarColor;
+    background-color: @loaderColor;
     width: 50px;
     height: 2px;
     display: inline-block;
     position: relative;
     vertical-align: middle;
     cursor: pointer;
+
+    &-background {
+      background-color: @volumeBarColor;
+      height: 2px;
+    }
   }
 
   &--draggable {
     color: @dragColor;
     width: 10px;
     cursor: pointer;
+    margin-top: -2px;
   }
 }

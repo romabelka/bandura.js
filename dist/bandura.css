@@ -442,7 +442,7 @@ small {
   margin-left: 40px;
 }
 .b-volume--container {
-  background-color: #ACACAC;
+  background-color: #3b3b3b;
   width: 50px;
   height: 2px;
   display: inline-block;
@@ -450,10 +450,15 @@ small {
   vertical-align: middle;
   cursor: pointer;
 }
+.b-volume--container-background {
+  background-color: #ACACAC;
+  height: 2px;
+}
 .b-volume--draggable {
   color: #29ABE2;
   width: 10px;
   cursor: pointer;
+  margin-top: -2px;
 }
 .b-progressbar {
   position: relative;

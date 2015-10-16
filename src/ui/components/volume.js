@@ -29,6 +29,10 @@ export default React.createClass({
         ***/}
         <div className="b-volume--container" ref="container"
           >
+          <div
+            className="b-volume--container-background"
+            style={{width: this.leftByProps() }}
+            ></div>
           <div className="b-volume--draggable" ref="draggable">
             <i
               className="b-icon b-icon__record b-draggable"
