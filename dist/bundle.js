@@ -34,7 +34,7 @@
 /******/ 	__webpack_require__.c = installedModules;
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "./dist";
+/******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -238,19 +238,19 @@
 	  }, {
 	    key: 'pause',
 	    value: function pause() {
-	      _dispatcherApi.settingsChanges.push({ action: 'pause' });
+	      _dispatcherApi.controls.push({ action: 'pause' });
 	      return this;
 	    }
 	  }, {
 	    key: 'play',
 	    value: function play() {
-	      _dispatcherApi.settingsChanges.push({ action: 'play' });
+	      _dispatcherApi.controls.push({ action: 'play' });
 	      return this;
 	    }
 	  }, {
 	    key: 'stop',
 	    value: function stop() {
-	      _dispatcherApi.settingsChanges.push({ action: 'stop' });
+	      _dispatcherApi.controls.push({ action: 'stop' });
 	      return this;
 	    }
 	  }, {
@@ -405,6 +405,9 @@
 	    value: function notify(text) {
 	      _dispatcherApi.notify.push(text);
 	    }
+	  }, {
+	    key: 'desctruct',
+	    value: function desctruct() {}
 	  }]);
 	
 	  return Bandura;
