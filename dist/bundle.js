@@ -53808,7 +53808,7 @@
 	
 	    this._plIds = _lodash2['default'].pluck(playlists, '_id');
 	    this._activeId = activeId;
-	    this._playlists = playlists ? playlists : [new _Playlist2['default']([], 'Custom playlist', 0, CUSTOM_ID), new _Playlist2['default']([], 'Favourite', 0, FAVORITE_ID)];
+	    this._playlists = playlists ? playlists : [new _Playlist2['default']([], 'Custom playlist', 0, CUSTOM_ID)];
 	  }
 	
 	  _createClass(PLCollection, [{
