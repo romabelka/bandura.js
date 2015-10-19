@@ -43572,7 +43572,7 @@
 	
 	var _dispatcherApi = __webpack_require__(20);
 	
-	var defaultTrackWidth = 127;
+	var defaultTrackWidth = 126;
 	
 	exports['default'] = _react2['default'].createClass({
 	  displayName: 'Playlist',
@@ -43714,18 +43714,16 @@
 	
 	    return this.setState({
 	      scrolling: setInterval(function () {
-	        return function () {
-	          if (_this2.state.position >= 0) {
-	            _this2.finishScrolling();
-	            _this2.setState({
-	              showLeftScroll: false
-	            });
-	          }
-	
-	          return _this2.setState({
-	            position: _this2.state.position + 45
+	        if (_this2.state.position >= 0) {
+	          _this2.finishScrolling();
+	          _this2.setState({
+	            showLeftScroll: false
 	          });
-	        };
+	        }
+	
+	        return _this2.setState({
+	          position: _this2.state.position + 45
+	        });
 	      }, 50)
 	    });
 	  },
@@ -43733,25 +43731,30 @@
 	  scrollRight: function scrollRight() {
 	    var _this3 = this;
 	
+	    var tracks = this.props.playlist.getTracks();
+	    var playlistWidth = this.refs.playlist.getDOMNode().getBoundingClientRect().width;
+	
+	    console.log(playlistWidth, tracks.length * defaultTrackWidth);
+	
 	    this.setState({
 	      showLeftScroll: true
 	    });
 	
 	    return this.setState({
 	      scrolling: setInterval(function () {
-	        return function () {
-	          if (_this3.state.position <= _this3.refs.playlist.getDOMNode().getBoundingClientRect().width - _this3.props.playlist.getTracks().length * defaultTrackWidth) {
-	            _this3.finishScrolling();
-	            _this3.setState({
-	              showRightScroll: false
-	            });
-	            return;
-	          }
+	        if (_this3.state.position <= playlistWidth - tracks.length * defaultTrackWidth) {
+	          _this3.finishScrolling();
 	
 	          _this3.setState({
-	            position: _this3.state.position - 45
+	            showRightScroll: false
 	          });
-	        };
+	
+	          return;
+	        }
+	
+	        _this3.setState({
+	          position: _this3.state.position - 45
+	        });
 	      }, 50)
 	    });
 	  },
