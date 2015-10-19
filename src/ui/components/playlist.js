@@ -5,7 +5,7 @@ import _ from 'lodash';
 import Track from './track';
 import { collections } from '../../dispatcher/api';
 
-const defaultTrackWidth = 127;
+const defaultTrackWidth = 126;
 
 export default React.createClass({
   displayName: 'Playlist',
@@ -141,42 +141,46 @@ export default React.createClass({
 
     return this.setState({
       scrolling: setInterval(() => {
-        return () => {
-          if (this.state.position >= 0) {
-            this.finishScrolling();
-            this.setState({
-              showLeftScroll: false,
-            });
-          }
-
-          return this.setState({
-            position: this.state.position + 45,
+        if (this.state.position >= 0) {
+          this.finishScrolling();
+          this.setState({
+            showLeftScroll: false,
           });
-        };
+        }
+
+        return this.setState({
+          position: this.state.position + 45,
+        });
       }, 50),
     });
   },
 
   scrollRight() {
+    const tracks = this.props.playlist.getTracks();
+    const playlistWidth = this.refs.playlist.getDOMNode()
+      .getBoundingClientRect().width;
+
+    console.log(playlistWidth, tracks.length * defaultTrackWidth);
+
     this.setState({
       showLeftScroll: true,
     });
 
     return this.setState({
       scrolling: setInterval(() => {
-        return () => {
-          if (this.state.position <= this.refs.playlist.getDOMNode().getBoundingClientRect().width - this.props.playlist.getTracks().length * defaultTrackWidth) {
-            this.finishScrolling();
-            this.setState({
-              showRightScroll: false,
-            });
-            return;
-          }
+        if (this.state.position <= playlistWidth - tracks.length * defaultTrackWidth) {
+          this.finishScrolling();
 
           this.setState({
-            position: this.state.position - 45,
+            showRightScroll: false,
           });
-        };
+
+          return;
+        }
+
+        this.setState({
+          position: this.state.position - 45,
+        });
       }, 50),
     });
   },
