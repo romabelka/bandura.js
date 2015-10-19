@@ -13,7 +13,6 @@ export default class PLCollection {
     this._activeId = activeId;
     this._playlists = playlists ? playlists : [
       new Playlist([], 'Custom playlist', 0, CUSTOM_ID),
-      new Playlist([], 'Favourite', 0, FAVORITE_ID),
     ];
   }
 
