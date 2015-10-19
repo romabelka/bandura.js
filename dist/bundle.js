@@ -53970,7 +53970,7 @@
 	}
 	
 	function removeFrom(array, position) {
-	  return array.slice(0, position).concat(array.slice(position));
+	  return array.slice(0, position).concat(array.slice(position + 1));
 	}
 	
 	function updateOn(array, position, newVal) {

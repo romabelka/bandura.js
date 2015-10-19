@@ -453,6 +453,7 @@ small {
 .b-volume--container-background {
   background-color: #ACACAC;
   height: 2px;
+  cursor: pointer;
 }
 .b-volume--draggable {
   color: #29ABE2;
