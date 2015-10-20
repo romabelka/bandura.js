@@ -79,7 +79,11 @@ export default function(playlist, task) {
   }
 
   function setPosition() {
-    const track = SoundManager.getSoundById(playlist.getActiveTrack().id);
+    if (!playlist) {
+      return;
+    }
+
+    const track = SoundManager.getSoundById(playlist.getActiveTrackId());
 
     return track.setPosition(
       track.duration * task.percent
