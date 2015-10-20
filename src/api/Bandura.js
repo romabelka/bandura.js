@@ -180,7 +180,7 @@ export default class Bandura {
       action: 'updateActive',
       playlist: new Playlist(
         tracks, 'Custom playlist',
-        currentTrack, PLCollection.CUSTOM_ID
+        PLCollection.CUSTOM_ID, currentTrack
       ),
     });
   }
