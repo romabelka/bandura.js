@@ -54272,7 +54272,11 @@
 	  }
 	
 	  function setPosition() {
-	    var track = _soundmanager2.soundManager.getSoundById(playlist.getActiveTrack().id);
+	    if (!playlist) {
+	      return;
+	    }
+	
+	    var track = _soundmanager2.soundManager.getSoundById(playlist.getActiveTrackId());
 	
 	    return track.setPosition(track.duration * task.percent);
 	  }
