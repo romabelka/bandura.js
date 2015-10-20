@@ -317,7 +317,7 @@
 	
 	      _dispatcherApi.collections.push({
 	        action: 'updateActive',
-	        playlist: new _Playlist2['default'](tracks, 'Custom playlist', currentTrack, _PLCollection2['default'].CUSTOM_ID)
+	        playlist: new _Playlist2['default'](tracks, 'Custom playlist', _PLCollection2['default'].CUSTOM_ID, currentTrack)
 	      });
 	    }
 	  }, {
