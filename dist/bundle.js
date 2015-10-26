@@ -44041,7 +44041,7 @@
 	    var videoItems = _lodash2['default'].map(this.props.videos, function (video) {
 	      return _react2['default'].createElement(_video2['default'], {
 	        video: video,
-	        key: video.id,
+	        key: video.id.videId,
 	        onClick: this.clickVideo,
 	        showVideo: video === this.state.visibleVideo });
 	    }, this);
@@ -44131,9 +44131,7 @@
 	        )
 	      );
 	    }
-	    {
-	      console.log(this.props.video);
-	    }
+	
 	    return _react2['default'].createElement(
 	      'div',
 	      { className: 'b-video--item', onClick: this.handleClick },
@@ -44306,13 +44304,35 @@
 	
 	  render: function render() {
 	    var currentTrack = this.props.currentTrack;
-	    var trackInfo = 'Nothing is playing right now';
+	    var trackInfo = _react2['default'].createElement(
+	      'small',
+	      { className: 'b-progressbar--track--info' },
+	      'Nothing is playing right now'
+	    );
 	    var showTime = '';
 	    var loaded = 0;
 	    var progress = undefined;
 	
 	    if (this.props.position && currentTrack) {
-	      trackInfo = currentTrack.name + ' : ' + currentTrack.artist;
+	      trackInfo = _react2['default'].createElement(
+	        'small',
+	        { className: 'b-progressbar--track--info' },
+	        _react2['default'].createElement(
+	          'span',
+	          { className: 'b-progressbar--track--info-name' },
+	          currentTrack.name
+	        ),
+	        _react2['default'].createElement(
+	          'span',
+	          { className: 'b-progressbar--track--info-delimiter' },
+	          ' : '
+	        ),
+	        _react2['default'].createElement(
+	          'span',
+	          { className: 'b-progressbar--track--info-artist' },
+	          currentTrack.artist
+	        )
+	      );
 	
 	      var trackTime = {
 	        min: Math.floor(this.props.duration / 60000),
@@ -44329,11 +44349,7 @@
 	    return _react2['default'].createElement(
 	      'div',
 	      { className: 'b-progressbar--wrapper' },
-	      _react2['default'].createElement(
-	        'small',
-	        { className: 'b-progressbar--track--info' },
-	        trackInfo
-	      ),
+	      trackInfo,
 	      _react2['default'].createElement(
 	        'small',
 	        { className: 'b-progressbar--track--time' },
@@ -44524,7 +44540,7 @@
 	
 	exports.callbacks = callbacks;
 	var videoSet = _api.videos.flatMapLatest(function (query) {
-	  var url = 'https://www.googleapis.com/youtube/v3/search?&part=snippet&q=' + query + '&type=video&videoCategoryId=19&key=AIzaSyAtH93CIUo3NvA2nvL3ltsYtl319P1vsNo';
+	  var url = 'https://www.googleapis.com/youtube/v3/search?&maxResults=10&part=snippet&q=' + query + '&type=video&videoCategoryId=10&key=AIzaSyAtH93CIUo3NvA2nvL3ltsYtl319P1vsNo';
 	
 	  return _baconjs2['default'].fromPromise(_jquery2['default'].ajax({
 	    url: url,

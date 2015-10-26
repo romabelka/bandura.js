@@ -10,13 +10,21 @@ export default React.createClass({
 
   render() {
     const currentTrack = this.props.currentTrack;
-    let trackInfo = 'Nothing is playing right now';
+    let trackInfo = (<small className="b-progressbar--track--info">Nothing is playing right now</small>);
     let showTime = '';
     let loaded = 0;
     let progress;
 
     if (this.props.position && currentTrack) {
-      trackInfo = `${currentTrack.name} : ${currentTrack.artist}`;
+      trackInfo = (<small className="b-progressbar--track--info">
+        <span className="b-progressbar--track--info-name">
+          {currentTrack.name}
+        </span>
+        <span className="b-progressbar--track--info-delimiter"> : </span>
+        <span className="b-progressbar--track--info-artist">
+          {currentTrack.artist}
+        </span>
+      </small>);
 
       const trackTime = {
         min: Math.floor(this.props.duration / 60000),
@@ -32,7 +40,7 @@ export default React.createClass({
 
     return (
       <div className="b-progressbar--wrapper">
-        <small className="b-progressbar--track--info">{trackInfo}</small>
+        {trackInfo}
         <small className="b-progressbar--track--time">{showTime}</small>
         <div className="b-progressbar" style={{ width: width }}>
           <div className="b-progressbar--container" onClick = {this.setPosition}>

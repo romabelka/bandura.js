@@ -489,6 +489,30 @@ small {
   white-space: nowrap;
   word-wrap: normal;
   max-width: 50%;
+  line-height: 13px;
+}
+.b-progressbar--track--info > div {
+  display: inline;
+  float: left;
+  line-height: 13px;
+}
+.b-progressbar--track--info-name {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 150px;
+  display: inline-block;
+  float: left;
+}
+.b-progressbar--track--info-artist {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 150px;
+  display: inline-block;
+}
+.b-progressbar--track--info-delimiter {
+  float: left;
+  margin: 0 3px;
+  display: inline-block;
 }
 .b-progressbar--track--time {
   float: right;

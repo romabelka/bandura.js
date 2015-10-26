@@ -131,7 +131,7 @@ export const callbacks = buttons.scan([], (btns, ev) => {
 });
 
 export const videoSet = videos.flatMapLatest((query) => {
-  const url = `https://www.googleapis.com/youtube/v3/search?&part=snippet&q=${query}&type=video&videoCategoryId=19&key=AIzaSyAtH93CIUo3NvA2nvL3ltsYtl319P1vsNo`;
+  const url = `https://www.googleapis.com/youtube/v3/search?&maxResults=10&part=snippet&q=${query}&type=video&videoCategoryId=10&key=AIzaSyAtH93CIUo3NvA2nvL3ltsYtl319P1vsNo`;
 
   return Bacon.fromPromise($.ajax({
     url: url,

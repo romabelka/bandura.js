@@ -29,6 +29,35 @@
     white-space: nowrap;
     word-wrap: normal;
     max-width: 50%;
+
+    line-height: 13px;
+
+    & > div {
+      display: inline;
+      float: left;
+      line-height: 13px;
+    }
+
+    &-name {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      max-width: 150px;
+      display: inline-block;
+      float: left;
+    }
+
+    &-artist {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      max-width: 150px;
+      display: inline-block;
+    }
+
+    &-delimiter {
+      float:left;
+      margin: 0 3px;
+      display: inline-block;
+    }
   }
 
   &--track--time {

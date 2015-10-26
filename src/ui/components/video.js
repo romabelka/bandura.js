@@ -29,7 +29,7 @@ export default React.createClass({
         </div>
       );
     }
-    {console.log(this.props.video);}
+
     return (
       <div className="b-video--item" onClick={this.handleClick}>
         <div className="b-video--wrapper">

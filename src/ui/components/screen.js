@@ -17,13 +17,13 @@ export default React.createClass({
       return (<div></div>);
     }
 
+
     const videoItems = _.map(this.props.videos, function(video) {
       return (<Video
         video={video}
-        key={video.id}
+        key={video.id.videId}
         onClick={this.clickVideo}
-        showVideo={video === this.state.visibleVideo}/>
-      );
+        showVideo={video === this.state.visibleVideo}/>);
     }, this);
 
     return (
