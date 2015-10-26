@@ -22,7 +22,7 @@ export default React.createClass({
           </div>
           <div className="b-video--wrapper">
             <div className="b-video--picture">
-              <img src={this.props.video.snippet.thumbnails.default.url}/>
+              <img src={this.props.video.snippet.thumbnails.medium.url}/>
             </div>
             <div className="b-video--title">{this.props.video.snippet.title}</div>
           </div>
@@ -34,7 +34,7 @@ export default React.createClass({
       <div className="b-video--item" onClick={this.handleClick}>
         <div className="b-video--wrapper">
           <div className="b-video--picture">
-            <img src={this.props.video.snippet.thumbnails.default.url}/>
+            <img src={this.props.video.snippet.thumbnails.medium.url}/>
           </div>
           <div className="b-video--title">{this.props.video.snippet.title}</div>
         </div>

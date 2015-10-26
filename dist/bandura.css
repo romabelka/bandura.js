@@ -777,11 +777,15 @@ small {
   cursor: pointer;
 }
 .b-video--item {
+  cursor: pointer;
   width: 14.2%;
   padding: 1%;
-  height: 140px;
+  height: 120px;
   box-sizing: border-box;
   display: inline-block;
+}
+.b-video--item:hover {
+  background: #ccc;
 }
 .b-video--title {
   width: 100%;
@@ -795,7 +799,7 @@ small {
 .b-video--picture {
   max-width: 100%;
   width: 140px;
-  height: 105px;
+  height: 77px;
   margin: 0 auto;
 }
 .b-video--picture img {

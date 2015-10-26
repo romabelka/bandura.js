@@ -44121,7 +44121,7 @@
 	          _react2['default'].createElement(
 	            'div',
 	            { className: 'b-video--picture' },
-	            _react2['default'].createElement('img', { src: this.props.video.snippet.thumbnails['default'].url })
+	            _react2['default'].createElement('img', { src: this.props.video.snippet.thumbnails.medium.url })
 	          ),
 	          _react2['default'].createElement(
 	            'div',
@@ -44141,7 +44141,7 @@
 	        _react2['default'].createElement(
 	          'div',
 	          { className: 'b-video--picture' },
-	          _react2['default'].createElement('img', { src: this.props.video.snippet.thumbnails['default'].url })
+	          _react2['default'].createElement('img', { src: this.props.video.snippet.thumbnails.medium.url })
 	        ),
 	        _react2['default'].createElement(
 	          'div',
